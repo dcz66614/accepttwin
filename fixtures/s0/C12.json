@@ -1,0 +1,43 @@
+{
+  "scenario_id": "C12",
+  "spec": "PROJECT_BOOK.md §11.2",
+  "description": "Same config as C11 (Markdown-first description); both warm orders bleed, first at 006.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "force_uri_only",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": null,
+  "expected_verdict": "REPRESENTATION_BLEED",
+  "expected_first_error": 6,
+  "expected_first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "expected_diagnostics": [
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 8
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 8
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 8
+    }
+  ],
+  "notes": "Same config as C11 (Markdown-first description); both warm orders bleed, first at 006."
+}

@@ -1,0 +1,60 @@
+{
+  "confirmed_cache_states": [
+    {
+      "request_index": 1,
+      "state": null
+    },
+    {
+      "request_index": 2,
+      "state": null
+    },
+    {
+      "request_index": 3,
+      "state": "MISS"
+    },
+    {
+      "request_index": 4,
+      "state": "MISS"
+    },
+    {
+      "request_index": 5,
+      "state": "MISS"
+    },
+    {
+      "request_index": 6,
+      "state": "MISS"
+    },
+    {
+      "request_index": 7,
+      "state": "MISS"
+    },
+    {
+      "request_index": 8,
+      "state": "MISS"
+    }
+  ],
+  "critical_count": 0,
+  "diagnostics": [
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_reset_confirmed": false,
+        "evidence_conflict": false,
+        "origin_counter_delta": null,
+        "origin_journal_available": null,
+        "proxy_cache_header_present": null
+      },
+      "experiment_id": null,
+      "message": "a cache reset did not reach a confirmed empty state (namespace='s0-C23-html-cold', success=False, entries_after=0), so cold-cache claims cannot be confirmed",
+      "request_index": null,
+      "severity": "WARNING"
+    }
+  ],
+  "first_error": null,
+  "first_error_experiment_id": null,
+  "reasons": [
+    "key cache evidence is missing or conflicting"
+  ],
+  "verdict": "INCONCLUSIVE",
+  "warning_count": 1
+}

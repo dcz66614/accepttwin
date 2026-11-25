@@ -1,0 +1,47 @@
+{
+  "diagnostics": [
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "request_index": 1
+    },
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "request_index": 2
+    }
+  ],
+  "duration_seconds": 0.0148,
+  "expected_diagnostics": [
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "request_index": 1
+    },
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "request_index": 2
+    }
+  ],
+  "expected_first_error": null,
+  "expected_ok": true,
+  "expected_verdict": "PASS_OBSERVED",
+  "first_error": null,
+  "first_error_experiment_id": null,
+  "oracle_first_error": null,
+  "oracle_mismatches": [],
+  "oracle_parity": true,
+  "oracle_verdict": "PASS_OBSERVED",
+  "origin_counter_delta_total": 8,
+  "report_hash": "294f457ebb316f5775b5fa0deaa5ea46142bb516bcde109a8e25e764a911e84d",
+  "request_count": 8,
+  "reset_count": 4,
+  "scenario_id": "C03",
+  "step_count": 25,
+  "verdict": "PASS_OBSERVED",
+  "warm_hm_requests": [
+    5,
+    6
+  ],
+  "warm_mh_requests": [
+    7,
+    8
+  ]
+}

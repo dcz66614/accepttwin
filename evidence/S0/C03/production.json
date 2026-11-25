@@ -1,0 +1,66 @@
+{
+  "confirmed_cache_states": [
+    {
+      "request_index": 1,
+      "state": null
+    },
+    {
+      "request_index": 2,
+      "state": null
+    },
+    {
+      "request_index": 3,
+      "state": "MISS"
+    },
+    {
+      "request_index": 4,
+      "state": "MISS"
+    },
+    {
+      "request_index": 5,
+      "state": "MISS"
+    },
+    {
+      "request_index": 6,
+      "state": "MISS"
+    },
+    {
+      "request_index": 7,
+      "state": "MISS"
+    },
+    {
+      "request_index": 8,
+      "state": "MISS"
+    }
+  ],
+  "critical_count": 0,
+  "diagnostics": [
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "evidence": {
+        "vary_accept": "advisory"
+      },
+      "experiment_id": "ORIGIN_HTML",
+      "message": "origin response for request 001 does not declare Vary: Accept; the cache must still be judged by its actual behaviour, not by this header alone (I-11)",
+      "request_index": 1,
+      "severity": "WARNING"
+    },
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "evidence": {
+        "vary_accept": "advisory"
+      },
+      "experiment_id": "ORIGIN_MARKDOWN",
+      "message": "origin response for request 002 does not declare Vary: Accept; the cache must still be judged by its actual behaviour, not by this header alone (I-11)",
+      "request_index": 2,
+      "severity": "WARNING"
+    }
+  ],
+  "first_error": null,
+  "first_error_experiment_id": null,
+  "reasons": [
+    "baselines, cold requests and both warm orders are correct with complete cache evidence and no CRITICAL diagnostic"
+  ],
+  "verdict": "PASS_OBSERVED",
+  "warning_count": 2
+}

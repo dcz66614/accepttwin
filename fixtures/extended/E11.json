@@ -1,0 +1,35 @@
+{
+  "scenario_id": "E11",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "Origin answers Markdown requests with 406 \u2014 O-M status mismatch.",
+  "origin_scenario": "markdown_406",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": null,
+  "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+  "expected_first_error": 2,
+  "expected_first_error_experiment_id": "ORIGIN_MARKDOWN",
+  "expected_diagnostics": [
+    {
+      "code": "ORIGIN_NEGOTIATION_ERROR",
+      "request_index": 2
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 4
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 7
+    }
+  ],
+  "notes": "Same shape as C08: the origin refuses the Markdown representation with 406 (new origin fixture markdown_406.json)."
+}

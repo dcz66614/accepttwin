@@ -1,0 +1,121 @@
+{
+  "confirmed_cache_states": [
+    {
+      "request_index": 1,
+      "state": null
+    },
+    {
+      "request_index": 2,
+      "state": null
+    },
+    {
+      "request_index": 3,
+      "state": "MISS"
+    },
+    {
+      "request_index": 4,
+      "state": "MISS"
+    },
+    {
+      "request_index": 5,
+      "state": "MISS"
+    },
+    {
+      "request_index": 6,
+      "state": "MISS"
+    },
+    {
+      "request_index": 7,
+      "state": "MISS"
+    },
+    {
+      "request_index": 8,
+      "state": "MISS"
+    }
+  ],
+  "critical_count": 5,
+  "diagnostics": [
+    {
+      "code": "ORIGIN_NEGOTIATION_ERROR",
+      "evidence": {
+        "body_sha256": "133897fcf1ee7fb77d049cb509cc1a2d1d97d69f0f6ed6e282c4feefaf0caf81",
+        "expected_content_type": "text/markdown; charset=utf-8",
+        "expected_sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+        "expected_status": 200,
+        "observed_content_type": "text/markdown; charset=utf-8",
+        "observed_status": 200,
+        "origin_direct": true,
+        "requested_representation": "markdown",
+        "sentinel_match": false,
+        "stage": "ORIGIN_MARKDOWN"
+      },
+      "experiment_id": "ORIGIN_MARKDOWN",
+      "message": "direct-origin baseline for markdown violates the contract: status 200 (expected 200), content-type 'text/markdown; charset=utf-8' (expected 'text/markdown; charset=utf-8'), sentinel_match=False",
+      "request_index": 2,
+      "severity": "CRITICAL"
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "evidence": {
+        "body_sha256": "133897fcf1ee7fb77d049cb509cc1a2d1d97d69f0f6ed6e282c4feefaf0caf81",
+        "expected_sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+        "observed_content_type": "text/markdown; charset=utf-8",
+        "requested_representation": "markdown",
+        "sentinel_match": false
+      },
+      "experiment_id": "ORIGIN_MARKDOWN",
+      "message": "response body for request 002 lacks the exact Sentinel of the requested markdown representation",
+      "request_index": 2,
+      "severity": "CRITICAL"
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "evidence": {
+        "body_sha256": "133897fcf1ee7fb77d049cb509cc1a2d1d97d69f0f6ed6e282c4feefaf0caf81",
+        "expected_sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+        "observed_content_type": "text/markdown; charset=utf-8",
+        "requested_representation": "markdown",
+        "sentinel_match": false
+      },
+      "experiment_id": "MARKDOWN_COLD",
+      "message": "response body for request 004 lacks the exact Sentinel of the requested markdown representation",
+      "request_index": 4,
+      "severity": "CRITICAL"
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "evidence": {
+        "body_sha256": "133897fcf1ee7fb77d049cb509cc1a2d1d97d69f0f6ed6e282c4feefaf0caf81",
+        "expected_sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+        "observed_content_type": "text/markdown; charset=utf-8",
+        "requested_representation": "markdown",
+        "sentinel_match": false
+      },
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "message": "response body for request 006 lacks the exact Sentinel of the requested markdown representation",
+      "request_index": 6,
+      "severity": "CRITICAL"
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "evidence": {
+        "body_sha256": "133897fcf1ee7fb77d049cb509cc1a2d1d97d69f0f6ed6e282c4feefaf0caf81",
+        "expected_sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+        "observed_content_type": "text/markdown; charset=utf-8",
+        "requested_representation": "markdown",
+        "sentinel_match": false
+      },
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "message": "response body for request 007 lacks the exact Sentinel of the requested markdown representation",
+      "request_index": 7,
+      "severity": "CRITICAL"
+    }
+  ],
+  "first_error": 2,
+  "first_error_experiment_id": "ORIGIN_MARKDOWN",
+  "reasons": [
+    "a direct-origin baseline violates the contract"
+  ],
+  "verdict": "ORIGIN_NEGOTIATION_ERROR",
+  "warning_count": 0
+}

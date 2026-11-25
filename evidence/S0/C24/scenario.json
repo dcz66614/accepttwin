@@ -1,0 +1,55 @@
+{
+  "diagnostics": [
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 4
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 7
+    }
+  ],
+  "duration_seconds": 0.0146,
+  "expected_diagnostics": [
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 4
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 7
+    }
+  ],
+  "expected_first_error": 4,
+  "expected_ok": true,
+  "expected_verdict": "CONTRACT_MISMATCH",
+  "first_error": 4,
+  "first_error_experiment_id": "MARKDOWN_COLD",
+  "oracle_first_error": 4,
+  "oracle_mismatches": [],
+  "oracle_parity": true,
+  "oracle_verdict": "CONTRACT_MISMATCH",
+  "origin_counter_delta_total": 8,
+  "report_hash": "90944803011fe4064dbe85dcdea362d78cb14014dfd7b6eb893aa9be5370b373",
+  "request_count": 8,
+  "reset_count": 4,
+  "scenario_id": "C24",
+  "step_count": 25,
+  "verdict": "CONTRACT_MISMATCH",
+  "warm_hm_requests": [
+    5,
+    6
+  ],
+  "warm_mh_requests": [
+    7,
+    8
+  ]
+}

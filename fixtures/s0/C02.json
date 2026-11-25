@@ -1,0 +1,18 @@
+{
+  "scenario_id": "C02",
+  "spec": "PROJECT_BOOK.md §11.2",
+  "description": "Same config as C01 (Markdown-first description); run always executes both warm orders.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": null,
+  "expected_verdict": "PASS_OBSERVED",
+  "expected_first_error": null,
+  "expected_first_error_experiment_id": null,
+  "expected_diagnostics": [],
+  "notes": "Same config as C01 (Markdown-first description); run always executes both warm orders."
+}

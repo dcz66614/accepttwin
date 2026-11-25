@@ -1,0 +1,27 @@
+{
+  "scenario_id": "C04",
+  "spec": "PROJECT_BOOK.md §11.2",
+  "description": "Same config as C03 (Markdown-first description).",
+  "origin_scenario": "no_vary",
+  "proxy_mode": "manual_accept_key",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": null,
+  "expected_verdict": "PASS_OBSERVED",
+  "expected_first_error": null,
+  "expected_first_error_experiment_id": null,
+  "expected_diagnostics": [
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "request_index": 1
+    },
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "request_index": 2
+    }
+  ],
+  "notes": "Same config as C03 (Markdown-first description)."
+}

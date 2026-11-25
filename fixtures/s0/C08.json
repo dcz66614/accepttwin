@@ -1,0 +1,35 @@
+{
+  "scenario_id": "C08",
+  "spec": "PROJECT_BOOK.md §11.2",
+  "description": "Origin Markdown returns 404.",
+  "origin_scenario": "markdown_404",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": null,
+  "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+  "expected_first_error": 2,
+  "expected_first_error_experiment_id": "ORIGIN_MARKDOWN",
+  "expected_diagnostics": [
+    {
+      "code": "ORIGIN_NEGOTIATION_ERROR",
+      "request_index": 2
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 4
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 7
+    }
+  ],
+  "notes": "Origin Markdown returns 404."
+}

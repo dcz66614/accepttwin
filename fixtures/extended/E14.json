@@ -1,0 +1,43 @@
+{
+  "scenario_id": "E14",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "Vary present, URI-only cache, Markdown first \u2014 M\u2192H confirmed HIT bleed.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "force_uri_only",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": null,
+  "expected_verdict": "REPRESENTATION_BLEED",
+  "expected_first_error": 6,
+  "expected_first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "expected_diagnostics": [
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 8
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 8
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 8
+    }
+  ],
+  "notes": "Same shape as C12 (the frozen run order always executes HTML first in each experiment; both warm orders bleed, first error 006)."
+}

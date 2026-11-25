@@ -1,0 +1,33 @@
+{
+  "scenario_id": "C24",
+  "spec": "PROJECT_BOOK.md §11.2",
+  "description": "Harness proxy wrapper: proxied Markdown responses return Content-Type text/html (body unchanged); origin baselines stay correct, so this is a proxy contract violation, not an origin error.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": {
+    "kind": "proxy_rewrites_markdown_content_type"
+  },
+  "expected_verdict": "CONTRACT_MISMATCH",
+  "expected_first_error": 4,
+  "expected_first_error_experiment_id": "MARKDOWN_COLD",
+  "expected_diagnostics": [
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 4
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 7
+    }
+  ],
+  "notes": "Harness proxy wrapper: proxied Markdown responses return Content-Type text/html (body unchanged); origin baselines stay correct, so this is a proxy contract violation, not an origin error."
+}

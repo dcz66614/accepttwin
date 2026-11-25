@@ -1,0 +1,18 @@
+{
+  "scenario_id": "E03",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "Vary: * \u2014 the cache cannot reuse the stored entry; the second request is a fresh fetch.",
+  "origin_scenario": "vary_star",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": null,
+  "expected_verdict": "PASS_OBSERVED",
+  "expected_first_error": null,
+  "expected_first_error_experiment_id": null,
+  "expected_diagnostics": [],
+  "notes": "RFC 9111 \u00a74.1: Vary: * must never be reused. The proxy stores nothing and reports BYPASS for every proxied request; that BYPASS is compliant and exempt from the \u00a78.9 variant leg (ADR-004). Spec \u00a711.3 says 'second request MISS'; the honest \u00a75.3 label is BYPASS (MISS requires an entry to be created, and none is), and the verdict is PASS_OBSERVED either way."
+}

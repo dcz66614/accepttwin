@@ -1,0 +1,18 @@
+{
+  "scenario_id": "E15",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "no-store, no Vary, proxy correctly BYPASSes \u2014 both orders correct.",
+  "origin_scenario": "no_vary",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "no_store",
+    "vary_accept": "not_required",
+    "max_age_seconds": null
+  },
+  "injection": null,
+  "expected_verdict": "PASS_OBSERVED",
+  "expected_first_error": null,
+  "expected_first_error_experiment_id": null,
+  "expected_diagnostics": [],
+  "notes": "A caching-capable proxy (respect_vary) bound to a no_store contract BYPASSes every request and stores nothing (cf. E05, which uses the disabled proxy)."
+}

@@ -1,0 +1,25 @@
+{
+  "scenario_id": "E20",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "MISS header conflicts with the origin count \u2014 evidence contradiction.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": {
+    "kind": "proxy_lies_miss_with_stash_replay"
+  },
+  "expected_verdict": "INCONCLUSIVE",
+  "expected_first_error": 6,
+  "expected_first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "expected_diagnostics": [
+    {
+      "code": "CACHE_EVIDENCE_CONFLICT",
+      "request_index": 6
+    }
+  ],
+  "notes": "Harness injection (harness proxy subclass, production code untouched): the 4th proxied GET (006) replays the Markdown body observed at 004 without contacting the origin (counter delta 0) while claiming MISS. The replayed body is the genuine origin body, so no Sentinel/contract diagnostic fires \u2014 only the \u00a78.8 conflict."
+}

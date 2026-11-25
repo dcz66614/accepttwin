@@ -1,0 +1,18 @@
+{
+  "scenario_id": "E06",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "no-store, Vary present \u2014 both representations BYPASS.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "disabled",
+  "contract": {
+    "mode": "no_store",
+    "vary_accept": "not_required",
+    "max_age_seconds": null
+  },
+  "injection": null,
+  "expected_verdict": "PASS_OBSERVED",
+  "expected_first_error": null,
+  "expected_first_error_experiment_id": null,
+  "expected_diagnostics": [],
+  "notes": "Disabled proxy under a no_store contract: every proxied request BYPASSes (cf. C18)."
+}

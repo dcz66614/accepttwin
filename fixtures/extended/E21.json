@@ -1,0 +1,45 @@
+{
+  "scenario_id": "E21",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "Body exceeds 1 MiB \u2014 beyond the first-release limit.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": {
+    "kind": "proxy_returns_oversize_body"
+  },
+  "expected_verdict": "INCONCLUSIVE",
+  "expected_first_error": 3,
+  "expected_first_error_experiment_id": "HTML_COLD",
+  "expected_diagnostics": [
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "request_index": 3
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "request_index": 4
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "request_index": 5
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "request_index": 6
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "request_index": 7
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "request_index": 8
+    }
+  ],
+  "notes": "Harness injection (harness proxy subclass, production code untouched): every proxied body is padded past 1 MiB with the Sentinel intact; the stored entries keep the original bodies. \u00a78.6 limit_code body_too_large on 003\u2013008 (baselines are direct-origin and small). The classifier's size check runs only because the harness passes run.raw_observations (ADR-002)."
+}

@@ -1,0 +1,45 @@
+{
+  "scenario_id": "E18",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "Origin count missing, status header present \u2014 dual proof cannot be completed.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": {
+    "kind": "origin_events_unavailable"
+  },
+  "expected_verdict": "INCONCLUSIVE",
+  "expected_first_error": 3,
+  "expected_first_error_experiment_id": "HTML_COLD",
+  "expected_diagnostics": [
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 3
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 4
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 5
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 6
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 7
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 8
+    }
+  ],
+  "notes": "Same shape as C21: the adjudication input carries an empty origin-event list (checked, found nothing), never None (ADR-002)."
+}

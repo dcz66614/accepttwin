@@ -1,0 +1,25 @@
+{
+  "scenario_id": "C23",
+  "spec": "PROJECT_BOOK.md §11.2",
+  "description": "Harness proxy wrapper: first cache reset reports success=false (store genuinely empty) so no cold-cache claim can be confirmed; run-level diagnostic, no single request is the first error.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": {
+    "kind": "reset_reports_failure"
+  },
+  "expected_verdict": "INCONCLUSIVE",
+  "expected_first_error": null,
+  "expected_first_error_experiment_id": null,
+  "expected_diagnostics": [
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": null
+    }
+  ],
+  "notes": "Harness proxy wrapper: first cache reset reports success=false (store genuinely empty) so no cold-cache claim can be confirmed; run-level diagnostic, no single request is the first error."
+}

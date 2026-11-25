@@ -1,0 +1,43 @@
+{
+  "scenario_id": "C20",
+  "spec": "PROJECT_BOOK.md §11.2",
+  "description": "Proxy hides Cache-Status headers: header leg missing.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "opaque",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": null,
+  "expected_verdict": "INCONCLUSIVE",
+  "expected_first_error": 3,
+  "expected_first_error_experiment_id": "HTML_COLD",
+  "expected_diagnostics": [
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 3
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 4
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 5
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 6
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 7
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": 8
+    }
+  ],
+  "notes": "Proxy hides Cache-Status headers: header leg missing."
+}

@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "accepttwin"
+version = "1.0.0"
+description = "AcceptTwin (P032): same URL, two representations — verify delivery is never mixed up."
+readme = "README.md"
+# NOTE (T012): README.md now exists (T012 wrote it from the real CLI
+# --help output), so the readme pointer is restored; the console
+# entry point below is the T012 CLI (verify + benchmark).
+license = { text = "MIT" }
+requires-python = ">=3.12,<3.13"
+dependencies = []
+
+[project.scripts]
+accepttwin = "accepttwin.cli:main"
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

@@ -1,0 +1,18 @@
+{
+  "scenario_id": "E01",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "Vary field name lowercase ('vary: Accept' on the wire) \u2014 normal Accept separation.",
+  "origin_scenario": "vary_lowercase",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": null,
+  "expected_verdict": "PASS_OBSERVED",
+  "expected_first_error": null,
+  "expected_first_error_experiment_id": null,
+  "expected_diagnostics": [],
+  "notes": "Origin emits the Vary field name lowercase; HTTP field names are case-insensitive (RFC 9110 \u00a75.1), so the run must PASS exactly like C01. The runner lowercases header names in evidence, so the wire-level lowercase fact is pinned separately by tests/golden/test_extended.py::test_e01_vary_field_name_is_lowercase_on_the_wire."
+}

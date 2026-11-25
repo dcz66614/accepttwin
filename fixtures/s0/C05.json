@@ -1,0 +1,18 @@
+{
+  "scenario_id": "C05",
+  "spec": "PROJECT_BOOK.md §11.2",
+  "description": "no-store, disabled proxy: all BYPASS.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "disabled",
+  "contract": {
+    "mode": "no_store",
+    "vary_accept": "not_required",
+    "max_age_seconds": null
+  },
+  "injection": null,
+  "expected_verdict": "PASS_OBSERVED",
+  "expected_first_error": null,
+  "expected_first_error_experiment_id": null,
+  "expected_diagnostics": [],
+  "notes": "no-store, disabled proxy: all BYPASS."
+}

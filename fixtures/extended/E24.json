@@ -1,0 +1,29 @@
+{
+  "scenario_id": "E24",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "Origin healthy, proxy warm response has a wrong Sentinel \u2014 the warm body violates the contract.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": {
+    "kind": "proxy_corrupts_warm_second_sentinel"
+  },
+  "expected_verdict": "CONTRACT_MISMATCH",
+  "expected_first_error": 6,
+  "expected_first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "expected_diagnostics": [
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 8
+    }
+  ],
+  "notes": "Harness injection (harness proxy subclass, production code untouched): the warm-second responses (006, 008) are returned with their Sentinel bytes replaced; stored entries keep the correct bodies, so this is not a bleed (body hashes differ from the first requests') and not an origin error (baselines stay correct)."
+}

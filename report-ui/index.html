@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AcceptTwin 报告</title>
+<!--
+  AcceptTwin self-contained report template (P032 T010).
+  scripts/embed_report.py replaces the three ACCEPTTWIN placeholders
+  below with the inline stylesheet, the compiled report-ui.js bundle
+  and the embedded report JSON. The finished page has no remote
+  reference of any kind: no CDN, no webfont, no image, no iframe,
+  no external link — it opens fully offline.
+-->
+<style>
+<!--ACCEPTTWIN:STYLES-->
+</style>
+</head>
+<body>
+<header>
+<h1 id="report-title">AcceptTwin 报告</h1>
+<p>同一网址，两种表示，验证交付是否正确。Your website serves humans and AI. Make sure it never mixes them up.</p>
+<p>项目 P032 · 规格 v1.0.0 · 报告 Schema accepttwin.report/v1</p>
+</header>
+
+<div id="no-payload">
+<p><strong>未嵌入报告数据。</strong>这是报告模板本身，不是已生成的报告页。</p>
+<p>生成方法：<span class="mono">.venv/bin/python scripts/embed_report.py evidence/Reports/C11.json -o evidence/Reports/html/C11.html</span>（需先用 <span class="mono">--contract</span> 传入运行契约，或不传则使用冻结 §5.1.2 常量作基线预期值）。48 场景汇总：<span class="mono">.venv/bin/python scripts/embed_report.py --all-48</span>。</p>
+<p>本页不显示正文原文：报告只包含正文 SHA-256 与 Sentinel 匹配标志。</p>
+</div>
+
+<noscript>
+<p><strong>本报告页需要 JavaScript 渲染。</strong>脚本是内嵌的自包含代码，不访问任何网络；启用 JavaScript 后重新打开即可查看全部十个章节。</p>
+</noscript>
+
+<main id="report-view">
+<section id="section-verdict"></section>
+<section id="section-baseline"></section>
+<section id="section-experiments"></section>
+<section id="section-timeline"></section>
+<section id="section-cache"></section>
+<section id="section-first-error"></section>
+<section id="section-diagnostics"></section>
+<section id="section-oracle"></section>
+<section id="section-hash"></section>
+<section id="section-privacy"></section>
+</main>
+
+<main id="summary-view" hidden></main>
+
+<footer>
+<p>诚实边界：本工具只证明“在给定双表示契约、受控缓存与有界场景内，网站按声明交付了正确的表示”，不证明真实 CDN 行为、不修复缓存、不认证网站的 AI 友好度、不保证任何真实网站的交付正确；没有 Vary: Accept 本身不是故障证据。</p>
+<p>隐私：本页不包含原始响应正文、Authorization、Cookie 或其他敏感请求头；不上传报告，不自动打开外部网址。</p>
+</footer>
+
+<script type="application/json" id="accepttwin-report">
+<!--ACCEPTTWIN:REPORT_JSON-->
+</script>
+<script type="application/json" id="accepttwin-baseline">
+<!--ACCEPTTWIN:BASELINE_JSON-->
+</script>
+<script type="application/json" id="accepttwin-summary">
+<!--ACCEPTTWIN:SUMMARY_JSON-->
+</script>
+<script>
+<!--ACCEPTTWIN:SCRIPT-->
+</script>
+</body>
+</html>

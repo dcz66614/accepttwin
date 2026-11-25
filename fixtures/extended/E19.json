@@ -1,0 +1,25 @@
+{
+  "scenario_id": "E19",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "HIT header conflicts with the origin request record \u2014 evidence contradiction.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": {
+    "kind": "proxy_lies_hit_on_warm_second"
+  },
+  "expected_verdict": "INCONCLUSIVE",
+  "expected_first_error": 6,
+  "expected_first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "expected_diagnostics": [
+    {
+      "code": "CACHE_EVIDENCE_CONFLICT",
+      "request_index": 6
+    }
+  ],
+  "notes": "Same shape as C22: the 4th proxied GET (006) claims HIT while the origin counter moved +1 (the body itself is the correct Markdown body, so no Sentinel/contract diagnostic fires)."
+}

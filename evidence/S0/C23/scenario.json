@@ -1,0 +1,39 @@
+{
+  "diagnostics": [
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": null
+    }
+  ],
+  "duration_seconds": 0.015,
+  "expected_diagnostics": [
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "request_index": null
+    }
+  ],
+  "expected_first_error": null,
+  "expected_ok": true,
+  "expected_verdict": "INCONCLUSIVE",
+  "first_error": null,
+  "first_error_experiment_id": null,
+  "oracle_first_error": null,
+  "oracle_mismatches": [],
+  "oracle_parity": true,
+  "oracle_verdict": "INCONCLUSIVE",
+  "origin_counter_delta_total": 8,
+  "report_hash": "c3f1b68418c740e960c91162e6032cc475e5503ea276580f3ac4a5f2c28486ab",
+  "request_count": 8,
+  "reset_count": 4,
+  "scenario_id": "C23",
+  "step_count": 25,
+  "verdict": "INCONCLUSIVE",
+  "warm_hm_requests": [
+    5,
+    6
+  ],
+  "warm_mh_requests": [
+    7,
+    8
+  ]
+}

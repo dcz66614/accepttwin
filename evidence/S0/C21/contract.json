@@ -1,0 +1,38 @@
+{
+  "cache_behavior": {
+    "max_age_seconds": 60,
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory"
+  },
+  "contract_id": "s0-C21",
+  "limits": {
+    "max_body_bytes": 1048576,
+    "request_timeout_seconds": 5.0
+  },
+  "metadata": {
+    "note": "Example contract for local synthetic origin (port 18766) behind the controlled cache proxy (port 18765). Same path, different ports, per PROJECT_BOOK \u00a75.1.1."
+  },
+  "name": "S0 C21 (healthy)",
+  "origin_url": "http://127.0.0.1:46325/doc",
+  "representations": {
+    "html": {
+      "accept": "text/html",
+      "expected_content_type": "text/html; charset=utf-8",
+      "expected_status": 200,
+      "sentinel": "AT_HTML_SENTINEL_001"
+    },
+    "markdown": {
+      "accept": "text/markdown",
+      "expected_content_type": "text/markdown; charset=utf-8",
+      "expected_status": 200,
+      "sentinel": "AT_MARKDOWN_SENTINEL_001"
+    }
+  },
+  "request_headers": {
+    "accept_encoding": "identity",
+    "accept_language": "en",
+    "user_agent": "AcceptTwin/1.0.0"
+  },
+  "schema": "accepttwin.contract/v1",
+  "url": "http://127.0.0.1:36143/doc"
+}

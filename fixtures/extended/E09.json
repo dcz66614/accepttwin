@@ -1,0 +1,35 @@
+{
+  "scenario_id": "E09",
+  "spec": "PROJECT_BOOK.md \u00a711.3",
+  "description": "Origin always answers Markdown requests with the HTML Content-Type \u2014 O-M fails.",
+  "origin_scenario": "markdown_wrong_content_type",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": null,
+  "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+  "expected_first_error": 2,
+  "expected_first_error_experiment_id": "ORIGIN_MARKDOWN",
+  "expected_diagnostics": [
+    {
+      "code": "ORIGIN_NEGOTIATION_ERROR",
+      "request_index": 2
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 4
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 7
+    }
+  ],
+  "notes": "Same shape as C08 (markdown_404), with the wrong-Content-Type fault instead of 404: the existing markdown_wrong_content_type origin fixture is the T003 'wrong representation' stand-in (Content-Type of the other representation)."
+}

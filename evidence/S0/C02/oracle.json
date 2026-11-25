@@ -1,0 +1,43 @@
+{
+  "verdict": "PASS_OBSERVED",
+  "diagnostics": [],
+  "first_error": null,
+  "first_error_experiment_id": null,
+  "reasons": [
+    "baselines, cold requests and both warm orders are correct with complete cache evidence and no CRITICAL diagnostic"
+  ],
+  "verified_cache_states": [
+    {
+      "request_index": 1,
+      "state": null
+    },
+    {
+      "request_index": 2,
+      "state": null
+    },
+    {
+      "request_index": 3,
+      "state": "MISS"
+    },
+    {
+      "request_index": 4,
+      "state": "MISS"
+    },
+    {
+      "request_index": 5,
+      "state": "MISS"
+    },
+    {
+      "request_index": 6,
+      "state": "MISS"
+    },
+    {
+      "request_index": 7,
+      "state": "MISS"
+    },
+    {
+      "request_index": 8,
+      "state": "MISS"
+    }
+  ]
+}

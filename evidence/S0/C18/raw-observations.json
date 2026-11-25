@@ -1,0 +1,596 @@
+{
+  "cache_verifications": [
+    {
+      "header_status": "BYPASS",
+      "reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "request_index": 3,
+      "state": "BYPASS",
+      "verified": true
+    },
+    {
+      "header_status": "BYPASS",
+      "reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "request_index": 4,
+      "state": "BYPASS",
+      "verified": true
+    },
+    {
+      "header_status": "BYPASS",
+      "reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "request_index": 5,
+      "state": "BYPASS",
+      "verified": true
+    },
+    {
+      "header_status": "BYPASS",
+      "reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "request_index": 6,
+      "state": "BYPASS",
+      "verified": true
+    },
+    {
+      "header_status": "BYPASS",
+      "reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "request_index": 7,
+      "state": "BYPASS",
+      "verified": true
+    },
+    {
+      "header_status": "BYPASS",
+      "reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "request_index": 8,
+      "state": "BYPASS",
+      "verified": true
+    }
+  ],
+  "contract_id": "s0-C18",
+  "contract_sha256": "9b2117d8314542de9a499a71bc1dddb6988b540ac3bfe6aa9254eea136635eb0",
+  "format": "accepttwin.raw-observations/v1",
+  "observations": [
+    {
+      "accept": "text/html",
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "body_size": 203,
+      "cache_entry_count_after": null,
+      "cache_entry_count_before": null,
+      "cache_entry_id": null,
+      "cache_key_sha256": null,
+      "cache_status_header": null,
+      "cache_verification_reasons": [],
+      "experiment_id": "ORIGIN_HTML",
+      "method": "GET",
+      "origin_counter_after": 1,
+      "origin_counter_before": 0,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 1,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_headers": {
+        "content-length": "203",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:58:06 GMT",
+        "server": "AcceptTwinOrigin/1.0.0 Python/3.12.3",
+        "vary": "Accept"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "193d6ddfaa446cc12061188e4b3118f18601f7d64945297ea56965c98f7735d1",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33319/doc",
+      "verified_cache_state": null
+    },
+    {
+      "accept": "text/markdown",
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "body_size": 94,
+      "cache_entry_count_after": null,
+      "cache_entry_count_before": null,
+      "cache_entry_id": null,
+      "cache_key_sha256": null,
+      "cache_status_header": null,
+      "cache_verification_reasons": [],
+      "experiment_id": "ORIGIN_MARKDOWN",
+      "method": "GET",
+      "origin_counter_after": 2,
+      "origin_counter_before": 1,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 2,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_headers": {
+        "content-length": "94",
+        "content-type": "text/markdown; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:58:06 GMT",
+        "server": "AcceptTwinOrigin/1.0.0 Python/3.12.3",
+        "vary": "Accept"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33319/doc",
+      "verified_cache_state": null
+    },
+    {
+      "accept": "text/html",
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "body_size": 203,
+      "cache_entry_count_after": 0,
+      "cache_entry_count_before": 0,
+      "cache_entry_id": null,
+      "cache_key_sha256": "49400842e55f418e5afedcbd60d4858c4f1319b09559e74f60e771db6244d72e",
+      "cache_status_header": "BYPASS",
+      "cache_verification_reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "experiment_id": "HTML_COLD",
+      "method": "GET",
+      "origin_counter_after": 3,
+      "origin_counter_before": 2,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 3,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_headers": {
+        "content-length": "203",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:58:06 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "vary": "Accept",
+        "x-accepttwin-cache-key": "49400842e55f418e5afedcbd60d4858c4f1319b09559e74f60e771db6244d72e",
+        "x-accepttwin-cache-status": "BYPASS"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "193d6ddfaa446cc12061188e4b3118f18601f7d64945297ea56965c98f7735d1",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33269/doc",
+      "verified_cache_state": "BYPASS"
+    },
+    {
+      "accept": "text/markdown",
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "body_size": 94,
+      "cache_entry_count_after": 0,
+      "cache_entry_count_before": 0,
+      "cache_entry_id": null,
+      "cache_key_sha256": "1d34fa354dcc8d0dc68597944d2195cfa8ab09d36780cd7d02235d098337c8a2",
+      "cache_status_header": "BYPASS",
+      "cache_verification_reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "experiment_id": "MARKDOWN_COLD",
+      "method": "GET",
+      "origin_counter_after": 4,
+      "origin_counter_before": 3,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 4,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_headers": {
+        "content-length": "94",
+        "content-type": "text/markdown; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:58:06 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "vary": "Accept",
+        "x-accepttwin-cache-key": "1d34fa354dcc8d0dc68597944d2195cfa8ab09d36780cd7d02235d098337c8a2",
+        "x-accepttwin-cache-status": "BYPASS"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33269/doc",
+      "verified_cache_state": "BYPASS"
+    },
+    {
+      "accept": "text/html",
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "body_size": 203,
+      "cache_entry_count_after": 0,
+      "cache_entry_count_before": 0,
+      "cache_entry_id": null,
+      "cache_key_sha256": "49400842e55f418e5afedcbd60d4858c4f1319b09559e74f60e771db6244d72e",
+      "cache_status_header": "BYPASS",
+      "cache_verification_reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "method": "GET",
+      "origin_counter_after": 5,
+      "origin_counter_before": 4,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 5,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_headers": {
+        "content-length": "203",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:58:06 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "vary": "Accept",
+        "x-accepttwin-cache-key": "49400842e55f418e5afedcbd60d4858c4f1319b09559e74f60e771db6244d72e",
+        "x-accepttwin-cache-status": "BYPASS"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "193d6ddfaa446cc12061188e4b3118f18601f7d64945297ea56965c98f7735d1",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33269/doc",
+      "verified_cache_state": "BYPASS"
+    },
+    {
+      "accept": "text/markdown",
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "body_size": 94,
+      "cache_entry_count_after": 0,
+      "cache_entry_count_before": 0,
+      "cache_entry_id": null,
+      "cache_key_sha256": "1d34fa354dcc8d0dc68597944d2195cfa8ab09d36780cd7d02235d098337c8a2",
+      "cache_status_header": "BYPASS",
+      "cache_verification_reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "method": "GET",
+      "origin_counter_after": 6,
+      "origin_counter_before": 5,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 6,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_headers": {
+        "content-length": "94",
+        "content-type": "text/markdown; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:58:06 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "vary": "Accept",
+        "x-accepttwin-cache-key": "1d34fa354dcc8d0dc68597944d2195cfa8ab09d36780cd7d02235d098337c8a2",
+        "x-accepttwin-cache-status": "BYPASS"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33269/doc",
+      "verified_cache_state": "BYPASS"
+    },
+    {
+      "accept": "text/markdown",
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "body_size": 94,
+      "cache_entry_count_after": 0,
+      "cache_entry_count_before": 0,
+      "cache_entry_id": null,
+      "cache_key_sha256": "1d34fa354dcc8d0dc68597944d2195cfa8ab09d36780cd7d02235d098337c8a2",
+      "cache_status_header": "BYPASS",
+      "cache_verification_reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "method": "GET",
+      "origin_counter_after": 7,
+      "origin_counter_before": 6,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 7,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_headers": {
+        "content-length": "94",
+        "content-type": "text/markdown; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:58:06 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "vary": "Accept",
+        "x-accepttwin-cache-key": "1d34fa354dcc8d0dc68597944d2195cfa8ab09d36780cd7d02235d098337c8a2",
+        "x-accepttwin-cache-status": "BYPASS"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33269/doc",
+      "verified_cache_state": "BYPASS"
+    },
+    {
+      "accept": "text/html",
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "body_size": 203,
+      "cache_entry_count_after": 0,
+      "cache_entry_count_before": 0,
+      "cache_entry_id": null,
+      "cache_key_sha256": "49400842e55f418e5afedcbd60d4858c4f1319b09559e74f60e771db6244d72e",
+      "cache_status_header": "BYPASS",
+      "cache_verification_reasons": [
+        "header BYPASS; origin counter +1 with matching event; entry count unchanged"
+      ],
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "method": "GET",
+      "origin_counter_after": 8,
+      "origin_counter_before": 7,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 8,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_headers": {
+        "content-length": "203",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:58:06 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "vary": "Accept",
+        "x-accepttwin-cache-key": "49400842e55f418e5afedcbd60d4858c4f1319b09559e74f60e771db6244d72e",
+        "x-accepttwin-cache-status": "BYPASS"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "193d6ddfaa446cc12061188e4b3118f18601f7d64945297ea56965c98f7735d1",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33269/doc",
+      "verified_cache_state": "BYPASS"
+    }
+  ],
+  "origin_counter_baseline": 0,
+  "origin_counter_final": 8,
+  "origin_events": [
+    {
+      "accept": "text/html",
+      "index": 1,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/markdown",
+      "index": 2,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/html",
+      "index": 3,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/markdown",
+      "index": 4,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/html",
+      "index": 5,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/markdown",
+      "index": 6,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/markdown",
+      "index": 7,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/html",
+      "index": 8,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    }
+  ],
+  "proxy_mode": "disabled",
+  "resets": [
+    {
+      "entries_after": 0,
+      "entries_before": 0,
+      "entries_removed": 0,
+      "namespace": "s0-C18-html-cold",
+      "success": true
+    },
+    {
+      "entries_after": 0,
+      "entries_before": 0,
+      "entries_removed": 0,
+      "namespace": "s0-C18-markdown-cold",
+      "success": true
+    },
+    {
+      "entries_after": 0,
+      "entries_before": 0,
+      "entries_removed": 0,
+      "namespace": "s0-C18-html-to-markdown",
+      "success": true
+    },
+    {
+      "entries_after": 0,
+      "entries_before": 0,
+      "entries_removed": 0,
+      "namespace": "s0-C18-markdown-to-html",
+      "success": true
+    }
+  ],
+  "scenario_id": "healthy",
+  "steps": [
+    {
+      "detail": "contract_id=s0-C18",
+      "name": "ValidateContract",
+      "ok": true,
+      "step": 1
+    },
+    {
+      "detail": "url=http://127.0.0.1:33269/doc origin_url=http://127.0.0.1:33319/doc",
+      "name": "ValidateLoopbackTargets",
+      "ok": true,
+      "step": 2
+    },
+    {
+      "detail": "origin=http://127.0.0.1:33319/doc scenario=healthy",
+      "name": "StartSyntheticOrigin",
+      "ok": true,
+      "step": 3
+    },
+    {
+      "detail": "proxy=http://127.0.0.1:33269/doc mode=disabled",
+      "name": "StartControlledCacheProxy",
+      "ok": true,
+      "step": 4
+    },
+    {
+      "detail": "origin=127.0.0.1:33319 proxy=127.0.0.1:33269",
+      "name": "VerifyLocalPorts",
+      "ok": true,
+      "step": 5
+    },
+    {
+      "detail": "origin_counter_baseline=0",
+      "name": "CaptureOriginCounterBaseline",
+      "ok": true,
+      "step": 6
+    },
+    {
+      "detail": "status=200 sentinel_match=True",
+      "name": "DirectOriginHTML",
+      "ok": true,
+      "step": 7
+    },
+    {
+      "detail": "status=200 sentinel_match=True",
+      "name": "DirectOriginMarkdown",
+      "ok": true,
+      "step": 8
+    },
+    {
+      "detail": "namespace=s0-C18-html-cold entries_before=0 entries_after=0 empty=True",
+      "name": "ResetCache",
+      "ok": true,
+      "step": 9
+    },
+    {
+      "detail": "entry_count=0",
+      "name": "VerifyCacheEmpty",
+      "ok": true,
+      "step": 10
+    },
+    {
+      "detail": "status=200 cache=BYPASS",
+      "name": "HTMLColdRequest",
+      "ok": true,
+      "step": 11
+    },
+    {
+      "detail": "request=003 verified_cache_state=BYPASS header=BYPASS",
+      "name": "VerifyMissOrBypass",
+      "ok": true,
+      "step": 12
+    },
+    {
+      "detail": "namespace=s0-C18-markdown-cold entries_before=0 entries_after=0 empty=True",
+      "name": "ResetCache",
+      "ok": true,
+      "step": 13
+    },
+    {
+      "detail": "entry_count=0",
+      "name": "VerifyCacheEmpty",
+      "ok": true,
+      "step": 14
+    },
+    {
+      "detail": "status=200 cache=BYPASS",
+      "name": "MarkdownColdRequest",
+      "ok": true,
+      "step": 15
+    },
+    {
+      "detail": "request=004 verified_cache_state=BYPASS header=BYPASS",
+      "name": "VerifyMissOrBypass",
+      "ok": true,
+      "step": 16
+    },
+    {
+      "detail": "namespace=s0-C18-html-to-markdown entries_before=0 entries_after=0 empty=True",
+      "name": "ResetCache",
+      "ok": true,
+      "step": 17
+    },
+    {
+      "detail": "entry_count=0",
+      "name": "VerifyCacheEmpty",
+      "ok": true,
+      "step": 18
+    },
+    {
+      "detail": "status=200 cache=BYPASS",
+      "name": "HTMLWarmFirst",
+      "ok": true,
+      "step": 19
+    },
+    {
+      "detail": "status=200 cache=BYPASS",
+      "name": "MarkdownWarmSecond",
+      "ok": true,
+      "step": 20
+    },
+    {
+      "detail": "requests=005/006 first=BYPASS second=BYPASS",
+      "name": "VerifyCacheEvidence",
+      "ok": true,
+      "step": 21
+    },
+    {
+      "detail": "namespace=s0-C18-markdown-to-html entries_before=0 entries_after=0 empty=True",
+      "name": "ResetCache",
+      "ok": true,
+      "step": 22
+    },
+    {
+      "detail": "entry_count=0",
+      "name": "VerifyCacheEmpty",
+      "ok": true,
+      "step": 23
+    },
+    {
+      "detail": "status=200 cache=BYPASS",
+      "name": "MarkdownWarmFirst",
+      "ok": true,
+      "step": 24
+    },
+    {
+      "detail": "status=200 cache=BYPASS",
+      "name": "HTMLWarmSecond",
+      "ok": true,
+      "step": 25
+    }
+  ],
+  "verification_failures": []
+}

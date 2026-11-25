@@ -1,0 +1,25 @@
+{
+  "scenario_id": "C22",
+  "spec": "PROJECT_BOOK.md §11.2",
+  "description": "Harness proxy wrapper: 4th proxied GET (006 HM-2) returns a real HTTP response whose X-AcceptTwin-Cache-Status says HIT while the origin counter moved +1; header/behaviour conflict.",
+  "origin_scenario": "healthy",
+  "proxy_mode": "respect_vary",
+  "contract": {
+    "mode": "variant_by_accept",
+    "vary_accept": "advisory",
+    "max_age_seconds": 60
+  },
+  "injection": {
+    "kind": "proxy_lies_hit_on_warm_second"
+  },
+  "expected_verdict": "INCONCLUSIVE",
+  "expected_first_error": 6,
+  "expected_first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "expected_diagnostics": [
+    {
+      "code": "CACHE_EVIDENCE_CONFLICT",
+      "request_index": 6
+    }
+  ],
+  "notes": "Harness proxy wrapper: 4th proxied GET (006 HM-2) returns a real HTTP response whose X-AcceptTwin-Cache-Status says HIT while the origin counter moved +1; header/behaviour conflict."
+}
