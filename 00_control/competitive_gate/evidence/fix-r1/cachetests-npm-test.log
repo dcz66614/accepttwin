@@ -1,0 +1,32 @@
+
+> http-cache-tests@0.4.6 test
+> node --test test-engine/lib/locate-failure.test.mjs
+
+✔ locates: Response 2 does not come from cache (2.711469ms)
+✔ locates: Response 1 comes from cache (0.374341ms)
+✔ locates: Response 2 comes from cache (1 on server) (0.169424ms)
+✔ locates: Response 1 status is 200, not 504 (0.221402ms)
+✔ locates: Request 2 should have been conditional, but it was not. (0.187472ms)
+✔ locates: Response 1 Age header not present. (0.182364ms)
+✔ locates: Response 2 header Expires is "null", not "Tue, 03 Nov 2026 01:00:38 GMT" (0.189634ms)
+✔ locates: Response 2 header Foo is 1, should match Bar (2) (0.12666ms)
+✔ locates: Response 2 includes unexpected header Cache-Control: "no-store" (0.16614ms)
+✔ locates: Response body is "x", not "y" (0.296665ms)
+✔ locates: Interim response 1 not received (0.356374ms)
+✔ locates: Received 0 interim response(s), expected 1 (0.153831ms)
+✔ locates: Request 2 If-None-Match header not present. (0.194622ms)
+✔ locates: Request 2 Range header present. (0.116335ms)
+✔ locates: Request 2 header If-None-Match is "undefined", not "abc" (0.482814ms)
+✔ locates: Request 2 had method GET, not HEAD (0.420861ms)
+✔ locates: request 2 doesn't have if-none-match header (0.352599ms)
+✔ locates: request 2 wasn't sent to server (0.347322ms)
+✔ gives up on messages it doesn't know (0.323886ms)
+✔ every assertion message in client/test.mjs can be located (1.553652ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 20
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 152.337073

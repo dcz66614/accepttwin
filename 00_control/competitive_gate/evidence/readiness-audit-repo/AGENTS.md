@@ -1,0 +1,36 @@
+# Working on agent-and-search-readiness
+
+This repo publishes the Agent and Search Readiness Standard (STANDARD.md) and its scorecard, the `readiness-audit` CLI on npm.
+
+## Layout
+
+- `STANDARD.md`: the standard. Every item has an ID (D, W, A, M, S, E, T, N plus a number), a level, and a row in the checklist (§15).
+- `src/audit.mjs`: the checks, as a library (`audit`, `score`, `matrix`).
+- `src/helpers.mjs`: pure helpers the checks share, tested without a network. Internal: the package exports only `src/audit.mjs`.
+- `src/http.mjs`: `request()`, the audit's one HTTP request, on `node:http(s)`.
+- `src/logs.mjs`: `--logs`, which counts discovery requests in an exported access log. It reads the audit's own path list (`DISCOVERY_FILES`), so the two can't drift.
+- `bin/readiness-audit.mjs`: the command-line tool.
+- `test/`: guard tests, and an end-to-end test that audits a fixture site on localhost through `--base` (`test/fixture-site.mjs`). A new check or a changed one gets a page in the fixture and an assertion there. `npm test` runs them all, with no outside network.
+- `docs/adopting.md`: the switch-over steps a project's agent follows. `docs/usability-test.md`: the T5 procedure.
+- `.github/social-preview.png`: the repo's social preview (1280×640). GitHub has no API for it: after changing the file, upload it in Settings > General > Social preview. The repo's description, website and topics also live in GitHub's settings (`gh repo edit`); keep them in step with the README's opening and `package.json`'s description and keywords.
+
+## Rules
+
+- **No dependencies.** Node 22.23.4, 24.22.1 or 26.12.1, or later on the same line (`NODE_LINES` in `src/helpers.mjs`, raised after each Node security release), built-ins only. All HTTP goes through `request()` in `src/http.mjs`, never `fetch`: it refuses Brotli and other encodings it doesn't decode itself, so an audited site can't reach a decoder bug.
+- **Read-only.** A check may GET anything and may POST only requests that create nothing on the audited site (an MCP initialize, server/discover, tools/list, an empty POST to `/`). Never register, write or log in.
+- **Every check has an ID that exists in the STANDARD.md checklist.** The tests fail otherwise. A new check needs its item described in STANDARD.md first.
+- **An item belongs in the standard when most projects should do it,** and its level has a stated reason: working agents rely on it, it keeps declarations true, or it's baseline hygiene. A practice from one project goes in "Considered and left out", with the reason.
+- **Claims cite primary sources** (specs, official docs) in §16, with a date. Mark drafts as drafts.
+- **Examples get copied.** Agents adopting the standard turn its examples into their projects' skills, copy and tests. A rule's example is generic or a `[placeholder]`; a project's name appears only with its evidence ("at animalhouse, ..."). Keep concrete values for real formats (headers, paths, schemas) and for dated evidence. For any other example, ask whether removing it loses information or only concreteness.
+- **Every restriction names the harm it prevents** (principle 10). A restriction added because it feels safe spreads to every project that copies the wording.
+- **Describe the current rule.** How a rule changed goes in CHANGELOG.md and the commit message. Naming a removed rule in the standard or the docs brings it back.
+- **Writing:** plain, direct sentences. No em dashes.
+
+## Releasing
+
+1. Change `version` in `package.json` and `VERSION` in `src/audit.mjs` together (a test checks they match).
+2. Add a CHANGELOG entry. A new required check, or a check that can newly fail, is a major version: projects pin a major version (`readiness-audit@2`), and a new failure shouldn't reach them unannounced. A new warning is a minor version: it doesn't change the exit code, but it can lower a score, so the changelog says so.
+3. `npm test`, then run the CLI against two or three real sites and read the output.
+4. Commit, push, and publish a GitHub release tagged `v<version>`. The Release workflow checks the tag against package.json, runs the tests, and publishes to npm through trusted publishing (no token).
+
+The very first publish has to be manual (`npm whoami`, then `npm publish --access public`), because npm's trusted publisher is set on the package's settings page, which exists only after the first publish. Then add the trusted publisher on npmjs.com: repository geeks-accelerator/agent-and-search-readiness, workflow `release.yml`.

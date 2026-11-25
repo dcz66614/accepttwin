@@ -1,0 +1,39 @@
+error: Assert failure
+  --> hm.hurl:15:0
+   |
+   | GET http://127.0.0.1:18765/doc
+   | ...
+15 | header "X-Test-Cache-Status" == "MISS"
+   |   actual:   string <HIT>
+   |   expected: string <MISS>
+   |
+
+error: Assert failure
+  --> hm.hurl:16:0
+   |
+   | GET http://127.0.0.1:18765/doc
+   | ...
+16 | header "Content-Type" == "text/markdown; charset=utf-8"
+   |   actual:   string <text/html; charset=utf-8>
+   |   expected: string <text/markdown; charset=utf-8>
+   |
+
+error: Assert failure
+  --> hm.hurl:17:0
+   |
+   | GET http://127.0.0.1:18765/doc
+   | ...
+17 | body contains "AT_MARKDOWN_SENTINEL_001"
+   |   actual:   string <<html><body><h1>Doc</h1><p>AT_HTML_SENTINEL_001</p></body></html>>
+   |   expected: contains string <AT_MARKDOWN_SENTINEL_001>
+   |
+
+Failure hm.hurl (2 request(s) in 3 ms)
+--------------------------------------------------------------------------------
+Executed files:    1
+Executed requests: 2 (500.0/s)
+Succeeded files:   0 (0.0%)
+Failed files:      1 (100.0%)
+Duration:          4 ms
+
+hm bleed exit=4

@@ -1,0 +1,29 @@
+error: Assert failure
+  --> dual.hurl:22:0
+   |
+   | GET http://127.0.0.1:18765/doc
+   | ...
+22 | header "X-Test-Cache-Status" == "MISS"
+   |   actual:   string <HIT>
+   |   expected: string <MISS>
+   |
+
+error: Assert failure
+  --> dual.hurl:23:0
+   |
+   | GET http://127.0.0.1:18765/doc
+   | ...
+23 | body contains "AT_MARKDOWN_SENTINEL_001"
+   |   actual:   string <<html><body><h1>Doc</h1><p>AT_HTML_SENTINEL_001</p></body></html>>
+   |   expected: contains string <AT_MARKDOWN_SENTINEL_001>
+   |
+
+Failure dual.hurl (4 request(s) in 5 ms)
+--------------------------------------------------------------------------------
+Executed files:    1
+Executed requests: 4 (666.7/s)
+Succeeded files:   0 (0.0%)
+Failed files:      1 (100.0%)
+Duration:          6 ms
+
+dual bleed exit=4

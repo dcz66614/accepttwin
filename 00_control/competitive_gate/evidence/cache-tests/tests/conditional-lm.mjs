@@ -1,0 +1,169 @@
+import * as templates from './lib/templates.mjs'
+
+export default {
+  name: 'Conditional Requests: If-Modified-Since and Last-Modified',
+  id: 'conditional-lm',
+  description: 'These tests check handling of conditional requests using `If-Modified-Since` and `Last-Modified`.',
+  spec_anchors: ['validation.model'],
+  tests: [
+    {
+      name: 'An optimal HTTP cache responds to `If-Modified-Since` with a `304` when holding a fresh response with a matching `Last-Modified`',
+      id: 'conditional-lm-fresh',
+      kind: 'optimal',
+      depends_on: ['freshness-max-age'],
+      browser_skip: true,
+      requests: [
+        templates.fresh({
+          response_headers: [
+            ['Last-Modified', -3000]
+          ]
+        }),
+        {
+          request_headers: [
+            ['If-Modified-Since', -3000]
+          ],
+          magic_ims: true,
+          expected_type: 'cached',
+          expected_status: 304
+        }
+      ]
+    },
+    {
+      name: 'An optimal HTTP cache responds to `If-Modified-Since` with a `304` when holding a fresh response with an earlier `Last-Modified`',
+      id: 'conditional-lm-fresh-earlier',
+      kind: 'optimal',
+      depends_on: ['freshness-max-age'],
+      browser_skip: true,
+      requests: [
+        templates.fresh({
+          response_headers: [
+            ['Last-Modified', -3000]
+          ]
+        }),
+        {
+          request_headers: [
+            ['If-Modified-Since', -2000]
+          ],
+          magic_ims: true,
+          expected_type: 'cached',
+          expected_status: 304
+        }
+      ]
+    },
+    {
+      name: 'An optimal HTTP cache responds to `If-Modified-Since` with a `304` when holding a stale response with a matching `Last-Modified`, after validation',
+      id: 'conditional-lm-stale',
+      kind: 'optimal',
+      depends_on: ['freshness-max-age-stale'],
+      browser_skip: true,
+      requests: [
+        templates.becomeStale({
+          response_headers: [
+            ['Last-Modified', -3000]
+          ]
+        }),
+        {
+          request_headers: [
+            ['If-Modified-Since', -3000]
+          ],
+          magic_ims: true,
+          expected_type: 'lm_validated',
+          expected_status: 304
+        }
+      ]
+    },
+    {
+      name: 'An optimal HTTP cache responds to `If-Modified-Since` with a `304` when holding a newer fresh response with no `Last-Modified`',
+      id: 'conditional-lm-fresh-no-lm',
+      kind: 'optimal',
+      depends_on: ['freshness-max-age'],
+      browser_skip: true,
+      requests: [
+        templates.fresh({}),
+        {
+          request_headers: [
+            ['If-Modified-Since', -3000]
+          ],
+          magic_ims: true,
+          expected_type: 'cached',
+          expected_status: 304,
+          setup_tests: ['expected_type']
+        }
+      ]
+    },
+    {
+      name: 'An optimal HTTP cache responds to `If-Modified-Since` with a `304` when holding a newer fresh response when IMS uses an equivalent rfc850 date',
+      id: 'conditional-lm-fresh-rfc850',
+      kind: 'optimal',
+      depends_on: ['freshness-max-age'],
+      browser_skip: true,
+      requests: [
+        templates.fresh({
+          response_headers: [
+            ['Last-Modified', -3000]
+          ]
+        }),
+        {
+          request_headers: [
+            ['If-Modified-Since', -3000]
+          ],
+          magic_ims: true,
+          rfc850date: ['if-modified-since'],
+          expected_type: 'cached',
+          expected_status: 304,
+          setup_tests: ['expected_type']
+        }
+      ]
+    },
+    {
+      name: 'Does HTTP cache send `If-Modified-Since` exactly as the stored `Last-Modified` of Fri, 11 Apr 2262 23:47:16 GMT (maximum 64-bit nanosecond time) when validating?',
+      id: 'conditional-lm-validate-exact-2262',
+      kind: 'check',
+      depends_on: ['304-lm-use-stored-Test-Header'],
+      spec_anchors: ['freshening.responses'],
+      requests: [
+        {
+          response_headers: [
+            ['Cache-Control', 'max-age=2'],
+            ['Last-Modified', 'Fri, 11 Apr 2262 23:47:16 GMT', false],
+            ['Date', 0]
+          ],
+          setup: true,
+          pause_after: true
+        },
+        {
+          response_headers: [
+            ['Last-Modified', 'Fri, 11 Apr 2262 23:47:16 GMT', false],
+            ['Date', 0]
+          ],
+          expected_type: 'lm_validated'
+        }
+      ]
+    },
+    {
+      name: 'Does HTTP cache send `If-Modified-Since` exactly as the stored `Last-Modified` of Fri, 31 Dec 9999 23:59:59 GMT (maximum HTTP-date) when validating?',
+      id: 'conditional-lm-validate-exact-9999',
+      kind: 'check',
+      depends_on: ['304-lm-use-stored-Test-Header'],
+      spec_anchors: ['freshening.responses'],
+      requests: [
+        {
+          response_headers: [
+            ['Cache-Control', 'max-age=2'],
+            ['Last-Modified', 'Fri, 31 Dec 9999 23:59:59 GMT', false],
+            ['Date', 0]
+          ],
+          setup: true,
+          pause_after: true
+        },
+        {
+          response_headers: [
+            ['Last-Modified', 'Fri, 31 Dec 9999 23:59:59 GMT', false],
+            ['Date', 0]
+          ],
+          expected_type: 'lm_validated'
+        }
+      ]
+    }
+  ]
+}

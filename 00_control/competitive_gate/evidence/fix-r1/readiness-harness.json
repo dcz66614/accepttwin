@@ -1,0 +1,236 @@
+{
+  "domain": "t001.local",
+  "base": "http://127.0.0.1:18765",
+  "version": "2.9.0",
+  "checked_at": "2026-11-24T18:46:17.373Z",
+  "hosted_mcp": false,
+  "has_api": false,
+  "html_kb_median": null,
+  "rich_results_test": [],
+  "results": [
+    {
+      "id": "D1",
+      "name": "robots.txt",
+      "level": "required",
+      "status": "fail",
+      "detail": "/robots.txt answered 404"
+    },
+    {
+      "id": "D2",
+      "name": "sitemap.xml",
+      "level": "required",
+      "status": "fail",
+      "detail": "/sitemap.xml answered 404"
+    },
+    {
+      "id": "D4",
+      "name": "llms.txt",
+      "level": "required",
+      "status": "fail",
+      "detail": "/llms.txt answered 404"
+    },
+    {
+      "id": "D6",
+      "name": "security.txt",
+      "level": "required",
+      "status": "fail",
+      "detail": "/.well-known/security.txt answered 404"
+    },
+    {
+      "id": "D11",
+      "name": "A2A path is honest",
+      "level": "required",
+      "status": "warn",
+      "detail": "honest 404, but no body body. It's the most requested agent path: answer with JSON that points to your real entry points"
+    },
+    {
+      "id": "D12",
+      "name": "No false declarations",
+      "level": "required",
+      "status": "pass",
+      "detail": "no OAuth, A2A, plugin or server-card claims without the service behind them"
+    },
+    {
+      "id": "W1",
+      "name": "Titles and descriptions",
+      "level": "required",
+      "status": "fail",
+      "detail": "no URLs in the sitemap to sample"
+    },
+    {
+      "id": "W2",
+      "name": "Canonical URLs",
+      "level": "required",
+      "status": "fail",
+      "detail": "no URLs in the sitemap to sample"
+    },
+    {
+      "id": "W3",
+      "name": "Indexable pages only",
+      "level": "required",
+      "status": "fail",
+      "detail": "no URLs in the sitemap to sample"
+    },
+    {
+      "id": "W4",
+      "name": "Structured data",
+      "level": "required",
+      "status": "fail",
+      "detail": "no URLs in the sitemap to sample"
+    },
+    {
+      "id": "W5",
+      "name": "Link previews",
+      "level": "required",
+      "status": "fail",
+      "detail": "no URLs in the sitemap to sample"
+    },
+    {
+      "id": "W6",
+      "name": "Page structure",
+      "level": "required",
+      "status": "fail",
+      "detail": "no URLs in the sitemap to sample"
+    },
+    {
+      "id": "A1",
+      "name": "OpenAPI 3.1",
+      "level": "required",
+      "status": "skip",
+      "detail": "no public API: /openapi.json and /api don't answer, and nothing declares one"
+    },
+    {
+      "id": "A2",
+      "name": "GET /api index",
+      "level": "required",
+      "status": "skip",
+      "detail": "no public API: /openapi.json and /api don't answer, and nothing declares one"
+    },
+    {
+      "id": "A6",
+      "name": "Errors that teach (401 without a key)",
+      "level": "required",
+      "status": "skip",
+      "detail": "no public API: /openapi.json and /api don't answer, and nothing declares one"
+    },
+    {
+      "id": "A7",
+      "name": "JSON catch-all for wrong API paths",
+      "level": "required",
+      "status": "skip",
+      "detail": "no public API: /openapi.json and /api don't answer, and nothing declares one"
+    },
+    {
+      "id": "M1",
+      "name": "MCP tools",
+      "level": "required",
+      "status": "skip",
+      "detail": "no hosted MCP endpoint"
+    },
+    {
+      "id": "M4",
+      "name": "Hosted MCP edge",
+      "level": "required",
+      "status": "skip",
+      "detail": "no hosted MCP endpoint"
+    },
+    {
+      "id": "S1",
+      "name": "Skill files",
+      "level": "required",
+      "status": "skip",
+      "detail": "no skills index to sample; check your SKILL.md files in review"
+    },
+    {
+      "id": "D5",
+      "name": "Link headers",
+      "level": "recommended",
+      "status": "warn",
+      "detail": "no Link header on the homepage"
+    },
+    {
+      "id": "D7",
+      "name": "JSON 404s and a JSON 405 on POST /",
+      "level": "recommended",
+      "status": "warn",
+      "detail": "an unknown /.well-known path answers 404 no body; POST / answers 501 text/html"
+    },
+    {
+      "id": "D9",
+      "name": "AI catalog (ARD)",
+      "level": "recommended",
+      "status": "warn",
+      "detail": "ard.json answered 404; ai-catalog.json answered 404; no <link rel=\"ard\"> in the page head"
+    },
+    {
+      "id": "D10",
+      "name": "DNS AID record",
+      "level": "recommended",
+      "status": "skip",
+      "detail": "not checked with --base: DNS describes the live domain"
+    },
+    {
+      "id": "D15",
+      "name": "AI crawlers named, Content-Signal",
+      "level": "recommended",
+      "status": "warn",
+      "detail": "no robots.txt"
+    },
+    {
+      "id": "D8",
+      "name": "Markdown for agents",
+      "level": "recommended",
+      "status": "warn",
+      "detail": "Accept: text/markdown on / returns no body"
+    },
+    {
+      "id": "A3",
+      "name": "API catalog (RFC 9727)",
+      "level": "recommended",
+      "status": "skip",
+      "detail": "no public API: /openapi.json and /api don't answer, and nothing declares one"
+    },
+    {
+      "id": "A4",
+      "name": "auth.md",
+      "level": "recommended",
+      "status": "skip",
+      "detail": "no public API: /openapi.json and /api don't answer, and nothing declares one"
+    },
+    {
+      "id": "A5",
+      "name": "API reference as markdown, linked from the homepage",
+      "level": "recommended",
+      "status": "skip",
+      "detail": "no public API: /openapi.json and /api don't answer, and nothing declares one"
+    },
+    {
+      "id": "M5",
+      "name": "MCP server card",
+      "level": "recommended",
+      "status": "skip",
+      "detail": "no hosted MCP endpoint"
+    },
+    {
+      "id": "S2",
+      "name": "Agent skills index",
+      "level": "recommended",
+      "status": "warn",
+      "detail": "/.well-known/agent-skills/index.json answered 404"
+    },
+    {
+      "id": "N5",
+      "name": "MCP server instructions",
+      "level": "next",
+      "status": "skip",
+      "detail": "no hosted MCP endpoint"
+    },
+    {
+      "id": "N6",
+      "name": "MCP structured output",
+      "level": "next",
+      "status": "skip",
+      "detail": "no hosted MCP endpoint"
+    }
+  ]
+}

@@ -1,0 +1,229 @@
+# Changelog
+
+## 2.9.0 (2026-11-19)
+
+A5 finds the homepage's link to the API by what the link says, not by one page name. A site that linked its API docs only as a bare `/docs` with no API word now gets a warning, which can lower its score without changing the exit code.
+
+- **A5 counts a homepage link whose path or text names the API, developers or agents** (`/api`, `/developers`, `/agents`, `/openapi.json`, a link reading "Developers"). A site names the page for its readers: on a meditation site, docs are the scripts and lyrics, so its API sits behind a Developers page.
+- **A link to `/docs` alone no longer counts,** since a site's docs can be its content: achurch.ai's homepage links `/docs/chants` and `/docs/prayers`, which passed A5 before. It passes now through its `/for-agents` link.
+- **Helpers:** `anchors()` reads each link with its text, and `apiDocLinks()` picks the ones that lead to the API docs.
+
+## 2.8.0 (2026-11-19)
+
+llms-full.txt is optional. D4 now requires llms.txt only: a site without llms-full.txt no longer fails, so some scores rise. Two new warnings for a site that serves one, which can lower a score until fixed without changing the exit code.
+
+- **D4 is "llms.txt".** llms-full.txt is a convention the llms.txt proposal doesn't define, and few readers ask for it: across 56 domains in a week, 332 requests on 18 sites, against 1,406 for llms.txt and 4,135 for `.md` pages, mostly from directories and scripts. llms.txt and each page's markdown copy (D8) carry a site; build llms-full.txt only when what agents act on fits in one fetch, such as an API or docs reference.
+- **A served llms-full.txt over 100,000 characters warns,** the most any documented agent fetch tool reads by default (Claude Code's WebFetch). A file of every page's full text gets read in part. It also warns when `/llms-full.txt` answers 200 with HTML: answer 404 when you don't serve one. The check that it lists every page llms.txt links stays.
+- **Tests:** `startFixture({ full })` serves the catalog, none, or one too big to read in one fetch.
+
+## 2.7.1 (2026-11-19)
+
+Three fixes from running 2.7.0 against eleven of our sites. No new checks or warnings.
+
+- **A sibling site's API linked from llms.txt no longer gives a site an API.** `apiPresence()` read every API-looking link in llms.txt, so communities.news, whose llms.txt points to alaskanews.com's API, failed A1, A2 and A7 for an API it doesn't run. It now reads only llms.txt's links on the site's own hosts, the list D4 already samples.
+- **A1 names the OpenAPI document the site declares elsewhere.** alaskanews.com's API catalog and llms.txt name `/api/v1/openapi.json`; A1 said only that `/openapi.json` answered 404. It still fails, as the standard puts the document at `/openapi.json`, and now says where the site's document is and to serve or redirect it there (`declaredOpenapi()`).
+- **S1 says when a skill file has no frontmatter,** as one problem, instead of reporting an empty name as "not a lowercase slug" and a missing description.
+
+## 2.7.0 (2026-11-19)
+
+From Ora's scans of 17 of our sites, checked against the standard and its sources. Eight new warnings, no new failures. Each warning can lower a score until it's fixed, but none changes the exit code. Built on shared code first, so no check has its own copy of a parser or a probe.
+
+- **S1 warns about skill descriptions that don't say when to use the skill.** The Agent Skills spec's description says what the skill does and when to use it, and STANDARD.md §7 already asked for it. A when-clause in the description or a "When to use" heading in the body passes.
+- **D8 checks the `.md` URL as well as `Accept`,** for the homepage (`/index.md`) and the page it compares, as STANDARD.md already said and the llms.txt proposal defines. It also **warns when a missing page answers a markdown request with HTML**: the 404 stays a 404, with a short markdown body that links llms.txt. D8 now reports every problem it finds, not just the first. The D8 recipe shows both.
+- **D4 warns when llms.txt has no markdown links,** the `[name](url)` lists the proposal's format is made of.
+- **A3 warns when the API catalog has no `item` link to the API.** RFC 9727 §4.1 says the catalog MUST link to the API endpoints, and an API that appears only as a linkset anchor isn't linked. A3 gets the repo's first catalog example.
+- **W4 warns when the homepage doesn't say which product it is:** no `sameAs` on its `WebSite` or `Organization`. W4 says `WebSite.name` is the product's name, and to leave out `address` and `contactPoint` unless there's a business address to print.
+- **A1 warns about error responses with no schema** in the OpenAPI document, and asks for one error object or RFC 9457 problem details.
+- **A5 checks that the homepage links the API docs,** and is now "API reference as markdown, linked from the homepage".
+- **STANDARD.md:** M3 names the MCP Registry entry under the site's domain (DNS or HTTP proof, in CI), and says how to move an existing `io.github` entry. T6 adds a search for the product's name to the monthly review. "What scanners check" adds Ora: what it scores and where it disagrees with this standard. §16 cites RFC 9457, Google's Organization and site-name docs, the Agent Skills spec, the registry's docs and Ora's check catalog.
+- **Code:** the page parsers (`attrs`, `tags`, `meta`, `jsonLd`), the OpenAPI document and its operations, the missing-page probe, SKILL.md parsing and llms.txt's link pattern each have one implementation in `src/helpers.mjs` or the up-front requests, shared by every check that reads them. `attrs()` reads unquoted attribute values.
+- **Tests:** `startFixture({ api: true })` serves an API, its docs, an API catalog and a skills index, so A1 to A7, S1 and S2 have an end-to-end test for the first time.
+
+## 2.6.1 (2026-11-12)
+
+Four bugs from an outside review of 2.6.0, each reproduced first and now covered by a test. No new checks and no new warnings. D1 passes robots.txt files it wrongly failed, and the audit finishes where it used to crash.
+
+- **The address guard reads IPv6 as bytes, and checks at connect time (security).** The URL parser writes `[::ffff:127.0.0.1]` as `[::ffff:7f00:1]`, and the guard knew only the dotted form, so a site could redirect the audit to loopback or a cloud metadata address. It now classifies IPv4-mapped, IPv4-compatible, NAT64 and 6to4 addresses by the IPv4 inside them, and refuses 198.18.0.0/15, multicast and reserved addresses. A name that doesn't resolve is no longer counted as safe. Every request outside the audited site and `--base` checks the addresses it connects to, so a name that resolves differently the second time (DNS rebinding) is still refused.
+- **A URL in site content that isn't one is a finding, not a crash.** A canonical like `href="http://["` stopped the whole audit with exit code 1, the code for a failing site. W2 reports a canonical that isn't a URL, W5 a share image, W3 a redirect `Location`, S1 a skills index entry. An error in the audit itself now exits 2, as a bad option already did, and the README says so.
+- **D1 lets a named robots.txt group be stricter than `*`.** `User-agent: BadBot` with `Disallow: /` failed as "badbot skips Disallow /admin". D1 now matches rules as RFC 9309 does (the longest match wins, Allow on a tie, `*` and `$`), reads Allow lines, and combines groups for the same agent, `*` included. It still fails a named group that misses a `*` Disallow, or reopens one with Allow.
+- **A domain in capitals or with a trailing dot is the same site.** `MusicVenue.space` found no sitemap URLs on its own site and failed D2 and W1 to W6. The CLI and `audit()` lowercase the domain and drop a trailing dot.
+
+## 2.6.0 (2026-11-04)
+
+From two projects fixing their APIs: one has no `/v1` prefix. No scoring changes, and no new warnings or failures.
+
+- **A12 Don't break saved calls** (recommended, checked in review). Agents save calls in scripts and skills and rerun them without rereading the docs, so a breaking change goes in a new version, the old one keeps working for a stated time, and the changelog that llms.txt links says so. A `/v1` prefix isn't needed before the first breaking change. The scorecard lists A12 among the items to check yourself.
+
+## 2.5.0 (2026-11-03)
+
+From a project's agent that was asked why llms-full.txt should hold a site's whole text. D4 said "the whole corpus" without saying what that meant, and the scorecard only checked that the file existed. One new warning, no new failures: a site whose llms-full.txt leaves out pages llms.txt links now warns in D4, which lowers its required score until fixed but doesn't change the exit code.
+
+- **D4 warns about pages llms-full.txt doesn't list.** Of the llms.txt links it samples, each one that answers HTML (besides the homepage) must appear as a link in llms-full.txt. Files like `/openapi.json` are surfaces, not pages, and aren't counted. A passing D4 says how many sampled pages llms-full.txt lists.
+- **STANDARD.md:** D4 describes three depths. llms.txt is the map, llms-full.txt is the catalog an agent works from in one fetch (every page, with what it is and the facts an agent needs to choose or use it), and each page's markdown copy has the rest. For an API or docs site, the catalog holds the reference itself; for things people read, watch or listen to, each item's summary, facts and link. The harm on each side is named, with the documented read limits of three agent fetch tools. D4 says llms-full.txt isn't the control for what AI may use (that's D15's `Content-Signal`, or auth), and that llms-full.txt is a convention the llms.txt proposal doesn't define. §16 cites the three tools' limits.
+
+From an outside review of 2.4.0:
+
+- **The §14 stub links a release tag, not `main`.** Agents read the stub every session and act on it, and a link to `main` gives them whatever was pushed last, before any release, tag or test. The stub says `blob/v[version]/STANDARD.md`, and §14 and docs/adopting.md say to fill in the latest tag and change it after reading the CHANGELOG. The status page that `--matrix` writes links the standard at the tag of the scorecard version that wrote it.
+- **"Last verified" is 2026-10-25,** the newest date a source in §16 was read. A test fails when it's earlier.
+- **The README's sample output is fresh** (animalhouse.ai, 2026-11-04), and a test fails when its version isn't the package's.
+- **"Score a site's readiness",** not "any site's", in the README and package.json, and SECURITY.md says why to audit only sites you own or may test: one run sends dozens to a few hundred requests, several at a time, and POSTs to any MCP endpoint it finds.
+
+## 2.4.0 (2026-11-02)
+
+From a review by the agents that run the scorecard daily for two projects. No scoring changes, and no new warnings or failures.
+
+- **`--concurrency <n>` sets how many requests the audit sends to a site at once,** for a site that slows under parallel requests. Without it, nothing changes: 6 at a time for the discovery files, 4 for sitemaps and pages. The limit now also covers the sampled skill files and the MCP alias probes, which went out together before. At achurch.ai, a sweep of ten requests at a time slowed the site for minutes (2026-10-12); its own checks now send at most two. The library takes it as `audit(domain, { concurrency })`.
+- **README:** documents `--concurrency` in the options and in "Safe to run", and says that a warning on a required check lowers the required score without changing the exit code (a site can show "required 14 of 15" with no FAIL line, because W6 warns). Two links to the research pointed at a placeholder; they now open [Who requests agent discovery files?](docs/research/who-reads-discovery-files.md).
+- **Plans:** the status lines of the sample-by-template, proving-the-score and dependency-updates plans say 2.0.0 is published, and keep what's still open.
+
+## 2.3.0 (2026-10-24)
+
+From the sister project's agent, after it reviewed this one. No scoring changes.
+
+- **Node 22 and 24 work again,** each at its current security release: the CLI accepts 22.23.4, 24.22.1 or 26.12.1, or later on the same line, and refuses older releases and end-of-life or odd-numbered lines, with advice on updating. 2.1.0 to 2.2.1 needed Node 26, so `npx readiness-audit` failed on the many machines and CI images that run 22 or 24. The audit's own defenses (refusing Brotli bodies, capping body sizes) don't depend on the Node line, and each line's security release has the October 21 fixes. CI tests all three lines with `check-latest`, and a test keeps `engines`, the docs and the CI matrix in step with `NODE_LINES`.
+- **README:** a Quick start with fresh output and the one-line prompt to adopt the standard; "Why this exists", with the evidence up front; a "Safe to run" section for the mechanics; Lighthouse and Google's Rich Results Test in "How it fits"; and a "Next step".
+
+## 2.2.1 (2026-10-24)
+
+Corrections after an outside review of 2.2.0 and its research. No new checks; D8 is easier to pass.
+
+- **D8 no longer requires `x-markdown-tokens`.** Cloudflare stopped sending the header on 2026-10-09, so a site using Cloudflare's own Markdown for Agents couldn't pass. It's optional, and shown when present.
+- **`--logs` counts only successful API answers** (a 2xx from `/api/*` or a POST to `/mcp`). A 404 or a 5xx no longer counts as a call. It no longer tells you to count browser, headless or unidentified addresses as agents because they called the API: a site's own pages call its API too. The JSON fields are `also_got_api_answer`, `api_answer_addresses` and `browser_like_api_answer_addresses`. agentprobe is counted once, as an audit tool.
+- **The research is corrected and reproducible.** [Who requests agent discovery files?](docs/research/who-reads-discovery-files.md) now says its window overlaps the sister study's for 161 of 168 hours; names Cloudflare's legacy AI categories, which leave out ExaSearchBot; calls the API measure same-week address overlap, not a sequence; says which sites were tested to show the markdown answers came from requests that asked; corrects three "mostly" claims; states Exa's 92% share of markdown requests; cites GoodBarber's earlier count and Mintlify's benchmark; and lists every correction. [method.md](docs/research/who-reads-discovery-files/method.md) publishes the queries and the classifier.
+- **STANDARD.md:** §2, D4, D8, D7, D11 and T3 use the corrected wording; D4 cites Mintlify's benchmark and D8 GoodBarber's logs; T3 says a successful API call doesn't make a client an agent; §16 cites both and the research.
+
+## 2.2.0 (2026-10-24)
+
+From a review of the sister project, [agent-security-pranks](https://github.com/geeks-accelerator/agent-security-pranks), and its research. Two new warnings (D7's `Allow`, and D8 at the recommended level), no new failures. A warning lowers the recommended score until fixed, but doesn't change the exit code.
+
+- **D7 warns about a 405 with no `Allow` header.** RFC 9110 requires it on every 405, and it tells a client what does work. All six sites the standard came from already send it.
+- **Response bodies are capped at 16 MB,** before and after decoding, so a site that answers with a gzip bomb or an endless stream can't exhaust the memory of the machine running the audit. Over the cap, the check sees the status and no body, as with a refused encoding, and D4 reports an oversized llms-full.txt by its size.
+- **`--logs` counts requests under crawler names that asked for secret files** (`.env`, `.git`, keys, dumps), per family, and says the families are the names clients send, not verified. The JSON report has `crawler_names_on_secret_probes`.
+- **D8 (markdown for agents) is recommended,** up from next level, so a site without it now warns at the recommended level and its recommended score can drop. The evidence: in a week across 56 domains, Cloudflare-verified bots asked for markdown 12,601 times on the sites that serve it, 92% of them Exa's search crawler.
+- **`--logs` names other audit tools** (Semrush, Ahrefs, agentprobe, agent-tools.cloud, Lumar, SEOJuice and the sister project's audit) as their own family.
+- **New research: [Who reads the discovery files](docs/research/who-reads-discovery-files.md),** a week across 56 domains on Cloudflare: who requested each discovery file, verified or not, which files sites are asked for without serving them, and how many readers went on to call the API. STANDARD.md §2 cites it; D4's reason now names who reads llms.txt; D7 and D11 cover the pre-1.0 path `/.well-known/agent.json`; T3 counts audits apart from agents.
+- **STANDARD.md:** §2 adds that a crawler's name is a claim: in a week across one owner's 56 domains, none of about 448k vulnerability probes came from a verified bot, and one scanner used about 20 AI-crawler names. T3 counts a crawler by its verified status. D7 asks for `Allow`. §16 cites the research and RFC 9110 §15.5.6. docs/recipes.md shows `Allow` on the 405.
+- **README:** a row for the sister project in "How it fits with other tools".
+- **README:** opens with what the audit checks, in the words people search for, a real run's output, "Why this one", and how it fits with other tools. Badges for the npm version and license.
+- **package.json:** the description leads with what the audit scores; keywords add aeo, ai-seo, ai-visibility, generative-engine-optimization, robots-txt, ai-crawlers, seo-audit, website-audit, agent-ready, llms-txt-validator and cli. Both reach npm with the next release.
+
+## 2.1.0 (2026-10-23)
+
+From a project's agent that checked pages in Google's Rich Results Test by hand. The standard asked for it ("accepts a sample") without saying which pages, and the scorecard never mentioned it. No scoring changes.
+
+- **The scorecard lists the pages to run through Google's Rich Results Test,** each with a link that opens it in the test: the homepage, one page of each template with rich-result markup, and any other page that adds a rich-result feature. Pages from one template share their markup, so one tests them all. The CLI prints them under W4 in "check these yourself", the JSON report has `rich_results_test`, and the status page has a section for them. The rich-result types are those in Google's search gallery (updated 2026-10-16).
+- **STANDARD.md:** W4 says which pages to test and when (after a change to a template's markup), when to use the Schema Markup Validator instead, and that valid means eligible, not shown. Its done-when is no errors on the listed pages. T6's monthly review checks Search Console's rich result reports, which cover every indexed page. §16 cites the search gallery, both testing tools, the reports and the URL Inspection API.
+
+## 2.0.0 (2026-10-21)
+
+From an adopting agent's review: a full score showed a site was set up correctly, not that agents did better on it, and the default run graded content sites on an API they don't have. This release makes the score fit the site, checks more of what agents and link previews actually read, and gives T5 and the traffic numbers a recorded form. Pin `readiness-audit@2`.
+
+**Checks that can newly fail** (why this is a major version):
+- **W1 to W6 sample by page type.** URLs are grouped by template (the first path segment plus the depth): every static page is read (groups of 20 or fewer), and three pages of each generated template, up to 40 pages. Each W line says what it read, and when the cap left static pages out. A sample spread evenly through the sitemap had read under one static page on sites that are mostly generated pages, and the static pages are where layouts leak metadata. Any existing W rule can now fail on them. At animalhouse this found 11 descriptions over 160 characters and 11 pages showing the homepage's X card that 1.2.1 had passed. W3's missing-item probe goes under each template, and W4's breadcrumbs are judged on template pages.
+- **D2 reads the pages' dates on a sitemap index.** It counted the sub-sitemaps' own `lastmod` dates. The sitemap is now read once, every sub-sitemap up to ten (the W checks read three), and D2 and the W checks share it.
+- **W5 fails when a page's share card shows another page's text.** It reads what each platform shows: on X, `twitter:title` and `twitter:description`, falling back to `og:`; on Facebook and LinkedIn, `og:`. Shared text counts against a page when it isn't the page's own (its `<title>` or meta description), and belongs to the homepage when it matches no page. Next.js merges metadata shallowly, so a page that sets `openGraph` but not `twitter` keeps the root layout's Twitter title and description. animalhouse found this by sharing links, after W5 had passed; inbed.ai has it too.
+- **The API checks run whenever a site has or declares an API,** and `--no-api` is gone. They run when `/openapi.json` or `/api` answers, or a `service-desc` link, an API catalog or llms.txt names an API; a declared API that doesn't answer fails A1. A site with neither skips them, as a site with no hosted MCP endpoint skips the MCP checks. Drop `--no-api` from your commands; an unknown flag is ignored.
+- **Node 26 or later.** Node 20 reached end of life on 2026-04-30, and Node's 2026-10-21 security release fixed a Brotli decoder bug that could run code (CVE-2026-111497) and two TLS hostname bypasses. Use 26.12.1 or later. The CLI exits with a message on an older major, since `engines` only warns.
+
+**New warnings:**
+- **W6** warns when heading levels skip going down (an `h1` followed by an `h3`).
+- **D4** reports llms.txt links that redirect: link the destination.
+- **D5 asks for `service-desc` and `api-catalog` only on a site with an API.** A site with none needs only `describedby`, since a `service-desc` naming an OpenAPI document would declare one.
+- **D8** compares the first page llms.txt links that serves markdown with its markdown copy, and warns about sections the copy lacks; the pass line says when no linked page serves markdown. The homepage's markdown may be llms.txt, so it isn't compared.
+
+**New:**
+- **`--logs <file>`** counts requests for the discovery files in an exported access log (combined log format, or JSON lines from Cloudflare Logpush, Vercel or Railway), by client family, and how many readers of each file also called the API. It prints counts, never addresses, and names the audit's own requests as their own family. Its paths are the audit's own list, so the two can't drift.
+- **The report and status page** say whether a site has a public API (`has_api`, a "Public API" row), and the report gives the sampled pages' median HTML size (`html_kb_median`, also in W6's line). Size isn't scored.
+- **T5 is recorded as fields:** `attempts`, `first_try`, `model`, `max_turns`, `median_calls`, `stops`, `cost_usd`, `date`. Convert a free-text T5 `result`.
+- **The T5 runner** ends with each attempt's `RESULT`, turns and cost, and a T5 entry to finish by hand. It also no longer exits silently before the first attempt: under `pipefail`, the random test name's `tr` ended on SIGPIPE, which stopped the script.
+- **Every request goes through `node:http(s)`, not `fetch`.** `fetch` decodes a Brotli body even when the request didn't ask for one, so an audited site could hand any body to the decoder. The audit asks for gzip or deflate, decodes those itself, and refuses any other encoding. W3 fails a sampled page whose body it refused, once, rather than every W check reporting its tags missing. One function now sends every request, with one user agent and one 15-second timeout.
+- **Releases run CI first,** on Node 26, and npm is pinned to major 12 in the publish step. Dependabot watches the GitHub Actions weekly.
+
+**STANDARD.md:**
+- W3: retiring a page (a permanent redirect to what replaced it, out of every discovery file in the same change, a test that it keeps redirecting).
+- W4: a visible date matches the structured one (Google's publication-dates guidance).
+- W5: every page's card shows its own title and description; the homepage's copy belongs on the homepage, not the root layout. §12's `twitter:title` gotcha names the Next.js cause.
+- W6: heading levels don't skip (W3C's headings tutorial); the median HTML size, reported and not scored.
+- D8: a page's markdown copy has the page's sections.
+- §11: guard tests for the sitemap against the routes ([recipe](docs/recipes.md#the-sitemap-equals-the-routes-t4-w3)), markdown copies against their pages, retired URLs, and every page's own metadata; "No stale claims" covers page copy and skill files, and S1 points to it.
+- T6: record the top queries with their landing pages (`queries` in `recorded.json`), reviewed by hand, not scored.
+- §12: inline elements with no space between them fuse into one word.
+- T3: classify traffic before counting it; a browser, headless or unidentified client counts as an agent only when something backs it up, such as calling the API.
+- W7: anchors say what the target is in searched-for words, not the brand name alone, with the brand in plain text beside them, and are true of the page they open. From animalhouse, where an agent linked sibling sites by brand name.
+- E6: link siblings in context with W7's anchors; never sitewide or on a partner page, which Google's spam policies call link schemes.
+- Considered and left out: in-page anchors, favicon versioning, prerendering and view transitions.
+- §12: the SDK v1 gotcha was re-checked on 1.32.1. §16: N6 cites the 2026-07-28 spec.
+- §16: Next.js metadata merging, Google on redirects and on publication dates.
+
+## 1.2.1 (2026-10-06)
+
+Principle 7 told skills to have the agent confirm with its person before registering, publishing or rotating a key, and S1 required it of every skill that publishes. That gates the core loop: an agent following it can't finish on its own, and a skill limited to explicit requests isn't used when it would help. No scoring changes.
+
+- **Principle 7 is now "Tell agents the consequences, then let them act."** Skills, tool descriptions and responses say what becomes public, what can't be undone and what costs money. MCP annotations carry the same facts, and approval policy belongs to the client and whoever runs the agent.
+- **New principle 10, "Caution has a cost, so count it."** Confirmation steps, ask-first lines, narrow triggers and disclaimers cost installs, engagement and organic discovery. Name the harm before adding a restriction, keep "only when asked" for destructive actions, and undo a change that lowers T5 or the come-back measure. Principles 8 and 9 keep their numbers.
+- **S1:** trigger on the job, specifically enough not to fire on unrelated requests, and say what lasting actions do, with no ask-first gates on the core loop. ClawHub's scan flagged drifts' first plugin for broad triggers ("explore, travel"); animalhouse's plugin, with job-specific triggers and no gates on the core loop, scanned clean. The scorecard's S1 review line says the same. botsmatter had already declined the old rule. If your skills have ask-first lines or explicit-only triggers from the old wording, take them out of the core loop; republishing is the owner's call.
+- **T5:** record every point where the agent couldn't go on by itself (`STOPS` in the runner's report). The runner's prompt no longer tells the agent to read the docs and the API, since finding them is part of what T5 measures, so earlier results aren't directly comparable. Record the full model ID: an alias like `sonnet` moves to each new release.
+- **Fewer examples to copy.** Agents adopting the standard turn its examples into their own skills and copy, so rules teach with a generic example, a `[placeholder]` template or a check question, and name a project only as evidence: W1's title pattern, T2's come-back measure, the T5 goal, A8's placeholders (taken from your own docs, not a fixed list), A11, E2's mechanics (now attributed), E6 (applies when you run related sites), S3 (no skill counts; ClawHub flags near-identical skills as template spam) and §12's timestamp gotcha. S1 gains two check questions. README and §13 no longer list skills that act without asking as a gap. ClawHub observations get a dated row in §16.
+- **docs/recipes.md:** route handlers take `params` as a promise (Next.js 15 and later), and Next.js 16 calls middleware `proxy.ts`.
+- **AGENTS.md:** examples get copied; every restriction names the harm it prevents; the standard describes the current rule, and history goes here and in commits.
+- **Examples that fit any project:** the T5 goal, A7, A8's aliases, N2 and W3 no longer use one project's terms. The principles list now says the first six (not seven) came from all six projects.
+- **docs/adopting.md:** a third switch-over rule, that every restriction names the harm it prevents; step 5 says why it asks first; the intro no longer leads with a score.
+
+## 1.2.0 (2026-10-06)
+
+From drifts.bot's switch-over, the third project to adopt the standard. One new warning (D4), no new failures. It also ships 1.1.0, which wasn't published to npm.
+
+- **`--base <url>` scores a build before it ships:** a local server or a preview deployment, as the domain. The site's URLs are requested from the base and reported under the domain; a private address is allowed there because you chose it, while everything else the site links to still has to be public. D10 (DNS) and W2's host redirects are skipped.
+- **D4 follows llms.txt's links.** It samples up to 10 of the site's own links and warns about missing pages (404 or 410), server errors and no answer. Endpoints that want a key (401, 403) are fine, and templates like `{id}` are skipped. A warning lowers the required score until fixed, but doesn't change the exit code.
+- **D10 asks public resolvers first** (1.1.1.1, then 8.8.8.8, then the system's), and its failures say that DNS answers stay cached until their TTL runs out.
+- **The status page names the pinned command** (`npx readiness-audit@1 --matrix ...`), as §14 says to run it.
+- **T6 takes structured numbers** in `recorded.json` (period; clicks, impressions, CTR, position, indexed, not indexed, crawled but not indexed; for Google and Bing), and the status page shows them. A free-text `result` still works.
+- **The T5 runner** takes `--attempts`, `--model`, `--max-turns` and `--pause`, runs each attempt in an empty folder with no user settings or MCP servers (and `--bare` when `ANTHROPIC_API_KEY` is set), gives the agent a random test name, and asks for doc mismatches as well as errors.
+- **STANDARD.md:**
+  - A9, A10: a limit on key checks answers 429, never 401, and counts only failures; a database error is 503; cache verified keys when the hash is slow; one auth helper for every route.
+  - T1, T3: logs outlive a deploy; page through platform logs.
+  - T5: keep test accounts off public pages, keep the agent fresh, budget the runs, report doc mismatches.
+  - T6: record fields, not prose; it takes a person with console access.
+  - §12 gotchas: Next.js drops a `Vary` set in middleware, proxy or `next.config` on App Router pages (tested on 14.2 and 16.3); `robots.ts` can't output `Content-Signal`; Redocly needs `security: []` on public operations; zod-to-openapi v7 with Zod 3 needed `extendZodWithOpenApi`; container logs vanish on deploy.
+- **docs/recipes.md:** one auth helper for every route, and test accounts kept off public pages.
+- **AGENTS.md:** a new warning is a minor version; a new failure is a major one.
+
+## 1.1.0 (2026-10-06, not published to npm; shipped in 1.2.0)
+
+From inbed.ai's switch-over, the second project to adopt the standard. Nothing gets stricter.
+
+- **D8 (markdown for agents) moves from recommended to next level.** It had no stated reason, our logs can't show `Accept: text/markdown` traffic (Railway's HTTP logs keep the user agent but not `Accept`), and principle 3 says a scanner check alone makes an item recommended at most. It now says why to build it and when (log the `Accept` header to find out), starts with the homepage and docs, and says Cloudflare Pro is optional. The status page gains a "Next level passed" row.
+- **`--compare <file>`** lists what changed since a previous run (a status page from `--matrix`, or a saved `--json` report): better, worse, newly checked, no longer checked, and level changes. A score's denominator grows as items start to apply, so totals alone mislead.
+- **A1 explains two cases.** A field whose description sits inside `anyOf` or `oneOf` (what Zod emits for `.nullable()` when `.describe()` comes first) is still missing a description, and the reason now says so and how to fix it. Operations whose description only repeats the summary are noted on the result line, without failing it.
+- **The Score line carries the date,** so pasted results keep it.
+- **STANDARD.md:**
+  - D1: CDN features such as Cloudflare's managed robots.txt prepend their own group.
+  - W3: in Next.js, a `loading.tsx` above a detail page makes missing pages answer 200.
+  - A1: put descriptions on the field itself, and say when to use each operation.
+  - A6: point out unreplaced placeholders such as `{{AGENT_ID}}`.
+  - S1 and S2: index the skills the site serves, not every listing; an index makes S1 apply.
+  - D10: the AID auth values, with an `a=apikey` example.
+  - D5: the template gives llms.txt the type sites actually send (`text/plain`).
+  - T5: choose a goal the agent can finish alone.
+  - §13: keep the status page in the project's private repo when there is one.
+- **New docs/recipes.md:** a `/.well-known` catch-all for D7 and D11, `GET /api` that sends browsers to the docs, `did_you_mean` by edit distance against the OpenAPI paths, unreplaced placeholders, and markdown routes without a CDN plan.
+
+## 1.0.1 (2026-10-05)
+
+Fixes from the first full switch-over (animalhouse.ai, 10 to 19 of 19 required).
+
+- **S1 no longer fails skill URLs that don't end in `<name>/SKILL.md`.** It read the folder from the URL's second-to-last segment, so an index pointing at `/skills/<name>` failed every name ("folder is skills"). A name is now checked against its folder only when the URL shows one, and always against its index entry's name.
+- **S1 samples only SKILL.md entries.** It read `archive` entries as text and failed their names and descriptions.
+- **S1 resolves relative skill URLs against the index**, not the site root (RFC 3986).
+- **A CDN-cached copy is named.** When robots.txt, the sitemap, llms.txt or security.txt fails and came from a CDN cache, the reason says how old the copy is, since a recent change may not show yet. Cloudflare caches robots.txt by default.
+- **STANDARD.md:** D1 says to purge robots.txt from the CDN after a change. D8 notes that Next.js 14.2 replaces `Vary` on App Router pages, so `Accept` goes on at the edge.
+
+## 1.0.0 (2026-10-05)
+
+First public release.
+
+- **The standard (STANDARD.md):** items in eight groups: discovery (D), web search (W), API (A), MCP (M), skills (S), engagement (E), measurement and tests (T), next level (N). Each has an ID, a level (required, recommended, only if true, next level) and the reason for its level.
+- **The scorecard (`readiness-audit`):** 32 checks in one read-only pass: 19 required, 11 recommended and 2 next-level. It samples up to 20 sitemap pages for search and up to 5 skill files, prints `--json`, and builds a status page across several sites with `--matrix`, including recorded T5 and T6 results from `--recorded`.
+- **Safe to point at any site:** it follows redirects itself and refuses private, local and non-http addresses at every hop, so a site's sitemap, share images, skills, catalog or DNS record can't send it to `localhost` or a cloud metadata address. It keeps to about six requests at a time.
+- **The agent usability test (T5):** a procedure, a runner for Claude Code, and a results format (docs/usability-test.md).
+- **Repo:** CI on Node 20, 22 and 24; a release workflow that publishes to npm through trusted publishing; contributing and security guides; issue templates.

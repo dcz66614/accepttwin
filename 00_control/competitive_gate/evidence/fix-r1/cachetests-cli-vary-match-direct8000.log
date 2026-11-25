@@ -1,0 +1,50 @@
+Running vary-match
+[32m=== Client request 1[0m
+    GET http://127.0.0.1:8000/test/fe4f254e-81c4-4697-adcd-4c0afd198e07
+    Pragma: foo
+    Cache-Control: nothing-to-see-here
+    Foo: 1
+    Test-Name: An optimal HTTP cache reuses a `Vary` response when the request matches
+    Test-ID: vary-match
+    Req-Num: 1
+
+[32m=== Client response 1[0m
+    HTTP 200 OK
+    cache-control: max-age=5000
+    client-request-count: 1
+    connection: keep-alive
+    content-length: 36
+    content-type: text/plain
+    date: Tue, 24 Nov 2026 18:14:50 GMT
+    keep-alive: timeout=5
+    last-modified: Tue, 24 Nov 2026 17:24:50 GMT
+    request-numbers: 1
+    server-base-url: /test/fe4f254e-81c4-4697-adcd-4c0afd198e07
+    server-now: 1795544090508
+    server-request-count: 1
+    vary: Foo
+
+[32m=== Client request 2[0m
+    GET http://127.0.0.1:8000/test/fe4f254e-81c4-4697-adcd-4c0afd198e07
+    Pragma: foo
+    Cache-Control: nothing-to-see-here
+    Foo: 1
+    Test-Name: An optimal HTTP cache reuses a `Vary` response when the request matches
+    Test-ID: vary-match
+    Req-Num: 2
+
+[32m=== Client response 2[0m
+    HTTP 200 OK
+    client-request-count: 2
+    connection: keep-alive
+    content-length: 36
+    content-type: text/plain
+    date: Tue, 24 Nov 2026 18:14:50 GMT
+    keep-alive: timeout=5
+    request-numbers: 1 2
+    server-base-url: /test/fe4f254e-81c4-4697-adcd-4c0afd198e07
+    server-now: 1795544090517
+    server-request-count: 2
+
+[32m==== Results[0m
+⚠️ - Response 2 does not come from cache

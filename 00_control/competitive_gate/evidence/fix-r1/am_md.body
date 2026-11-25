@@ -1,0 +1,37 @@
+# Accept: text/markdown
+
+**Serve Markdown to AI agents with content negotiation.** Your site already has the content. Serving a Markdown variant lets AI agents skip nav/scripts/layout markup and read the content directly.
+
+## Three benefits
+
+- **Tokens — a fraction of the bytes.** Markdown drops nav, styles, scripts, and layout wrappers. Agents spend context on your prose, not your DOM.
+- **Retrieval — higher signal-to-noise.** No ads, related-content rails, or modal overlays muddying the text a RAG pipeline has to embed.
+- **Latency — faster first token.** Less to fetch, less to parse, less to stuff into the context window before the model starts thinking.
+
+## Check your site
+
+The HTML version of this page has two interactive tools:
+
+- **Readiness check** — scores a URL against six checks: serves Markdown for `Accept: text/markdown`, sets `Vary: Accept`, rejects unsupported types with `406`, honors q-values, serves Markdown when tied with HTML at `q=1` (`text/markdown, text/html, */*`, which Claude Code, Copilot CLI, and Microsoft Copilot send), and confirms any advertised `rel="alternate"` Markdown URL returns `200 text/markdown`. It also reports, without scoring, which type wins when HTML is listed first at equal weight.
+- **Accept tester** — makes a request from our edge with a given `Accept` header and shows the raw response headers and body.
+
+You can run the same checks yourself with curl:
+
+```bash
+curl -sI -H "Accept: text/markdown" https://yoursite.com/article
+curl -s  -H "Accept: text/markdown" https://yoursite.com/article
+```
+
+Look for `Content-Type: text/markdown; charset=utf-8` and `Vary: Accept` on the response.
+
+## Where to next
+
+- [Quick start](https://acceptmarkdown.com/start) — the smallest working setup
+- [Guides](https://acceptmarkdown.com/guides) — `Vary`, q-values, `406`, caching, and the Cloudflare zero-config shortcut
+- [Recipes](https://acceptmarkdown.com/recipes) — Nginx, Caddy, WordPress, Laravel, Rails, Cloudflare Workers, Next.js, Astro, Apache, SvelteKit, Nuxt/Nitro, Express, Go, Django
+- [Status](https://acceptmarkdown.com/status) — which AI agents send `Accept: text/markdown`, and which platforms serve Markdown out of the box
+- [Reference](https://acceptmarkdown.com/reference) — RFC 9110, RFC 7763, the `text/markdown` media type, and adjacent specs
+
+---
+
+_Markdown content negotiation: serve clean Markdown to AI agents from the same URL that serves HTML to browsers._ — [acceptmarkdown.com](https://acceptmarkdown.com/)

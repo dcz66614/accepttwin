@@ -1,0 +1,55 @@
+Listening on http://[::]:8000/
+[34m=== Server request 1[0m
+    GET /test/fe4f254e-81c4-4697-adcd-4c0afd198e07
+    host: 127.0.0.1:8000
+    connection: keep-alive
+    pragma: foo
+    cache-control: nothing-to-see-here
+    foo: 1
+    test-name: An optimal HTTP cache reuses a `Vary` response when the request matches
+    test-id: vary-match
+    req-num: 1
+    accept: */*
+    accept-language: *
+    sec-fetch-mode: cors
+    user-agent: node
+    accept-encoding: gzip, deflate
+
+[34m=== Server response 1[0m
+    HTTP 200 OK
+    server-base-url: /test/fe4f254e-81c4-4697-adcd-4c0afd198e07
+    server-request-count: 1
+    client-request-count: 1
+    server-now: 1795544090508
+    cache-control: max-age=5000
+    last-modified: Tue, 24 Nov 2026 17:24:50 GMT
+    date: Tue, 24 Nov 2026 18:14:50 GMT
+    vary: Foo
+    content-type: text/plain
+    request-numbers: 1
+
+[34m=== Server request 2[0m
+    GET /test/fe4f254e-81c4-4697-adcd-4c0afd198e07
+    host: 127.0.0.1:8000
+    connection: keep-alive
+    pragma: foo
+    cache-control: nothing-to-see-here
+    foo: 1
+    test-name: An optimal HTTP cache reuses a `Vary` response when the request matches
+    test-id: vary-match
+    req-num: 2
+    accept: */*
+    accept-language: *
+    sec-fetch-mode: cors
+    user-agent: node
+    accept-encoding: gzip, deflate
+
+[34m=== Server response 2[0m
+    HTTP 200 OK
+    server-base-url: /test/fe4f254e-81c4-4697-adcd-4c0afd198e07
+    server-request-count: 2
+    client-request-count: 2
+    server-now: 1795544090517
+    content-type: text/plain
+    request-numbers: 1 2
+
