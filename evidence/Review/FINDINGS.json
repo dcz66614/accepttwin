@@ -1,0 +1,346 @@
+{
+  "acceptance_commands": {
+    "benchmark_suite_all": "BENCHMARK_STATUS: PASS (max single-scenario 0.030s; repeat-100 distinct=1; reports schema 48/48, verdict 48/48, parity 48/48; HTML 49 pages clean)",
+    "git_rev_parse_HEAD": "c02387c8d9f7aaeb3da7e8482f97756580ec0a08",
+    "git_status": "clean at review start and end (only evidence/Review/ output files untracked)",
+    "npm_run_build": "fresh worktree: exit 127 tsc not found (T013-F03); rebuild with installed tsc 5.9.3: exit 0, byte-identical to committed report-ui.js (SHA-256 784e3106f7a380845559690dfa04aa4f8549f0d044bf5edea66ee2aefec9c84d)",
+    "pytest": "936 passed, 0 failed, 0 skipped, 67.82s, exit 0 (independent worktree ~/workspace/p032-review-wt, main .venv)",
+    "verify_suite_all": "VERIFY_STATUS: PASS (ALL48 48/48 golden, parity 48/48; S0 24/24 golden, parity 24/24; C11 bleed 3/3; repeat-100 distinct_hashes=1; C01 hash 67e69e68e128...)"
+  },
+  "adjudicated_not_defects": [
+    {
+      "id": "T007-residual-a",
+      "reason": "Raw evidence (raw-observations.json, contract.json) legitimately records the actual URLs/ports used. PROJECT_BOOK §10.4 port exclusion applies to the canonical report-hash payload only, which ADR-003 normalises and which this review verified (C01 hash identical across two independent runs, 67e69e68e128...).",
+      "title": "Evidence files still contain real ports",
+      "verdict": "NOT_A_DEFECT"
+    },
+    {
+      "id": "T007-residual-c",
+      "reason": "contract.py _is_loopback_host conservatively does not normalise unknown names: fail-closed direction (at worst a port-dependent hash, never a false equality). The harness uses 127.0.0.1.",
+      "title": "Loopback name recognition only covers localhost",
+      "verdict": "NOT_A_DEFECT"
+    },
+    {
+      "id": "D-01",
+      "reason": "Content has been delivered in full; recorded for final-review awareness only (VERIFY_LOG.md D-01).",
+      "title": "GPT claimed §19-§21 'already existed', contradicting the delivery record",
+      "verdict": "RECORDED_NO_ACTION"
+    },
+    {
+      "id": "D-04-D-08",
+      "reason": "All annotated in the frozen spec and carried with it; this review did not treat truncated content as retrieved text (VERIFY_LOG.md D-04-D-08).",
+      "title": "Specification extraction truncations, incomplete frontmatter, §5.1.2 JSON written from the field table",
+      "verdict": "RECORDED_NO_ACTION"
+    }
+  ],
+  "counts": {
+    "P0": 0,
+    "P1": 0,
+    "P2": 15,
+    "P3": 1,
+    "total": 16
+  },
+  "findings": [
+    {
+      "disposition": "T014: normalise with role-distinct placeholders (e.g. url -> :0, origin_url -> :1) or record acceptance in an ADR.",
+      "evidence": "Independent probe ~/workspace/t013-scratch/probes.py (run against the frozen tree): two contracts differing only by swapping url/origin_url ports hash identically, 82686a3e6dc62a53...; different port pairs also collide (intended per ADR-003). Execution still uses real ports, so no verdict is affected and no Golden scenario distinguishes the pair.",
+      "files": [
+        {
+          "lines": "230-266, 267-291",
+          "note": "_normalise_ephemeral_port rewrites any loopback http URL port to 0; _canonicalise applies it to both url and origin_url keys",
+          "path": "src/accepttwin/contract.py"
+        }
+      ],
+      "id": "T013-F01",
+      "impact": "Two semantically different contracts (proxy and origin roles swapped) share one contract/report hash; weakens contract identity. No verdict, parity or Golden impact.",
+      "reproduction": ".venv/bin/python ~/workspace/t013-scratch/probes.py",
+      "severity": "P2",
+      "status": "new",
+      "title": "Port-swap contract-hash collision: url/origin_url both normalise to :0"
+    },
+    {
+      "disposition": "T014: add a per-request verified_cache_state comparison to check_parity/_oracle_parity.",
+      "evidence": "Read check_parity and _oracle_parity. PROJECT_BOOK §12.4 lists MISS/HIT/BYPASS evidence among the per-scenario parity items; the check as written could pass a silent cache-state disagreement that leaves verdict/diagnostics unchanged. No actual divergence observed in 48/48 (all parity=OK in the reviewer's own verify run).",
+      "files": [
+        {
+          "lines": "668-697",
+          "note": "check_parity compares verdict + diagnostics projection (code+request_index) + first_error + experiment only",
+          "path": "scripts/s0_harness.py"
+        },
+        {
+          "lines": "392-421",
+          "note": "_oracle_parity: same comparison set",
+          "path": "src/accepttwin/report_builder.py"
+        }
+      ],
+      "id": "T013-F02",
+      "impact": "Parity scope is narrower than the §12.4 item list; a state disagreement with identical diagnostics would pass silently. Low practical risk: in all reachable paths a verified-state difference changes at least one diagnostic.",
+      "reproduction": "Read scripts/s0_harness.py:671-697; run verify --suite all and inspect per-scenario parity (verdict/diagnostics/first_error only).",
+      "severity": "P2",
+      "status": "new",
+      "title": "Oracle parity does not directly compare per-request verified MISS/HIT/BYPASS states"
+    },
+    {
+      "disposition": "T014: define the frozen rebuild path from a clean checkout (registry access for npm ci, or a documented offline reuse of installed node_modules with the pinned tsc version).",
+      "evidence": "In the independent worktree (same commit, no node_modules): `npm run build` exits 127, `sh: 1: tsc: not found`. Rebuilt with the main worktree's installed tsc 5.9.3: exit 0 and output byte-identical to committed report-ui.js (SHA-256 784e3106f7a380845559690dfa04aa4f8549f0d044bf5edea66ee2aefec9c84d). LIMITATIONS.md already notes `npm ci` needs registry.",
+      "files": [
+        {
+          "lines": "scripts.build = tsc -p tsconfig.json",
+          "path": "report-ui/package.json"
+        },
+        {
+          "lines": "typescript 5.9.3 locked",
+          "path": "report-ui/package-lock.json"
+        }
+      ],
+      "id": "T013-F03",
+      "impact": "A clean checkout cannot rebuild report-ui.js offline; rebuild reproducibility depends on uncommitted node_modules.",
+      "reproduction": "git worktree add <dir> c02387c; cd <dir>/report-ui && npm run build",
+      "severity": "P2",
+      "status": "new",
+      "title": "npm run build fails in a fresh checkout (tsc not found; node_modules uncommitted, npm ci needs registry)"
+    },
+    {
+      "disposition": "T014: fix together with T011 F-01 (bounded read at both sites, e.g. resp.read(limit+1), or wire privacy.enforce_body_limit); record the decision in an ADR.",
+      "evidence": "Read cache_proxy.py _fetch_origin: `body = resp.read()` with no bound, same pattern as experiment_runner.py:301 (personally probed: 1,048,577-byte body returned whole). Same mitigations apply (classifier INCONCLUSIVE_LIMIT on body_size, no body persisted/logged/reported; controlled local synthetic origin).",
+      "files": [
+        {
+          "lines": "761",
+          "note": "body = resp.read() in _fetch_origin, unbounded",
+          "path": "src/accepttwin/cache_proxy.py"
+        },
+        {
+          "lines": "301, 372",
+          "note": "original F-01 site; _max_body assigned but never read",
+          "path": "src/accepttwin/experiment_runner.py"
+        }
+      ],
+      "id": "T013-F04",
+      "impact": "A faulty origin can force one unbounded allocation on the proxy fetch path as well as the runner path; memory pressure only, no leak path.",
+      "reproduction": "grep -n 'resp.read()' src/accepttwin/cache_proxy.py src/accepttwin/experiment_runner.py",
+      "severity": "P2",
+      "status": "new",
+      "title": "Unbounded read (F-01 class) also present in cache_proxy._fetch_origin"
+    },
+    {
+      "disposition": "T014: use the raw cache-status header as the claim instead of obs.cache_status, or record the coupling and its fail-closed argument in an ADR.",
+      "evidence": "Read oracle/src/evidence.ts: the Oracle re-derives every evidence leg from raw data (header, counter delta, origin event, entry count/body hash) and can only confirm a state when the legs agree, so it cannot over-confirm from the claim alone; but a production verifier bug that wrongly verifies a state would be inherited as the claim (legs are still re-checked). T007 review noted the same coupling and accepted it (verified_cache_state is a T004/T005 observation-layer product, not T006 classifier output).",
+      "files": [
+        {
+          "lines": "verifyCacheState: claimed = obs.cache_status",
+          "note": "obs.cache_status is the runner's verified_cache_state, computed by production cache_evidence.verify_cache_state",
+          "path": "oracle/src/evidence.ts"
+        }
+      ],
+      "id": "T013-F05",
+      "impact": "Residual coupling between Oracle and production observation layer; fail-closed in practice (under-confirmation only when legs disagree).",
+      "reproduction": "Read oracle/src/evidence.ts verifyCacheState; compare with src/accepttwin/cache_evidence.py verify_cache_state.",
+      "severity": "P2",
+      "status": "new",
+      "title": "Oracle takes the production runner's verified_cache_state as its claimed cache state"
+    },
+    {
+      "disposition": "T014 must decide explicitly before freeze: implement per §4.1, or record an ADR deferring/amending §4.1. Silent omission is not acceptable. Blocks freeze without an ADR; does not block T013 SUCCESS.",
+      "evidence": "Read cli.py in full (423 lines). Gap honestly disclosed in docs/USAGE.md:108-110 and docs/LIMITATIONS.md. No placeholder commands impersonate the missing ones.",
+      "files": [
+        {
+          "lines": "1-423",
+          "note": "only verify and benchmark subcommands (+ --help/--version); no demo/run/report/clean/contract subcommands; verify takes --suite s0|all, not --report",
+          "path": "src/accepttwin/cli.py"
+        }
+      ],
+      "id": "T012-P2-1",
+      "impact": "Delivered CLI surface is narrower than the frozen §4.1 contract; no effect on any verdict or gate outcome.",
+      "reproduction": ".venv/bin/python -m accepttwin --help",
+      "severity": "P2",
+      "status": "carried",
+      "title": "PROJECT_BOOK §4.1 CLI commands not implemented (demo/run/report preview/export/delete/clean/contract delete); verify --report form also absent"
+    },
+    {
+      "disposition": "T014: re-point to the committed evidence/Performance/VERIFY_LOG.txt.",
+      "evidence": "Read docs/USAGE.md:64. Durable evidence is the committed evidence/Performance/VERIFY_LOG.txt.",
+      "files": [
+        {
+          "lines": "64",
+          "note": "references /tmp/t012_verify.log, a builder-local temp log",
+          "path": "docs/USAGE.md"
+        }
+      ],
+      "id": "T012-P2-2",
+      "impact": "Documentation points at a non-persistent path; evidence itself is intact.",
+      "reproduction": "grep -n t012_verify docs/USAGE.md",
+      "severity": "P2",
+      "status": "carried",
+      "title": "docs/USAGE.md cites non-durable /tmp/t012_verify.log as evidence"
+    },
+    {
+      "disposition": "T014: apply a bounded read (resp.read(limit+1) then judge oversize, or wire privacy.enforce_body_limit) and record the decision in an ADR. See also T013-F04 for the second read site.",
+      "evidence": "Personally probed with a local origin returning 1,048,577 bytes: _http_get returned all 1,048,577 bytes. Classifier defence verified: oversize bodies are judged INCONCLUSIVE_LIMIT (E21 live). Agree with the T011 review adjudication (P2, not P1): no leak path, controlled local synthetic origin, worst case is single-read memory pressure.",
+      "files": [
+        {
+          "lines": "301, 372",
+          "note": "body = resp.read(); self._max_body assigned once, never read anywhere in the repo",
+          "path": "src/accepttwin/experiment_runner.py"
+        }
+      ],
+      "id": "T011-F-01",
+      "impact": "A faulty origin can force one unbounded allocation; memory pressure only.",
+      "reproduction": ".venv/bin/python ~/workspace/t013-scratch/probe2.py (F-01 section)",
+      "severity": "P2",
+      "status": "carried",
+      "title": "experiment_runner.py:301 _http_get reads unbounded resp.read(); _max_body assigned but never read"
+    },
+    {
+      "disposition": "T014, either: narrow the default deletable subtree (e.g. evidence/ and named temp dirs), or state explicitly in CLI help and docs that any explicitly named regular file inside the workspace may be deleted.",
+      "evidence": "Read privacy.py:516-582 and scripts/clean_evidence.py. Meets the §17.3 literal requirements (workspace boundary + explicit naming); an operator explicitly naming a file can delete any regular file in the workspace, including source. No glob, no recursion are the only mitigations.",
+      "files": [
+        {
+          "lines": "516-582",
+          "note": "resolve_cleanup_target/delete_evidence_files: workspace-wide, explicit target, regular file, non-symlink",
+          "path": "src/accepttwin/privacy.py"
+        }
+      ],
+      "id": "T011-P2",
+      "impact": "Explicit mis-operation could delete source files; requires an explicit mistake to trigger.",
+      "reproduction": "Read src/accepttwin/privacy.py:516-582.",
+      "severity": "P2",
+      "status": "carried",
+      "title": "Cleanup command delete scope not narrowed (any explicitly named regular file inside the workspace)"
+    },
+    {
+      "disposition": "T014: reword to 'timeline/baseline/cache tables show digests; diagnostics evidence detail shows full hashes'.",
+      "evidence": "evidence/Reports/html/C11.html contains 24 full 64-hex hashes in diagnostics evidence detail (body_sha256/cache_key_sha256 fully visible). Behaviour is compliant (hashes are not body text; §4.3 area F requires body hashes in the report; §17.2 permits recording body hashes) — wording only.",
+      "files": [
+        {
+          "lines": "38",
+          "note": "claims UI shows only the first 16 hex chars of cache keys/body hashes, full hashes only in embedded/downloadable JSON",
+          "path": "report-ui/T010_NOTES.md"
+        }
+      ],
+      "id": "T010-P2-1",
+      "impact": "Documentation wording only; no leak, no acceptance impact.",
+      "reproduction": "grep -c '[0-9a-f]\\{64\\}' evidence/Reports/html/C11.html  (= 24)",
+      "severity": "P2",
+      "status": "carried",
+      "title": "report-ui/T010_NOTES.md point 5 wording contradicts implementation (full 64-hex hashes shown in diagnostics evidence)"
+    },
+    {
+      "disposition": "T014: turn into hard failures, or guarantee Chromium in the CI environment.",
+      "evidence": "Read the two skip sites. This review's full run: 936 passed, 0 skipped — both rendering tests actually executed.",
+      "files": [
+        {
+          "lines": "465, 492",
+          "note": "pytest.skip('no headless Chromium available in this environment')",
+          "path": "tests/integration/test_report_ui.py"
+        }
+      ],
+      "id": "T010-P2-2",
+      "impact": "In a Chromium-less environment two offline acceptance tests would be silently dropped.",
+      "reproduction": "grep -n 'pytest.skip' tests/integration/test_report_ui.py",
+      "severity": "P2",
+      "status": "carried",
+      "title": "Two conditional pytest.skip in test_report_ui.py (offline rendering tests skipped without Chromium)"
+    },
+    {
+      "disposition": "T014: harden to RFC 9111-tolerant parsing (strip spaces around '=', strip quoted-string parameters).",
+      "evidence": "Personally probed _requires_revalidation: 'max-age = 0' -> False, 'no-cache=\"field\"' -> False; 'no-cache', 'max-age=0', 'max-age=0, public', case variants -> True. Production and Oracle agree with each other, so parity is unaffected.",
+      "files": [
+        {
+          "lines": "285-307",
+          "note": "_requires_revalidation: directive == 'no-cache', directive.startswith('max-age=')",
+          "path": "src/accepttwin/classifier.py"
+        },
+        {
+          "lines": "requiresRevalidation",
+          "note": "same exact-match behaviour (consistent with production)",
+          "path": "oracle/src/evidence.ts"
+        }
+      ],
+      "id": "T008-P2-2",
+      "impact": "Spaced/quoted revalidation directives would be treated as ordinary responses instead of INCONCLUSIVE_LIMIT (revalidation_required).",
+      "reproduction": ".venv/bin/python ~/workspace/t013-scratch/probe4.py",
+      "severity": "P2",
+      "status": "carried",
+      "title": "Revalidation token parsing is exact-match only: 'max-age = 0' and 'no-cache=\"field\"' do not trigger"
+    },
+    {
+      "disposition": "T014: treat q=0 media types as not acceptable (406) and add tests.",
+      "evidence": "Personally probed live origin (healthy fixture): Accept: text/markdown;q=0 -> 200; text/html;q=0 -> 200; both q=0 -> 200 (serves HTML). RFC 9110 §12.5.1: q=0 means 'not acceptable', so the expected status is 406. Unknown Accept correctly returns 406.",
+      "files": [
+        {
+          "lines": "_parse_accept",
+          "note": "best_q starts at -1.0, so q=0.0 is still accepted as the best representation",
+          "path": "src/accepttwin/origin_server.py"
+        }
+      ],
+      "id": "T003-P2-01",
+      "impact": "q=0 edge case only; the four experiments send fixed Accept headers without q values, so no Golden scenario is affected.",
+      "reproduction": ".venv/bin/python ~/workspace/t013-scratch/probe_q0.py; ~/workspace/t013-scratch/probe2.py (q=0 section)",
+      "severity": "P2",
+      "status": "carried",
+      "title": "Origin server: Accept with q=0 does not return 406"
+    },
+    {
+      "disposition": "T014: add q-tie tests.",
+      "evidence": "Personally probed live origin: 'text/html;q=0.9, text/markdown;q=0.9' -> HTML; 'text/markdown;q=0.9, text/html;q=0.9' -> Markdown. Rule works as documented; no test in the repo covers it (grep for q tie tests: none).",
+      "files": [
+        {
+          "lines": "_parse_accept",
+          "note": "tie goes to the first listed (documented in the docstring)",
+          "path": "src/accepttwin/origin_server.py"
+        }
+      ],
+      "id": "T003-P2-02",
+      "impact": "Untested documented behaviour; no observed defect.",
+      "reproduction": ".venv/bin/python ~/workspace/t013-scratch/probe2.py (tie section)",
+      "severity": "P2",
+      "status": "carried",
+      "title": "Origin server: q-value tie rule has no test"
+    },
+    {
+      "disposition": "T014: clean up (write the literal True with a comment, or restructure).",
+      "evidence": "Read classifier.py around line 595: _events_support returns False only when origin_events is not None (it returns None when None), so the expression is always True in this branch. No behavioural impact.",
+      "files": [
+        {
+          "lines": "595",
+          "note": "'origin_journal_available': (origin_events is not None) inside a branch only reachable when origin_events is not None",
+          "path": "src/accepttwin/classifier.py"
+        }
+      ],
+      "id": "T006-P3",
+      "impact": "Cosmetic only.",
+      "reproduction": "Read src/accepttwin/classifier.py:580-610.",
+      "severity": "P3",
+      "status": "carried",
+      "title": "classifier origin_journal_available is constant True in the event_support-is-False branch"
+    },
+    {
+      "disposition": "Before final review: draft the centralised clause and add it via ADR.",
+      "evidence": "Substance is dispersed across PROJECT_BOOK §3.2/§3.3/§7.11 and README's honest-boundary section; no single centralised clause exists as an ADR. Recorded in VERIFY_LOG.md D-03.",
+      "files": [
+        {
+          "lines": "84-91",
+          "note": "honest-boundary section exists and cites D-03",
+          "path": "README.md"
+        },
+        {
+          "lines": "D-03 row",
+          "note": "still OPEN",
+          "path": "docs/LIMITATIONS.md"
+        }
+      ],
+      "id": "D-03",
+      "impact": "Documentation form only; the boundary substance is present and honoured in code.",
+      "reproduction": "grep -n 'D-03' README.md docs/LIMITATIONS.md",
+      "severity": "P2",
+      "status": "carried",
+      "title": "Honest boundary not centralised in a single clause"
+    }
+  ],
+  "note": "T013 SUCCESS means the independent review work is complete; it does not mean the project is defect-free. All P0/P1 counts are zero; the 15 P2 and 1 P3 findings must be dispositioned by T014 before freeze. T012 P2-1 (section 4.1 CLI) and D-03 require an explicit ADR decision before freeze, not silent omission.",
+  "review": "P032 AcceptTwin T013 independent review",
+  "review_date": "2026-11-24",
+  "reviewed_commit": "c02387c8d9f7aaeb3da7e8482f97756580ec0a08",
+  "t013_success": true,
+  "verdict": "REVIEW_COMPLETE"
+}
