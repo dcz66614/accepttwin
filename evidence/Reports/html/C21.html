@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AcceptTwin 报告</title>
+<!--
+  AcceptTwin self-contained report template (P032 T010).
+  scripts/embed_report.py replaces the three ACCEPTTWIN placeholders
+  below with the inline stylesheet, the compiled report-ui.js bundle
+  and the embedded report JSON. The finished page has no remote
+  reference of any kind: no CDN, no webfont, no image, no iframe,
+  no external link — it opens fully offline.
+-->
+<style>
+/* AcceptTwin self-contained report styles (P032 T010).
+ *
+ * Inlined verbatim by scripts/embed_report.py into every generated
+ * HTML page. No external references of any kind: no style imports,
+ * no resource references, no webfont, no image, no icon font —
+ * system font stack only, so the page renders identically with the
+ * network off.
+ */
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0 auto;
+  max-width: 1020px;
+  padding: 24px 20px 64px;
+  background: #ffffff;
+  color: #1a1a1a;
+  font-family: system-ui, -apple-system, "Segoe UI", "Helvetica Neue", sans-serif;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+header { border-bottom: 3px solid #1a1a1a; margin-bottom: 8px; padding-bottom: 12px; }
+header h1 { font-size: 24px; margin: 0 0 4px; }
+header p { margin: 2px 0; color: #555555; }
+
+main section {
+  border: 1px solid #cccccc;
+  border-radius: 6px;
+  margin: 18px 0;
+  padding: 14px 16px;
+}
+
+h2 { font-size: 19px; margin: 0 0 10px; }
+h3 { font-size: 16px; margin: 14px 0 6px; }
+
+.note {
+  background: #f2f2f2;
+  border-left: 4px solid #888888;
+  color: #444444;
+  font-size: 13px;
+  margin: 8px 0 12px;
+  padding: 8px 10px;
+}
+
+.mono { font-family: ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace; font-size: 13px; overflow-wrap: anywhere; }
+
+table { border-collapse: collapse; margin: 8px 0; width: 100%; }
+th, td { border: 1px solid #dddddd; padding: 6px 8px; text-align: left; vertical-align: top; }
+thead th { background: #f2f2f2; }
+table.kv th { background: #f7f7f7; width: 220px; }
+
+.verdict-row { align-items: center; display: flex; flex-wrap: wrap; gap: 12px; }
+.verdict-badge {
+  border-radius: 4px;
+  color: #ffffff;
+  display: inline-block;
+  font-weight: 700;
+  padding: 6px 12px;
+}
+.verdict-PASS_OBSERVED { background: #1e7d32; }
+.verdict-ORIGIN_NEGOTIATION_ERROR { background: #b26a00; }
+.verdict-REPRESENTATION_BLEED { background: #b00020; }
+.verdict-CONTRACT_MISMATCH { background: #8e24aa; }
+.verdict-INCONCLUSIVE { background: #455a64; }
+.final-flag { color: #444444; font-size: 14px; }
+
+.severity {
+  border-radius: 3px;
+  color: #ffffff;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 2px 7px;
+}
+.severity-CRITICAL { background: #b00020; }
+.severity-WARNING { background: #b26a00; }
+
+.baseline-grid { display: grid; gap: 14px; grid-template-columns: 1fr 1fr; }
+.baseline-card { border: 1px solid #dddddd; border-radius: 4px; padding: 10px 12px; }
+.baseline-card h3 { margin-top: 0; }
+
+details.experiment { border: 1px solid #dddddd; border-radius: 4px; margin: 10px 0; padding: 8px 12px; }
+details.experiment summary { cursor: pointer; font-weight: 700; }
+details.evidence { margin-top: 8px; }
+details.evidence summary { cursor: pointer; color: #444444; }
+
+table.requests { font-size: 13px; }
+table.requests td, table.requests th { padding: 5px 7px; }
+
+ol.lane { list-style: none; margin: 6px 0; padding: 0; }
+ol.lane li {
+  border-left: 4px solid #888888;
+  margin: 6px 0;
+  padding: 6px 10px;
+}
+ol.lane li.lane-reset { background: #f2f2f2; border-left-color: #1a1a1a; font-weight: 700; }
+ol.lane li.lane-request { background: #fbfbfb; }
+
+article.diagnostic { border-top: 1px solid #dddddd; margin-top: 12px; padding-top: 10px; }
+article.diagnostic:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+.diagnostic-head { margin: 0 0 6px; }
+
+.summary-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.summary-chip {
+  background: #f2f2f2;
+  border: 1px solid #cccccc;
+  border-radius: 4px;
+  display: inline-block;
+  font-weight: 700;
+  padding: 4px 10px;
+}
+.summary-chip.verdict-PASS_OBSERVED { background: #e6f2e8; border-color: #1e7d32; color: #1e7d32; }
+.summary-chip.verdict-ORIGIN_NEGOTIATION_ERROR { background: #fdf3e0; border-color: #b26a00; color: #7a4a00; }
+.summary-chip.verdict-REPRESENTATION_BLEED { background: #fdecea; border-color: #b00020; color: #b00020; }
+.summary-chip.verdict-CONTRACT_MISMATCH { background: #f6e8fa; border-color: #8e24aa; color: #8e24aa; }
+.summary-chip.verdict-INCONCLUSIVE { background: #eceff1; border-color: #455a64; color: #455a64; }
+
+button.download-button {
+  background: #1a1a1a;
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 15px;
+  margin: 10px 0;
+  padding: 10px 16px;
+}
+button.download-button:hover { background: #444444; }
+
+footer { border-top: 3px solid #1a1a1a; color: #555555; font-size: 13px; margin-top: 28px; padding-top: 12px; }
+
+#no-payload {
+  background: #fdf3e0;
+  border: 1px solid #b26a00;
+  border-radius: 6px;
+  margin: 18px 0;
+  padding: 14px 16px;
+}
+
+@media (max-width: 720px) {
+  .baseline-grid { grid-template-columns: 1fr; }
+  table.kv th { width: 150px; }
+}
+
+@media print {
+  body { max-width: none; padding: 0; }
+  main section { break-inside: avoid; }
+  button.download-button { display: none; }
+}
+
+</style>
+</head>
+<body>
+<header>
+<h1 id="report-title">AcceptTwin 报告</h1>
+<p>同一网址，两种表示，验证交付是否正确。Your website serves humans and AI. Make sure it never mixes them up.</p>
+<p>项目 P032 · 规格 v1.0.0 · 报告 Schema accepttwin.report/v1</p>
+</header>
+
+<div id="no-payload">
+<p><strong>未嵌入报告数据。</strong>这是报告模板本身，不是已生成的报告页。</p>
+<p>生成方法：<span class="mono">.venv/bin/python scripts/embed_report.py evidence/Reports/C11.json -o evidence/Reports/html/C11.html</span>（需先用 <span class="mono">--contract</span> 传入运行契约，或不传则使用冻结 §5.1.2 常量作基线预期值）。48 场景汇总：<span class="mono">.venv/bin/python scripts/embed_report.py --all-48</span>。</p>
+<p>本页不显示正文原文：报告只包含正文 SHA-256 与 Sentinel 匹配标志。</p>
+</div>
+
+<noscript>
+<p><strong>本报告页需要 JavaScript 渲染。</strong>脚本是内嵌的自包含代码，不访问任何网络；启用 JavaScript 后重新打开即可查看全部十个章节。</p>
+</noscript>
+
+<main id="report-view">
+<section id="section-verdict"></section>
+<section id="section-baseline"></section>
+<section id="section-experiments"></section>
+<section id="section-timeline"></section>
+<section id="section-cache"></section>
+<section id="section-first-error"></section>
+<section id="section-diagnostics"></section>
+<section id="section-oracle"></section>
+<section id="section-hash"></section>
+<section id="section-privacy"></section>
+</main>
+
+<main id="summary-view" hidden></main>
+
+<footer>
+<p>诚实边界：本工具只证明“在给定双表示契约、受控缓存与有界场景内，网站按声明交付了正确的表示”，不证明真实 CDN 行为、不修复缓存、不认证网站的 AI 友好度、不保证任何真实网站的交付正确；没有 Vary: Accept 本身不是故障证据。</p>
+<p>隐私：本页不包含原始响应正文、Authorization、Cookie 或其他敏感请求头；不上传报告，不自动打开外部网址。</p>
+</footer>
+
+<script type="application/json" id="accepttwin-report">
+{
+  "critical_count": 0,
+  "diagnostics": [
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": "entry-aa37444de71f43f5",
+        "cache_key_sha256": "aa37444de71f43f514e14d66d0af5d8e0e6ba112841555d4cabee1872ef0751c",
+        "cache_reset_confirmed": true,
+        "cache_status": "MISS",
+        "evidence_conflict": false,
+        "origin_counter_delta": 1,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": true
+      },
+      "experiment_id": "HTML_COLD",
+      "message": "request 003 claims MISS but no matching origin event exists for it",
+      "request_index": 3,
+      "severity": "WARNING"
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": "entry-f24c611d9614aa4f",
+        "cache_key_sha256": "f24c611d9614aa4f6a12c6269fe3ac87d4c652dfe2d9ed12e02e72dbf3a52c22",
+        "cache_reset_confirmed": true,
+        "cache_status": "MISS",
+        "evidence_conflict": false,
+        "origin_counter_delta": 1,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": true
+      },
+      "experiment_id": "MARKDOWN_COLD",
+      "message": "request 004 claims MISS but no matching origin event exists for it",
+      "request_index": 4,
+      "severity": "WARNING"
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": "entry-aa37444de71f43f5",
+        "cache_key_sha256": "aa37444de71f43f514e14d66d0af5d8e0e6ba112841555d4cabee1872ef0751c",
+        "cache_reset_confirmed": true,
+        "cache_status": "MISS",
+        "evidence_conflict": false,
+        "origin_counter_delta": 1,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": true
+      },
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "message": "request 005 claims MISS but no matching origin event exists for it",
+      "request_index": 5,
+      "severity": "WARNING"
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": "entry-f24c611d9614aa4f",
+        "cache_key_sha256": "f24c611d9614aa4f6a12c6269fe3ac87d4c652dfe2d9ed12e02e72dbf3a52c22",
+        "cache_reset_confirmed": true,
+        "cache_status": "MISS",
+        "evidence_conflict": false,
+        "origin_counter_delta": 1,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": true
+      },
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "message": "request 006 claims MISS but no matching origin event exists for it",
+      "request_index": 6,
+      "severity": "WARNING"
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": "entry-f24c611d9614aa4f",
+        "cache_key_sha256": "f24c611d9614aa4f6a12c6269fe3ac87d4c652dfe2d9ed12e02e72dbf3a52c22",
+        "cache_reset_confirmed": true,
+        "cache_status": "MISS",
+        "evidence_conflict": false,
+        "origin_counter_delta": 1,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": true
+      },
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "message": "request 007 claims MISS but no matching origin event exists for it",
+      "request_index": 7,
+      "severity": "WARNING"
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": "entry-aa37444de71f43f5",
+        "cache_key_sha256": "aa37444de71f43f514e14d66d0af5d8e0e6ba112841555d4cabee1872ef0751c",
+        "cache_reset_confirmed": true,
+        "cache_status": "MISS",
+        "evidence_conflict": false,
+        "origin_counter_delta": 1,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": true
+      },
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "message": "request 008 claims MISS but no matching origin event exists for it",
+      "request_index": 8,
+      "severity": "WARNING"
+    }
+  ],
+  "final": true,
+  "first_error": 3,
+  "first_error_experiment_id": "HTML_COLD",
+  "input": {
+    "cache_behavior": {
+      "max_age_seconds": 60,
+      "mode": "variant_by_accept",
+      "vary_accept": "advisory"
+    },
+    "contract_id": "s0-C21",
+    "contract_sha256": "845420d26bd91c25e5ff27be6f1ebfc75c620c4caa9c446eb51615294924b640",
+    "origin_url": "http://127.0.0.1:45645/doc",
+    "request_headers": {
+      "accept_encoding": "identity",
+      "accept_language": "en",
+      "user_agent": "AcceptTwin/1.0.0"
+    },
+    "url": "http://127.0.0.1:40537/doc"
+  },
+  "observations": [
+    {
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "cache_entry_id": null,
+      "cache_key_sha256": null,
+      "cache_status": null,
+      "experiment_id": "ORIGIN_HTML",
+      "origin_counter_delta": 1,
+      "request_index": 1,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_status": 200,
+      "sentinel_match": true
+    },
+    {
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "cache_entry_id": null,
+      "cache_key_sha256": null,
+      "cache_status": null,
+      "experiment_id": "ORIGIN_MARKDOWN",
+      "origin_counter_delta": 1,
+      "request_index": 2,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_status": 200,
+      "sentinel_match": true
+    },
+    {
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "cache_entry_id": "entry-aa37444de71f43f5",
+      "cache_key_sha256": "aa37444de71f43f514e14d66d0af5d8e0e6ba112841555d4cabee1872ef0751c",
+      "cache_status": "MISS",
+      "experiment_id": "HTML_COLD",
+      "origin_counter_delta": 1,
+      "request_index": 3,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_status": 200,
+      "sentinel_match": true
+    },
+    {
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "cache_entry_id": "entry-f24c611d9614aa4f",
+      "cache_key_sha256": "f24c611d9614aa4f6a12c6269fe3ac87d4c652dfe2d9ed12e02e72dbf3a52c22",
+      "cache_status": "MISS",
+      "experiment_id": "MARKDOWN_COLD",
+      "origin_counter_delta": 1,
+      "request_index": 4,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_status": 200,
+      "sentinel_match": true
+    },
+    {
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "cache_entry_id": "entry-aa37444de71f43f5",
+      "cache_key_sha256": "aa37444de71f43f514e14d66d0af5d8e0e6ba112841555d4cabee1872ef0751c",
+      "cache_status": "MISS",
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "origin_counter_delta": 1,
+      "request_index": 5,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_status": 200,
+      "sentinel_match": true
+    },
+    {
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "cache_entry_id": "entry-f24c611d9614aa4f",
+      "cache_key_sha256": "f24c611d9614aa4f6a12c6269fe3ac87d4c652dfe2d9ed12e02e72dbf3a52c22",
+      "cache_status": "MISS",
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "origin_counter_delta": 1,
+      "request_index": 6,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_status": 200,
+      "sentinel_match": true
+    },
+    {
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "cache_entry_id": "entry-f24c611d9614aa4f",
+      "cache_key_sha256": "f24c611d9614aa4f6a12c6269fe3ac87d4c652dfe2d9ed12e02e72dbf3a52c22",
+      "cache_status": "MISS",
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "origin_counter_delta": 1,
+      "request_index": 7,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_status": 200,
+      "sentinel_match": true
+    },
+    {
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "cache_entry_id": "entry-aa37444de71f43f5",
+      "cache_key_sha256": "aa37444de71f43f514e14d66d0af5d8e0e6ba112841555d4cabee1872ef0751c",
+      "cache_status": "MISS",
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "origin_counter_delta": 1,
+      "request_index": 8,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_status": 200,
+      "sentinel_match": true
+    }
+  ],
+  "oracle": {
+    "first_error": 3,
+    "first_error_experiment_id": "HTML_COLD",
+    "verdict": "INCONCLUSIVE"
+  },
+  "oracle_parity": true,
+  "project": {
+    "project_id": "P032",
+    "version": "1.0.1"
+  },
+  "reasons": [
+    "key cache evidence is missing or conflicting"
+  ],
+  "report_hash": "c4f1cddb2ee9749a884a30341aa97f656f8178530326bee77f4932ead6d128bd",
+  "scenario_id": "C21",
+  "schema": "accepttwin.report/v1",
+  "verdict": "INCONCLUSIVE",
+  "warning_count": 6
+}
+</script>
+<script type="application/json" id="accepttwin-baseline">
+{
+  "html": {
+    "accept": "text/html",
+    "expected_content_type": "text/html; charset=utf-8",
+    "expected_status": 200
+  },
+  "markdown": {
+    "accept": "text/markdown",
+    "expected_content_type": "text/markdown; charset=utf-8",
+    "expected_status": 200
+  }
+}
+</script>
+<script type="application/json" id="accepttwin-summary">
+
+</script>
+<script>
+"use strict";
+/**
+ * Report data types for the AcceptTwin self-contained HTML report
+ * (P032 T010).
+ *
+ * These types mirror the frozen ``accepttwin.report/v1`` JSON shape
+ * built by ``src/accepttwin/report_builder.py`` (PROJECT_BOOK §14,
+ * §5.8) — they describe data, they never re-decide a verdict. The
+ * UI only renders what the report already contains: no raw response
+ * body text and no sensitive request header ever appears here
+ * (§7.12 I-12, §17.2), and the Sentinel *values* are never carried
+ * in any field below (only ``sentinel_match`` booleans and
+ * ``body_sha256`` / ``expected_sentinel_sha256`` hashes).
+ *
+ * The four modules of this directory follow PROJECT_BOOK §15.3
+ * (frontend module tree — the full list was truncated in the frozen
+ * extraction, D-04; the surviving names are app / types / timeline /
+ * diagnostics): types (this file), timeline (dual-direction cache
+ * lanes), diagnostics (diagnostic + first-error presentation) and
+ * app (DOM rendering + bootstrap).
+ */
+var AcceptTwinUI;
+(function (AcceptTwinUI) {
+    AcceptTwinUI.VERDICTS = [
+        "PASS_OBSERVED",
+        "ORIGIN_NEGOTIATION_ERROR",
+        "REPRESENTATION_BLEED",
+        "CONTRACT_MISMATCH",
+        "INCONCLUSIVE",
+    ];
+    /** Chinese labels for the five verdicts (presentation only). */
+    AcceptTwinUI.VERDICT_LABELS = {
+        PASS_OBSERVED: "通过（已观测）",
+        ORIGIN_NEGOTIATION_ERROR: "源站协商错误",
+        REPRESENTATION_BLEED: "表示串版",
+        CONTRACT_MISMATCH: "契约不符",
+        INCONCLUSIVE: "证据不足",
+    };
+    AcceptTwinUI.EXPERIMENT_IDS = [
+        "ORIGIN_HTML",
+        "ORIGIN_MARKDOWN",
+        "HTML_COLD",
+        "MARKDOWN_COLD",
+        "HTML_TO_MARKDOWN",
+        "MARKDOWN_TO_HTML",
+    ];
+    AcceptTwinUI.EXPERIMENTS = [
+        {
+            id: "ORIGIN_HTML",
+            label: "源站 HTML 基线（O-H）",
+            kind: "baseline",
+            indices: [1],
+        },
+        {
+            id: "ORIGIN_MARKDOWN",
+            label: "源站 Markdown 基线（O-M）",
+            kind: "baseline",
+            indices: [2],
+        },
+        {
+            id: "HTML_COLD",
+            label: "实验 1：HTML 独立冷请求",
+            kind: "cold",
+            indices: [3],
+        },
+        {
+            id: "MARKDOWN_COLD",
+            label: "实验 2：Markdown 独立冷请求",
+            kind: "cold",
+            indices: [4],
+        },
+        {
+            id: "HTML_TO_MARKDOWN",
+            label: "实验 3：HTML → Markdown 暖缓存",
+            kind: "warm",
+            indices: [5, 6],
+        },
+        {
+            id: "MARKDOWN_TO_HTML",
+            label: "实验 4：Markdown → HTML 暖缓存",
+            kind: "warm",
+            indices: [7, 8],
+        },
+    ];
+    /** The four experiments of §6 (the two baselines excluded). */
+    AcceptTwinUI.FOUR_EXPERIMENTS = AcceptTwinUI.EXPERIMENTS.filter((meta) => meta.kind !== "baseline");
+})(AcceptTwinUI || (AcceptTwinUI = {}));
+/**
+ * Dual-direction cache timeline (P032 T010).
+ *
+ * Pure functions over the eight frozen §5.5 observations — no DOM
+ * here, so this logic is independently checkable. The timeline
+ * follows PROJECT_BOOK §4.3 area C:
+ *
+ *   lane 1: RESET → HTML MISS → Markdown MISS / HIT / BYPASS
+ *   lane 2: RESET → Markdown MISS → HTML MISS / HIT / BYPASS
+ *
+ * The §6.3 fixed sequence has eight requests, so each lane shows
+ * the warm experiment's *store* request explicitly between the cold
+ * request and the warm second request (005 between 003 and 006;
+ * 007 between 004 and 008): hiding the store request would drop
+ * evidence, and the lane headline is still the second warm
+ * request's cache state, exactly as §4.3 area C specifies.
+ *
+ * The RESET markers are structural: §6.2 requires each experiment
+ * to reset the cache independently, but the frozen report JSON
+ * carries no reset records, so a marker means "experiment boundary
+ * — cache reset per §6.2", not an observed reset event. The UI
+ * labels it as such; nothing here invents reset evidence.
+ */
+/// <reference path="./types.ts" />
+var AcceptTwinUI;
+(function (AcceptTwinUI) {
+    /**
+     * The representation actually observed, derived only from the
+     * response Content-Type (§5.1.2 frozen values). "unknown" when
+     * the Content-Type matches neither representation — the raw
+     * Content-Type string is shown alongside, never body text.
+     */
+    function observedRepresentation(obs) {
+        const ct = obs.response_content_type.toLowerCase();
+        if (ct.startsWith("text/html")) {
+            return "html";
+        }
+        if (ct.startsWith("text/markdown")) {
+            return "markdown";
+        }
+        return "unknown";
+    }
+    AcceptTwinUI.observedRepresentation = observedRepresentation;
+    /** Chinese label for a requested / observed representation. */
+    function representationLabel(rep) {
+        if (rep === "html") {
+            return "HTML";
+        }
+        if (rep === "markdown") {
+            return "Markdown";
+        }
+        return "无法识别";
+    }
+    AcceptTwinUI.representationLabel = representationLabel;
+    /**
+     * Dual-evidence agreement for one proxied observation (§5.3 /
+     * §7.7 I-07): the header state and the origin-counter behaviour
+     * must agree — MISS / BYPASS expect the origin counter to rise
+     * by 1, HIT expects it to stay flat.
+     */
+    function dualEvidenceAgreement(obs) {
+        if (obs.cache_status === null) {
+            // Direct-origin baseline (ADR-001): no cache evidence exists.
+            return "direct";
+        }
+        if (obs.cache_status === "CACHE_STATE_UNKNOWN") {
+            return "unknown";
+        }
+        if (obs.cache_status === "HIT") {
+            return obs.origin_counter_delta === 0 ? "agree" : "conflict";
+        }
+        // MISS and BYPASS both require the request to reach the origin.
+        return obs.origin_counter_delta === 1 ? "agree" : "conflict";
+    }
+    AcceptTwinUI.dualEvidenceAgreement = dualEvidenceAgreement;
+    AcceptTwinUI.DUAL_EVIDENCE_LABELS = {
+        agree: "双重证据一致",
+        conflict: "双重证据冲突",
+        unknown: "缓存状态无法确认",
+        direct: "直连源站，不经过缓存",
+    };
+    /**
+     * Cache-key summary (§4.3 area C: "缓存键摘要"): the first 16
+     * hex characters of the key hash plus an ellipsis. The full hash
+     * stays in the embedded report JSON (and in the downloadable
+     * JSON); the UI shows only the summary. Null when no key exists
+     * (origin baselines, unconfirmed states).
+     */
+    function cacheKeySummary(cacheKeySha256) {
+        if (cacheKeySha256 === null || cacheKeySha256 === "") {
+            return "—";
+        }
+        return cacheKeySha256.slice(0, 16) + "…";
+    }
+    AcceptTwinUI.cacheKeySummary = cacheKeySummary;
+    const RESET_STEP = {
+        kind: "reset",
+        label: "RESET — 按 §6.2 独立清空缓存（实验边界标记）",
+    };
+    /**
+     * Build the two §4.3 area C lanes from the eight observations.
+     * Lane 1 covers requests 003 (HTML cold) → 005 (warm store) →
+     * 006 (warm second); lane 2 covers 004 → 007 → 008.
+     */
+    function buildLanes(observations) {
+        const byIndex = new Map();
+        for (const obs of observations) {
+            byIndex.set(obs.request_index, obs);
+        }
+        const pick = (indices) => {
+            const steps = [RESET_STEP];
+            for (const index of indices) {
+                const obs = byIndex.get(index);
+                if (obs !== undefined) {
+                    steps.push({ kind: "request", observation: obs });
+                }
+            }
+            return steps;
+        };
+        return [
+            {
+                id: "HTML_TO_MARKDOWN",
+                title: "方向一：HTML → Markdown（实验 3）",
+                steps: pick([3, 5, 6]),
+            },
+            {
+                id: "MARKDOWN_TO_HTML",
+                title: "方向二：Markdown → HTML（实验 4）",
+                steps: pick([4, 7, 8]),
+            },
+        ];
+    }
+    AcceptTwinUI.buildLanes = buildLanes;
+    /**
+     * One-line status for one of the four §6 experiments, derived
+     * from its observations: request count, cache-state chain,
+     * Sentinel match rate. Never claims more than the observations
+     * show.
+     */
+    function experimentStatus(meta, observations) {
+        const obs = meta.indices
+            .map((index) => observations.find((o) => o.request_index === index))
+            .filter((o) => o !== undefined);
+        if (obs.length === 0) {
+            return "无观测记录";
+        }
+        const states = obs.map((o) => o.cache_status === null ? "直连" : o.cache_status);
+        const matched = obs.filter((o) => o.sentinel_match).length;
+        const chain = states.join(" → ");
+        return (`完成 · ${obs.length} 个请求 · 缓存 ${chain} · ` +
+            `Sentinel 匹配 ${matched}/${obs.length}`);
+    }
+    AcceptTwinUI.experimentStatus = experimentStatus;
+    /**
+     * Expected cache state for one request under §6.1, given the
+     * contract's cache mode. Used only as a *label* ("预期") next to
+     * the observed state — the verdict itself is never recomputed
+     * here.
+     */
+    function expectedCacheState(experimentId, requestIndex, cacheMode) {
+        const bypass = cacheMode === "no_store";
+        if (experimentId === "ORIGIN_HTML" || experimentId === "ORIGIN_MARKDOWN") {
+            return "直连源站，无缓存状态";
+        }
+        if (experimentId === "HTML_COLD" || experimentId === "MARKDOWN_COLD") {
+            return bypass ? "BYPASS" : "MISS";
+        }
+        // Warm experiments: first request stores, second is judged.
+        const isFirst = requestIndex === 5 || requestIndex === 7;
+        if (isFirst) {
+            return bypass ? "BYPASS" : "MISS";
+        }
+        return bypass ? "BYPASS" : "MISS（正确隔离）/ HIT（串版证据）";
+    }
+    AcceptTwinUI.expectedCacheState = expectedCacheState;
+})(AcceptTwinUI || (AcceptTwinUI = {}));
+/**
+ * Diagnostics and first-error presentation (P032 T010).
+ *
+ * Pure functions over the frozen §8 diagnostics and the §6.3
+ * first-error location — no DOM here. Nothing in this module
+ * re-derives a verdict or a diagnostic: it only formats what the
+ * report already contains. Evidence values are rendered
+ * generically (hashes, flags, counters, loopback URLs, the fixed
+ * ``redacted:non-loopback`` marker); raw body text can never
+ * appear because the report itself never carries it (§7.12 I-12),
+ * and ``scripts/embed_report.py`` additionally scans the finished
+ * HTML for the Sentinel literals before writing it.
+ */
+/// <reference path="./types.ts" />
+var AcceptTwinUI;
+(function (AcceptTwinUI) {
+    /** One-line §8 descriptions (presentation labels only). */
+    AcceptTwinUI.DIAGNOSTIC_DESCRIPTIONS = {
+        ORIGIN_NEGOTIATION_ERROR: "源站基线未按表示契约返回正确内容",
+        REPRESENTATION_BLEED: "暖缓存第二请求得到了另一种表示（已证实串版）",
+        CONTRACT_MISMATCH: "响应不符合声明契约",
+        CACHE_STATE_UNKNOWN: "无法用双重证据确认缓存状态",
+        SENTINEL_MISMATCH: "响应正文缺少请求表示应有的精确 Sentinel",
+        INCONCLUSIVE_LIMIT: "超出首版支持范围，无法形成可靠判断",
+        VARY_ACCEPT_ABSENT: "源站响应未声明 Vary: Accept",
+        CACHE_EVIDENCE_CONFLICT: "代理报告的缓存状态与源站行为证据不一致",
+        CACHE_POLICY_MISMATCH: "代理实际行为与契约声明的缓存模式冲突",
+    };
+    /**
+     * Chinese labels for evidence keys seen in §8 diagnostics.
+     * Unknown keys fall back to the key itself — the value is still
+     * shown, never dropped silently.
+     */
+    function evidenceLabel(key) {
+        const labels = {
+            body_sha256: "正文 SHA-256",
+            body_size: "正文大小（字节）",
+            cache_control: "Cache-Control",
+            cache_entry_count_after: "缓存条目数（后）",
+            cache_entry_count_before: "缓存条目数（前）",
+            cache_entry_id: "缓存条目 ID",
+            cache_key_sha256: "缓存键 SHA-256",
+            cache_reset_confirmed: "缓存重置已确认",
+            cache_status: "缓存状态",
+            declared_cache_mode: "契约声明的缓存模式",
+            evidence_conflict: "证据冲突",
+            evidence_consistent: "证据一致",
+            expected: "预期",
+            expected_content_type: "预期 Content-Type",
+            expected_sentinel_sha256: "预期 Sentinel SHA-256",
+            expected_status: "预期状态码",
+            experiment_id: "实验",
+            first_request_index: "首次请求序号",
+            limit_code: "超出范围原因",
+            observed: "实际",
+            observed_content_type: "实际 Content-Type",
+            observed_representation: "实际表示",
+            observed_status: "实际状态码",
+            observed_cache_status: "实际缓存状态",
+            origin_counter_after: "源站计数（后）",
+            origin_counter_before: "源站计数（前）",
+            origin_counter_delta: "源站计数变化",
+            origin_direct: "直连源站",
+            origin_journal_available: "源站事件日志可用",
+            proxy_cache_header_present: "代理缓存状态头存在",
+            proxy_reported_status: "代理报告的状态",
+            redirect_target: "重定向目标",
+            request_index: "请求序号",
+            request_url: "请求 URL",
+            requested_representation: "请求表示",
+            response_content_type: "响应 Content-Type",
+            response_status: "响应状态码",
+            sentinel_match: "Sentinel 匹配",
+            stage: "阶段",
+            supported_limit: "支持上限",
+            vary_accept: "Vary 要求",
+        };
+        return labels[key] ?? key;
+    }
+    AcceptTwinUI.evidenceLabel = evidenceLabel;
+    /**
+     * Render one evidence value as plain text. Nested ``expected`` /
+     * ``observed`` objects flatten one level (``status=200,
+     * content_type=…``). Booleans render as 是/否; null renders as
+     * an em dash. No value is ever interpreted as HTML — callers
+     * must assign the result via ``textContent``.
+     */
+    function formatEvidenceValue(value) {
+        if (value === null || value === undefined) {
+            return "—";
+        }
+        if (typeof value === "boolean") {
+            return value ? "是" : "否";
+        }
+        if (typeof value === "number") {
+            return String(value);
+        }
+        if (typeof value === "string") {
+            return value;
+        }
+        if (Array.isArray(value)) {
+            return value.map((item) => formatEvidenceValue(item)).join(", ");
+        }
+        if (typeof value === "object") {
+            return Object.entries(value)
+                .map(([key, item]) => `${key}=${formatEvidenceValue(item)}`)
+                .join(", ");
+        }
+        return String(value);
+    }
+    AcceptTwinUI.formatEvidenceValue = formatEvidenceValue;
+    /** The observation the first error points at, or null. */
+    function firstErrorObservation(report) {
+        if (report.first_error === null) {
+            return null;
+        }
+        return (report.observations.find((obs) => obs.request_index === report.first_error) ?? null);
+    }
+    AcceptTwinUI.firstErrorObservation = firstErrorObservation;
+    /** Diagnostics sorted by request order (§6.3: never re-sorted by
+     * severity — the report's order is the execution order). */
+    function diagnosticsInOrder(report) {
+        return [...report.diagnostics].sort((a, b) => {
+            const ra = a.request_index ?? Number.MAX_SAFE_INTEGER;
+            const rb = b.request_index ?? Number.MAX_SAFE_INTEGER;
+            return ra - rb;
+        });
+    }
+    AcceptTwinUI.diagnosticsInOrder = diagnosticsInOrder;
+})(AcceptTwinUI || (AcceptTwinUI = {}));
+/**
+ * DOM rendering for the AcceptTwin self-contained HTML report
+ * (P032 T010).
+ *
+ * Renders the ten required interface items (T010 task card) from
+ * the embedded ``accepttwin.report/v1`` JSON payload:
+ *
+ *   1. final verdict            (§4.3 area A)
+ *   2. HTML / Markdown baselines (§4.3 area B)
+ *   3. four experiment states   (§6)
+ *   4. dual-direction timeline  (§4.3 area C)
+ *   5. cache evidence           (§5.3, §4.3 area C)
+ *   6. first-error location     (§4.3 area D, §6.3)
+ *   7. diagnostic codes         (§4.3 area E, §8)
+ *   8. Oracle parity            (§12.4)
+ *   9. report hash              (§10.4)
+ *  10. privacy preview          (§4.3 area F, §17.3)
+ *
+ * Safety rules (fail-closed by construction):
+ * - All report data is inserted via ``textContent`` only — never
+ *   ``innerHTML`` — so no report string can become markup.
+ * - No remote fetch, no link, no image, no iframe: the only
+ *   network-adjacent action is the JSON download button, which
+ *   builds a Blob from the already-embedded payload at click time.
+ * - No body text is ever displayed: only hashes (truncated to a
+ *   16-hex summary in the visible UI, full value in the embedded
+ *   JSON) and Sentinel match flags.
+ * - This module never recomputes a verdict or a diagnostic; it
+ *   only renders what the report contains.
+ */
+/// <reference path="./types.ts" />
+/// <reference path="./timeline.ts" />
+/// <reference path="./diagnostics.ts" />
+var AcceptTwinUI;
+(function (AcceptTwinUI) {
+    // ------------------------------------------------------------------
+    // DOM helpers (textContent only — no innerHTML anywhere)
+    // ------------------------------------------------------------------
+    function el(tag, className, text) {
+        const node = document.createElement(tag);
+        if (className !== undefined && className !== "") {
+            node.className = className;
+        }
+        if (text !== undefined) {
+            node.textContent = text;
+        }
+        return node;
+    }
+    function show(id) {
+        return document.getElementById(id);
+    }
+    function clear(node) {
+        while (node.firstChild !== null) {
+            node.removeChild(node.firstChild);
+        }
+    }
+    /** Two-column key/value table. Values are always plain text. */
+    function kvTable(rows) {
+        const table = document.createElement("table");
+        table.className = "kv";
+        const body = document.createElement("tbody");
+        for (const [key, value] of rows) {
+            const tr = document.createElement("tr");
+            tr.appendChild(el("th", "", key));
+            tr.appendChild(el("td", "mono", value));
+            body.appendChild(tr);
+        }
+        table.appendChild(body);
+        return table;
+    }
+    function hashSummary(hash) {
+        return hash.length > 16 ? hash.slice(0, 16) + "…" : hash;
+    }
+    function verdictBadge(verdict) {
+        const badge = el("span", "verdict-badge verdict-" + verdict, verdict + " · " + AcceptTwinUI.VERDICT_LABELS[verdict]);
+        return badge;
+    }
+    function severityBadge(severity) {
+        return el("span", "severity severity-" + severity, severity);
+    }
+    // ------------------------------------------------------------------
+    // 1. Final verdict (§4.3 area A)
+    // ------------------------------------------------------------------
+    function renderVerdict(report) {
+        const section = show("section-verdict");
+        if (section === null) {
+            return;
+        }
+        clear(section);
+        section.appendChild(el("h2", "", "1 · 最终裁决"));
+        const badgeRow = el("p", "verdict-row");
+        badgeRow.appendChild(verdictBadge(report.verdict));
+        const finalText = report.final
+            ? "最终有效报告（Oracle parity 通过）"
+            : "非最终报告（未提供 Oracle 结果，或 Oracle parity 未通过）";
+        badgeRow.appendChild(el("span", "final-flag", finalText));
+        section.appendChild(badgeRow);
+        section.appendChild(kvTable([
+            ["场景 ID", report.scenario_id],
+            ["诊断总数", String(report.diagnostics.length)],
+            ["CRITICAL 数量", String(report.critical_count)],
+            ["WARNING 数量", String(report.warning_count)],
+            [
+                "首次错误请求",
+                report.first_error === null
+                    ? "无"
+                    : `请求 ${String(report.first_error).padStart(3, "0")}` +
+                        (report.first_error_experiment_id !== null
+                            ? `（${report.first_error_experiment_id}）`
+                            : ""),
+            ],
+            ["输入契约 SHA-256", report.input.contract_sha256],
+            ["报告 Schema", report.schema],
+        ]));
+        if (report.reasons.length > 0) {
+            section.appendChild(el("h3", "", "裁决理由"));
+            const list = document.createElement("ul");
+            for (const reason of report.reasons) {
+                list.appendChild(el("li", "", reason));
+            }
+            section.appendChild(list);
+        }
+    }
+    // ------------------------------------------------------------------
+    // 2. HTML / Markdown baselines (§4.3 area B)
+    // ------------------------------------------------------------------
+    function renderBaselines(report, baseline) {
+        const section = show("section-baseline");
+        if (section === null) {
+            return;
+        }
+        clear(section);
+        section.appendChild(el("h2", "", "2 · HTML / Markdown 基线"));
+        section.appendChild(el("p", "note", "源站直连基线（请求 001 / 002，不经过缓存代理）。预期值来自运行契约 " +
+            "（无契约时取冻结 §5.1.2 常量）；正文原文不显示，只显示 Sentinel 匹配标志与正文哈希。"));
+        const grid = el("div", "baseline-grid");
+        const columns = [
+            { rep: "html", obsIndex: 1, title: "HTML 基线（请求 001）" },
+            { rep: "markdown", obsIndex: 2, title: "Markdown 基线（请求 002）" },
+        ];
+        for (const column of columns) {
+            const expected = baseline[column.rep];
+            const obs = report.observations.find((o) => o.request_index === column.obsIndex);
+            const card = el("div", "baseline-card");
+            card.appendChild(el("h3", "", column.title));
+            if (obs === undefined) {
+                card.appendChild(el("p", "", "无观测记录"));
+                grid.appendChild(card);
+                continue;
+            }
+            const passed = obs.response_status === expected.expected_status &&
+                obs.response_content_type === expected.expected_content_type &&
+                obs.sentinel_match;
+            card.appendChild(kvTable([
+                ["Accept 请求值", expected.accept],
+                ["预期状态码", String(expected.expected_status)],
+                ["实际状态码", String(obs.response_status)],
+                ["预期 Content-Type", expected.expected_content_type],
+                ["实际 Content-Type", obs.response_content_type],
+                ["Sentinel 匹配", obs.sentinel_match ? "匹配" : "不匹配"],
+                ["正文 SHA-256（摘要）", hashSummary(obs.body_sha256)],
+                ["源站基线结果", passed ? "通过" : "失败"],
+            ]));
+            grid.appendChild(card);
+        }
+        section.appendChild(grid);
+    }
+    // ------------------------------------------------------------------
+    // 3. Four experiment states (§6)
+    // ------------------------------------------------------------------
+    function renderExperiments(report) {
+        const section = show("section-experiments");
+        if (section === null) {
+            return;
+        }
+        clear(section);
+        section.appendChild(el("h2", "", "3 · 四种实验状态"));
+        section.appendChild(el("p", "note", "四种实验按 §6.1 固定顺序执行，缺一不可；每个实验独立清空缓存 " +
+            "（§6.2），暖缓存实验的两次请求之间不清缓存。点击可展开查看每次请求的完整记录。"));
+        const cacheMode = report.input.cache_behavior.mode;
+        for (const meta of AcceptTwinUI.FOUR_EXPERIMENTS) {
+            const details = document.createElement("details");
+            details.className = "experiment";
+            const summary = document.createElement("summary");
+            summary.appendChild(el("span", "", meta.label + " — "));
+            summary.appendChild(el("span", "", AcceptTwinUI.experimentStatus(meta, report.observations)));
+            details.appendChild(summary);
+            const table = document.createElement("table");
+            table.className = "requests";
+            const head = document.createElement("thead");
+            const headRow = document.createElement("tr");
+            for (const label of [
+                "请求",
+                "请求表示",
+                "响应表示",
+                "状态码",
+                "Content-Type",
+                "缓存状态（预期 / 实际）",
+                "源站计数变化",
+                "Sentinel",
+            ]) {
+                headRow.appendChild(el("th", "", label));
+            }
+            head.appendChild(headRow);
+            table.appendChild(head);
+            const body = document.createElement("tbody");
+            for (const index of meta.indices) {
+                const obs = report.observations.find((o) => o.request_index === index);
+                if (obs === undefined) {
+                    continue;
+                }
+                const row = document.createElement("tr");
+                row.appendChild(el("td", "mono", String(obs.request_index).padStart(3, "0")));
+                row.appendChild(el("td", "", AcceptTwinUI.representationLabel(obs.requested_representation)));
+                row.appendChild(el("td", "", AcceptTwinUI.representationLabel(AcceptTwinUI.observedRepresentation(obs))));
+                row.appendChild(el("td", "mono", String(obs.response_status)));
+                row.appendChild(el("td", "mono", obs.response_content_type));
+                row.appendChild(el("td", "", AcceptTwinUI.expectedCacheState(obs.experiment_id, obs.request_index, cacheMode) +
+                    " / " +
+                    (obs.cache_status === null ? "直连" : obs.cache_status)));
+                row.appendChild(el("td", "mono", obs.origin_counter_delta >= 0 ? `+${obs.origin_counter_delta}` : String(obs.origin_counter_delta)));
+                row.appendChild(el("td", "", obs.sentinel_match ? "匹配" : "不匹配"));
+                body.appendChild(row);
+            }
+            table.appendChild(body);
+            details.appendChild(table);
+            section.appendChild(details);
+        }
+    }
+    // ------------------------------------------------------------------
+    // 4. Dual-direction timeline (§4.3 area C)
+    // ------------------------------------------------------------------
+    function renderTimeline(report) {
+        const section = show("section-timeline");
+        if (section === null) {
+            return;
+        }
+        clear(section);
+        section.appendChild(el("h2", "", "4 · 双向缓存时间线"));
+        section.appendChild(el("p", "note", "每条时间线以 RESET 开头（§6.2：每个实验独立清空缓存；报告 JSON " +
+            "不含重置记录，RESET 在此仅表示实验边界，不是对重置事件的观测断言）。" +
+            "暖缓存实验的第一次请求是“存入”步骤，第二次请求是被判定的步骤。"));
+        for (const lane of AcceptTwinUI.buildLanes(report.observations)) {
+            section.appendChild(el("h3", "", lane.title));
+            const list = el("ol", "lane");
+            for (const step of lane.steps) {
+                const item = document.createElement("li");
+                if (step.kind === "reset") {
+                    item.className = "lane-reset";
+                    item.appendChild(el("span", "", step.label));
+                    list.appendChild(item);
+                    continue;
+                }
+                const obs = step.observation;
+                item.className = "lane-request";
+                const line = el("span", "");
+                line.appendChild(el("strong", "", `请求 ${String(obs.request_index).padStart(3, "0")} `));
+                line.appendChild(document.createTextNode(`${AcceptTwinUI.representationLabel(obs.requested_representation)} → ` +
+                    `${AcceptTwinUI.representationLabel(AcceptTwinUI.observedRepresentation(obs))} · ` +
+                    `缓存 ${obs.cache_status ?? "直连"} · ` +
+                    `键摘要 ${AcceptTwinUI.cacheKeySummary(obs.cache_key_sha256)} · ` +
+                    `条目 ${obs.cache_entry_id ?? "—"} · ` +
+                    `源站计数 ${obs.origin_counter_delta >= 0 ? "+" : ""}${obs.origin_counter_delta} · ` +
+                    `Sentinel ${obs.sentinel_match ? "匹配" : "不匹配"}`));
+                item.appendChild(line);
+                list.appendChild(item);
+            }
+            section.appendChild(list);
+        }
+    }
+    // ------------------------------------------------------------------
+    // 5. Cache evidence (§5.3 dual evidence)
+    // ------------------------------------------------------------------
+    function renderCacheEvidence(report) {
+        const section = show("section-cache");
+        if (section === null) {
+            return;
+        }
+        clear(section);
+        section.appendChild(el("h2", "", "5 · 缓存证据"));
+        section.appendChild(el("p", "note", "每个缓存状态必须同时具备响应头证据与源站行为证据（§5.3 / §7.7 I-07），" +
+            "两者缺一不可：MISS / BYPASS 要求源站计数 +1，HIT 要求源站计数不变。基线请求 " +
+            "001 / 002 直连源站，不经过缓存，无缓存证据。"));
+        const table = document.createElement("table");
+        table.className = "requests";
+        const head = document.createElement("thead");
+        const headRow = document.createElement("tr");
+        for (const label of [
+            "请求",
+            "实验",
+            "响应头证据（缓存状态）",
+            "行为证据（源站计数变化）",
+            "双重证据",
+            "缓存键摘要",
+            "缓存条目 ID",
+        ]) {
+            headRow.appendChild(el("th", "", label));
+        }
+        head.appendChild(headRow);
+        table.appendChild(head);
+        const body = document.createElement("tbody");
+        for (const obs of report.observations) {
+            const row = document.createElement("tr");
+            row.appendChild(el("td", "mono", String(obs.request_index).padStart(3, "0")));
+            row.appendChild(el("td", "", obs.experiment_id));
+            row.appendChild(el("td", "", obs.cache_status ?? "直连（无）"));
+            row.appendChild(el("td", "mono", obs.origin_counter_delta >= 0 ? `+${obs.origin_counter_delta}` : String(obs.origin_counter_delta)));
+            row.appendChild(el("td", "", AcceptTwinUI.DUAL_EVIDENCE_LABELS[AcceptTwinUI.dualEvidenceAgreement(obs)] ?? "—"));
+            row.appendChild(el("td", "mono", AcceptTwinUI.cacheKeySummary(obs.cache_key_sha256)));
+            row.appendChild(el("td", "mono", obs.cache_entry_id ?? "—"));
+            body.appendChild(row);
+        }
+        table.appendChild(body);
+        section.appendChild(table);
+    }
+    // ------------------------------------------------------------------
+    // 6. First-error location (§4.3 area D, §6.3)
+    // ------------------------------------------------------------------
+    function renderFirstError(report) {
+        const section = show("section-first-error");
+        if (section === null) {
+            return;
+        }
+        clear(section);
+        section.appendChild(el("h2", "", "6 · 首次错误定位"));
+        section.appendChild(el("p", "note", "first_error 是整个运行中第一个违反冻结契约的请求（§6.3），按实际执行顺序编号，" +
+            "不按诊断严重程度重排；首次错误与最终裁决分别存储，后续更严重的错误不改写历史请求顺序。"));
+        const obs = AcceptTwinUI.firstErrorObservation(report);
+        if (obs === null || report.first_error === null) {
+            section.appendChild(el("p", "", "无首次错误：全部 8 个请求均符合冻结契约。"));
+            return;
+        }
+        section.appendChild(kvTable([
+            ["请求序号", String(report.first_error).padStart(3, "0")],
+            ["实验", report.first_error_experiment_id ?? "—"],
+            ["请求表示", AcceptTwinUI.representationLabel(obs.requested_representation)],
+            ["响应表示", AcceptTwinUI.representationLabel(AcceptTwinUI.observedRepresentation(obs))],
+            ["响应状态码", String(obs.response_status)],
+            ["响应 Content-Type", obs.response_content_type],
+            ["缓存状态", obs.cache_status ?? "直连（无）"],
+            ["Sentinel 匹配", obs.sentinel_match ? "匹配" : "不匹配"],
+            ["正文 SHA-256（摘要）", hashSummary(obs.body_sha256)],
+            ["源站计数变化", obs.origin_counter_delta >= 0 ? `+${obs.origin_counter_delta}` : String(obs.origin_counter_delta)],
+        ]));
+    }
+    // ------------------------------------------------------------------
+    // 7. Diagnostic codes (§4.3 area E, §8)
+    // ------------------------------------------------------------------
+    function renderDiagnostics(report) {
+        const section = show("section-diagnostics");
+        if (section === null) {
+            return;
+        }
+        clear(section);
+        section.appendChild(el("h2", "", "7 · 诊断代码"));
+        if (report.diagnostics.length === 0) {
+            section.appendChild(el("p", "", "无诊断：运行未触发任何诊断代码。"));
+            return;
+        }
+        for (const diag of AcceptTwinUI.diagnosticsInOrder(report)) {
+            const article = el("article", "diagnostic");
+            const head = el("p", "diagnostic-head");
+            head.appendChild(el("strong", "mono", diag.code));
+            head.appendChild(document.createTextNode(" "));
+            head.appendChild(severityBadge(diag.severity));
+            const description = AcceptTwinUI.DIAGNOSTIC_DESCRIPTIONS[diag.code];
+            if (description !== undefined) {
+                head.appendChild(document.createTextNode(" — " + description));
+            }
+            article.appendChild(head);
+            article.appendChild(el("p", "", diag.message));
+            article.appendChild(kvTable([
+                ["实验", diag.experiment_id ?? "—"],
+                [
+                    "请求序号",
+                    diag.request_index === null
+                        ? "—"
+                        : String(diag.request_index).padStart(3, "0"),
+                ],
+            ]));
+            const evidence = diag.evidence;
+            const keys = Object.keys(evidence);
+            if (keys.length > 0) {
+                const details = document.createElement("details");
+                details.className = "evidence";
+                details.appendChild(el("summary", "", "证据引用（" + String(keys.length) + " 项）"));
+                const rows = keys.map((key) => [
+                    AcceptTwinUI.evidenceLabel(key),
+                    AcceptTwinUI.formatEvidenceValue(evidence[key]),
+                ]);
+                details.appendChild(kvTable(rows));
+                article.appendChild(details);
+            }
+            section.appendChild(article);
+        }
+    }
+    // ------------------------------------------------------------------
+    // 8. Oracle parity (§12.4)
+    // ------------------------------------------------------------------
+    function renderOracle(report) {
+        const section = show("section-oracle");
+        if (section === null) {
+            return;
+        }
+        clear(section);
+        section.appendChild(el("h2", "", "8 · Oracle parity"));
+        section.appendChild(el("p", "note", "独立 TypeScript Oracle 与生产实现逐场景对账（§12.4）：比较最终裁决、" +
+            "诊断投影（code + request_index）与首次错误位置。三项全部一致时 parity 通过，" +
+            "报告方可标记最终有效（§4.2 约束 6）。"));
+        const table = document.createElement("table");
+        table.className = "requests";
+        const head = document.createElement("thead");
+        const headRow = document.createElement("tr");
+        for (const label of ["", "生产实现", "独立 Oracle"]) {
+            headRow.appendChild(el("th", "", label));
+        }
+        head.appendChild(headRow);
+        table.appendChild(head);
+        const body = document.createElement("tbody");
+        const rows = [
+            [
+                "最终裁决",
+                report.verdict,
+                report.oracle === null ? "—" : report.oracle.verdict,
+            ],
+            [
+                "首次错误",
+                report.first_error === null ? "无" : String(report.first_error),
+                report.oracle === null
+                    ? "—"
+                    : report.oracle.first_error === null
+                        ? "无"
+                        : String(report.oracle.first_error),
+            ],
+            [
+                "首次错误实验",
+                report.first_error_experiment_id ?? "—",
+                report.oracle === null
+                    ? "—"
+                    : report.oracle.first_error_experiment_id ?? "—",
+            ],
+        ];
+        for (const [label, prod, oracle] of rows) {
+            const row = document.createElement("tr");
+            row.appendChild(el("td", "", label));
+            row.appendChild(el("td", "mono", prod));
+            row.appendChild(el("td", "mono", oracle));
+            body.appendChild(row);
+        }
+        table.appendChild(body);
+        section.appendChild(table);
+        section.appendChild(kvTable([
+            [
+                "Oracle parity",
+                report.oracle_parity === null
+                    ? "未提供 Oracle 结果"
+                    : report.oracle_parity
+                        ? "一致"
+                        : "不一致",
+            ],
+            ["最终有效", report.final ? "是" : "否"],
+        ]));
+    }
+    // ------------------------------------------------------------------
+    // 9. Report hash (§10.4)
+    // ------------------------------------------------------------------
+    function renderHash(report) {
+        const section = show("section-hash");
+        if (section === null) {
+            return;
+        }
+        clear(section);
+        section.appendChild(el("h2", "", "9 · 报告哈希"));
+        section.appendChild(el("p", "note", "report_hash = SHA-256（规范化 JSON 哈希载荷）（§10.4）：载荷去掉 report_hash 本身与 " +
+            "cache_key_sha256 / cache_entry_id / origin_counter_before / origin_counter_after / " +
+            "request_url / redirect_target；url 与 origin_url 的临时端口在规范化时归一化为 0（ADR-003）。"));
+        section.appendChild(kvTable([
+            ["报告哈希", report.report_hash],
+            ["输入契约 SHA-256", report.input.contract_sha256],
+            ["场景 ID", report.scenario_id],
+        ]));
+        section.appendChild(el("p", "note", "核对：embed_report.py 在生成本页前已用 report_builder.compute_report_hash " +
+            "对报告 JSON 重算并比对一致；也可对下载的 JSON 报告重新计算核对。"));
+    }
+    // ------------------------------------------------------------------
+    // 10. Privacy preview (§4.3 area F, §17.3)
+    // ------------------------------------------------------------------
+    function renderPrivacy(report, exportName) {
+        const section = show("section-privacy");
+        if (section === null) {
+            return;
+        }
+        clear(section);
+        section.appendChild(el("h2", "", "10 · 隐私预览"));
+        section.appendChild(el("p", "note", "导出 HTML 之前必须完成隐私预览（§4.2 约束 7、§17.3）：本页在生成时已由 " +
+            "embed_report.py 打印预览并通过正文泄漏扫描；以下为本报告的预览结果。"));
+        const headers = Object.entries(report.input.request_headers)
+            .map(([key, value]) => `${key}=${value}`)
+            .join(", ");
+        section.appendChild(kvTable([
+            ["是否包含原始正文", "否"],
+            ["是否包含敏感请求头（Authorization / Cookie）", "否"],
+            ["是否包含允许展示的请求头", "是（Accept、User-Agent、Accept-Encoding、Accept-Language）"],
+            ["允许展示的请求头（实际值）", headers],
+            ["是否包含正文原始内容", "否"],
+            ["是否包含正文哈希", "是（SHA-256 与 Sentinel 匹配标志）"],
+            ["正文原文显示", "不显示 — 本页只显示哈希与匹配标志"],
+            ["导出文件", exportName],
+            ["导出前预览状态", "已完成"],
+        ]));
+        const download = el("button", "download-button", "下载 JSON 报告（" + report.scenario_id + ".json）");
+        download.setAttribute("type", "button");
+        download.addEventListener("click", () => {
+            const blob = new Blob([JSON.stringify(report, null, 2) + "\n"], {
+                type: "application/json",
+            });
+            const url = URL.createObjectURL(blob);
+            const anchor = document.createElement("a");
+            anchor.href = url;
+            anchor.download = report.scenario_id + ".json";
+            document.body.appendChild(anchor);
+            anchor.click();
+            document.body.removeChild(anchor);
+            URL.revokeObjectURL(url);
+        });
+        section.appendChild(download);
+        section.appendChild(el("p", "note", "下载内容与本页嵌入的 JSON 报告完全一致（同一份 report JSON），不经过任何网络请求。"));
+    }
+    // ------------------------------------------------------------------
+    // 48-scenario summary (index.html)
+    // ------------------------------------------------------------------
+    function renderSummary(summary) {
+        const view = show("summary-view");
+        const reportView = show("report-view");
+        if (view === null) {
+            return;
+        }
+        if (reportView !== null) {
+            reportView.setAttribute("hidden", "");
+        }
+        view.removeAttribute("hidden");
+        clear(view);
+        view.appendChild(el("h2", "", "48 场景汇总"));
+        view.appendChild(el("p", "note", "由 48 份 JSON 报告样本直接生成（未重跑实验），并与 REPORTS_SUMMARY.json 逐项核对一致。" +
+            "点击“查看报告”打开对应场景的自包含 HTML 报告（相对链接，不访问外部网址）。"));
+        const chips = el("p", "summary-chips");
+        for (const verdict of AcceptTwinUI.VERDICTS) {
+            const count = summary.counts[verdict] ?? 0;
+            chips.appendChild(el("span", "summary-chip verdict-" + verdict, `${verdict} ${count}`));
+        }
+        chips.appendChild(el("span", "summary-chip", `共 ${summary.total} 场景`));
+        view.appendChild(chips);
+        const table = document.createElement("table");
+        table.className = "requests";
+        const head = document.createElement("thead");
+        const headRow = document.createElement("tr");
+        for (const label of [
+            "场景",
+            "最终裁决",
+            "首次错误",
+            "CRITICAL",
+            "WARNING",
+            "Oracle parity",
+            "最终",
+            "报告哈希（前 12 位）",
+            "",
+        ]) {
+            headRow.appendChild(el("th", "", label));
+        }
+        head.appendChild(headRow);
+        table.appendChild(head);
+        const body = document.createElement("tbody");
+        for (const row of summary.rows) {
+            const tr = document.createElement("tr");
+            tr.appendChild(el("td", "mono", row.scenario_id));
+            const verdictCell = document.createElement("td");
+            verdictCell.appendChild(verdictBadge(row.verdict));
+            tr.appendChild(verdictCell);
+            tr.appendChild(el("td", "mono", row.first_error === null ? "—" : String(row.first_error)));
+            tr.appendChild(el("td", "mono", String(row.critical_count)));
+            tr.appendChild(el("td", "mono", String(row.warning_count)));
+            tr.appendChild(el("td", "", row.oracle_parity === null ? "未提供" : row.oracle_parity ? "一致" : "不一致"));
+            tr.appendChild(el("td", "", row.final ? "是" : "否"));
+            tr.appendChild(el("td", "mono", row.report_hash.slice(0, 12)));
+            const linkCell = document.createElement("td");
+            const link = document.createElement("a");
+            link.href = row.scenario_id + ".html";
+            link.textContent = "查看报告";
+            linkCell.appendChild(link);
+            tr.appendChild(linkCell);
+            body.appendChild(tr);
+        }
+        table.appendChild(body);
+        view.appendChild(table);
+    }
+    // ------------------------------------------------------------------
+    // Bootstrap
+    // ------------------------------------------------------------------
+    function readPayload(id) {
+        const node = document.getElementById(id);
+        if (node === null || node.textContent === null) {
+            return null;
+        }
+        const text = node.textContent.trim();
+        if (text === "") {
+            return null;
+        }
+        try {
+            return JSON.parse(text);
+        }
+        catch {
+            return null;
+        }
+    }
+    function init() {
+        const report = readPayload("accepttwin-report");
+        const baseline = readPayload("accepttwin-baseline");
+        const summary = readPayload("accepttwin-summary");
+        const notice = show("no-payload");
+        if (report !== null) {
+            if (notice !== null) {
+                notice.setAttribute("hidden", "");
+            }
+            document.title = `AcceptTwin 报告 — ${report.scenario_id} · ${report.verdict}`;
+            const heading = show("report-title");
+            if (heading !== null) {
+                heading.textContent = `AcceptTwin 报告 — ${report.scenario_id}`;
+            }
+            const fallback = {
+                html: {
+                    accept: "text/html",
+                    expected_status: 200,
+                    expected_content_type: "text/html; charset=utf-8",
+                },
+                markdown: {
+                    accept: "text/markdown",
+                    expected_status: 200,
+                    expected_content_type: "text/markdown; charset=utf-8",
+                },
+            };
+            renderVerdict(report);
+            renderBaselines(report, baseline ?? fallback);
+            renderExperiments(report);
+            renderTimeline(report);
+            renderCacheEvidence(report);
+            renderFirstError(report);
+            renderDiagnostics(report);
+            renderOracle(report);
+            renderHash(report);
+            renderPrivacy(report, report.scenario_id + ".html");
+            return;
+        }
+        if (summary !== null) {
+            if (notice !== null) {
+                notice.setAttribute("hidden", "");
+            }
+            document.title = "AcceptTwin 报告 — 48 场景汇总";
+            const heading = show("report-title");
+            if (heading !== null) {
+                heading.textContent = "AcceptTwin 报告 — 48 场景汇总";
+            }
+            renderSummary(summary);
+            return;
+        }
+        // No payload embedded: this is the bare template. The static
+        // notice in the template stays visible and explains how to
+        // generate a real report page.
+    }
+    AcceptTwinUI.init = init;
+})(AcceptTwinUI || (AcceptTwinUI = {}));
+AcceptTwinUI.init();
+
+</script>
+</body>
+</html>
