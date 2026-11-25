@@ -1,0 +1,96 @@
+{
+  "diagnostics": [
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "request_index": 1
+    },
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "request_index": 2
+    },
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 8
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 8
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 8
+    }
+  ],
+  "duration_seconds": 0.0112,
+  "expected_diagnostics": [
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "request_index": 1
+    },
+    {
+      "code": "VARY_ACCEPT_ABSENT",
+      "request_index": 2
+    },
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 8
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 8
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 8
+    }
+  ],
+  "expected_first_error": 6,
+  "expected_ok": true,
+  "expected_verdict": "REPRESENTATION_BLEED",
+  "first_error": 6,
+  "first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "oracle_first_error": 6,
+  "oracle_mismatches": [],
+  "oracle_parity": true,
+  "oracle_verdict": "REPRESENTATION_BLEED",
+  "origin_counter_delta_total": 6,
+  "report_hash": "a7e648c55c225ff482a15ec4da077f094524ec7e7d122f473e9e9450c31a193b",
+  "request_count": 8,
+  "reset_count": 4,
+  "scenario_id": "C14",
+  "step_count": 25,
+  "suite": "S0",
+  "verdict": "REPRESENTATION_BLEED",
+  "warm_hm_requests": [
+    5,
+    6
+  ],
+  "warm_mh_requests": [
+    7,
+    8
+  ]
+}

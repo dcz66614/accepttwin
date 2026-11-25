@@ -1,0 +1,55 @@
+{
+  "name": "readiness-audit",
+  "version": "2.9.0",
+  "description": "Score a site's readiness for AI agents and search (GEO, AEO, AI SEO): llms.txt, robots.txt AI crawler rules, structured data, link previews, OpenAPI, MCP, agent skills and A2A. Read-only CLI, no account.",
+  "type": "module",
+  "bin": {
+    "readiness-audit": "bin/readiness-audit.mjs"
+  },
+  "exports": "./src/audit.mjs",
+  "files": [
+    "bin",
+    "src",
+    "STANDARD.md",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": "^22.23.4 || ^24.22.1 || >=26.12.1"
+  },
+  "keywords": [
+    "ai-agents",
+    "seo",
+    "llms-txt",
+    "mcp",
+    "agent-readiness",
+    "ai-search",
+    "geo",
+    "openapi",
+    "structured-data",
+    "audit",
+    "scorecard",
+    "aeo",
+    "ai-seo",
+    "ai-visibility",
+    "generative-engine-optimization",
+    "robots-txt",
+    "ai-crawlers",
+    "seo-audit",
+    "website-audit",
+    "agent-ready",
+    "llms-txt-validator",
+    "cli"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geeks-accelerator/agent-and-search-readiness.git"
+  },
+  "homepage": "https://github.com/geeks-accelerator/agent-and-search-readiness#readme",
+  "bugs": "https://github.com/geeks-accelerator/agent-and-search-readiness/issues"
+}

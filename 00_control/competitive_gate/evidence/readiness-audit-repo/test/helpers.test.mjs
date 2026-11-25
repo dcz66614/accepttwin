@@ -1,0 +1,445 @@
+// The checks' pure helpers, run without a network.
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { sampleSkillEntries, skillNameProblem, cdnCacheNote, repeatsSummary, hasVariantDescription, parsePrevious, compareResults, formatComparison, spread, samplePages, sharedCardText, linkRels, apiPresence, missingSections, richResultPages, list, norm, pathDepth, decodeText, headings, headingSkips, sitemapEntries, llmsLinks, baseMapper, formatRecorded, safeUrl, robotsGroups, robotsAllowed, robotsLeaks, attrs, tags, meta, jsonLd, openapiDeref, openapiOps, skillFile, saysWhenToUse, markdownUrl, MARKDOWN_LINK, catalogItems, identityLinks, untypedErrors, declaredOpenapi, anchors, apiDocLinks } from '../src/helpers.mjs';
+
+test('sampleSkillEntries reads SKILL.md entries and skips archives', () => {
+  const list = [
+    { name: 'a', type: 'skill-md', url: '/.well-known/agent-skills/a/SKILL.md' },
+    { name: 'b', type: 'archive', url: '/.well-known/agent-skills/b.zip' },
+    { name: 'c', url: '/skills/c/SKILL.md' }, // no type, older index: counts
+    { name: 'd', url: '/skills/d.zip' }, // no type, not markdown: skipped
+    { name: 'e', type: 'skill-md' }, // no url
+  ];
+  assert.deepEqual(sampleSkillEntries(list).map((e) => e.name), ['a', 'c']);
+  assert.deepEqual(sampleSkillEntries(undefined), []);
+});
+
+test('sampleSkillEntries spreads five picks across a long index', () => {
+  const list = Array.from({ length: 93 }, (_, i) => ({ name: `s${i}`, type: 'skill-md', url: `/s${i}/SKILL.md` }));
+  const picked = sampleSkillEntries(list).map((e) => e.name);
+  assert.equal(picked.length, 5);
+  assert.equal(new Set(picked).size, 5);
+  assert.equal(picked[0], 's0');
+});
+
+test('skillNameProblem wants a slug that matches the folder and the index entry', () => {
+  const url = 'https://example.com/.well-known/agent-skills/adopt-a-akita/SKILL.md';
+  assert.equal(skillNameProblem({ name: 'adopt-a-akita', url, entryName: 'adopt-a-akita' }), null);
+  assert.equal(skillNameProblem({ name: 'Akita. Adopt an Akita', url, entryName: 'adopt-a-akita' }), 'not a lowercase slug');
+  assert.equal(skillNameProblem({ name: '', url }), 'no name in the frontmatter');
+  assert.equal(skillNameProblem({ name: 'akita', url, entryName: 'akita' }), 'folder is adopt-a-akita');
+  assert.equal(skillNameProblem({ name: 'adopt-a-akita', url, entryName: 'akita' }), 'index says akita');
+});
+
+test('skillNameProblem reads a folder only from .../<name>/SKILL.md URLs', () => {
+  // A /skills/<name> URL says nothing about the folder: no false "folder is skills".
+  assert.equal(skillNameProblem({ name: 'care', url: 'https://example.com/skills/care', entryName: 'care' }), null);
+  assert.equal(skillNameProblem({ name: 'care', url: 'https://raw.example.com/repo/main/skills/care/SKILL.md' }), null);
+  assert.equal(skillNameProblem({ name: 'care', url: 'https://example.com/SKILL.md' }), null);
+});
+
+test('cdnCacheNote speaks up only for a cached copy with an age', () => {
+  const h = (o) => new Headers(o);
+  assert.match(cdnCacheNote(h({ 'cf-cache-status': 'HIT', age: '5437' })), /CDN cache and is 91 minutes old/);
+  assert.match(cdnCacheNote(h({ 'cf-cache-status': 'STALE', age: '30' })), /30 seconds old/);
+  assert.match(cdnCacheNote(h({ 'x-cache': 'Hit from cloudfront', age: '600' })), /10 minutes old/);
+  assert.equal(cdnCacheNote(h({ 'cf-cache-status': 'MISS', age: '5437' })), '');
+  assert.equal(cdnCacheNote(h({ 'cf-cache-status': 'DYNAMIC' })), '');
+  assert.equal(cdnCacheNote(h({ 'cf-cache-status': 'HIT' })), '');
+  assert.equal(cdnCacheNote(h({})), '');
+});
+
+test('repeatsSummary flags descriptions that add nothing to the summary', () => {
+  assert.equal(repeatsSummary({ summary: 'Feed your creature', description: 'Feed your creature.' }), true);
+  assert.equal(repeatsSummary({ summary: 'Feed your creature now', description: 'feed your creature' }), true);
+  assert.equal(repeatsSummary({ summary: 'Feed your creature', description: 'Feed your creature. Use it when hunger is low; the response says what changed.' }), false);
+  assert.equal(repeatsSummary({ description: 'Feed your creature' }), false);
+});
+
+test('hasVariantDescription finds a description that sits inside anyOf', () => {
+  assert.equal(hasVariantDescription({ anyOf: [{ type: 'string', description: 'Your bio' }, { type: 'null' }] }), true);
+  assert.equal(hasVariantDescription({ description: 'Your bio', anyOf: [{ type: 'string' }, { type: 'null' }] }), false);
+  assert.equal(hasVariantDescription({ anyOf: [{ type: 'string' }, { type: 'null' }] }), false);
+  const refs = { '#/x': { description: 'via ref' } };
+  assert.equal(hasVariantDescription({ oneOf: [{ $ref: '#/x' }] }, (s) => (s?.$ref ? refs[s.$ref] : s)), true);
+});
+
+const STATUS_PAGE = `# Agent and Search Readiness Status
+
+Generated 2026-10-05 by \`npx readiness-audit --matrix one.com two.com\` (readiness-audit v1.0.1).
+
+| ID | Check | Level | one.com | two.com |
+|---|---|---|---|---|
+| D1 | robots.txt | required | ✓ | ✗ |
+| D8 | Markdown for agents | recommended | ! | – |
+| S1 | Skill files | required | – | ✓ |
+| | **Required passed** | | **1 of 1** | **1 of 2** |
+| T5 | Agent usability test (recorded) | required | 4 of 5 first try (2026-10-12) | not recorded |
+`;
+
+test('parsePrevious reads one domain from a status page or a JSON report', () => {
+  const page = parsePrevious(STATUS_PAGE, 'two.com');
+  assert.equal(page.date, '2026-10-05');
+  assert.deepEqual(Object.fromEntries(page.results), {
+    D1: { status: 'fail', level: 'required' },
+    D8: { status: 'skip', level: 'recommended' },
+    S1: { status: 'pass', level: 'required' },
+  });
+  assert.equal(parsePrevious(STATUS_PAGE, 'three.com'), null);
+  const json = parsePrevious(JSON.stringify({ domain: 'one.com', checked_at: '2026-10-01T10:00:00Z', results: [{ id: 'D1', status: 'pass', level: 'required' }] }), 'one.com');
+  assert.equal(json.date, '2026-10-01');
+  assert.deepEqual(json.results.get('D1'), { status: 'pass', level: 'required' });
+});
+
+test('compareResults sorts every change into one list', () => {
+  const previous = parsePrevious(STATUS_PAGE, 'one.com').results;
+  const now = [
+    { id: 'D1', status: 'fail', level: 'required' }, // was pass
+    { id: 'D8', status: 'pass', level: 'next' }, // was warn, and moved level
+    { id: 'S1', status: 'pass', level: 'required' }, // was not applicable
+    { id: 'W1', status: 'warn', level: 'required' }, // new check
+  ];
+  const cmp = compareResults(previous, now);
+  assert.deepEqual(cmp.worse, ['D1 (pass to fail)']);
+  assert.deepEqual(cmp.better, ['D8 (warn to pass)']);
+  assert.deepEqual(cmp.levelChanged, ['D8 (recommended to next)']);
+  assert.deepEqual(cmp.newlyChecked, ['S1 (required, pass)', 'W1 (required, warn)']);
+  assert.deepEqual(formatComparison(cmp, '2026-10-05').slice(0, 2), ['Since 2026-10-05:', '  Better: D8 (warn to pass)']);
+  assert.deepEqual(formatComparison(compareResults(new Map([['D1', { status: 'pass', level: 'required' }]]), [{ id: 'D1', status: 'pass', level: 'required' }]), 'x'), ['Since x: no changes.']);
+});
+
+test('spread picks evenly and keeps short lists whole', () => {
+  assert.deepEqual(spread([1, 2, 3], 5), [1, 2, 3]);
+  assert.deepEqual(spread([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 5), [0, 2, 4, 6, 8]);
+});
+
+test('llmsLinks keeps the site\'s own links and skips anchors, templates and other sites', () => {
+  const hosts = new Set(['example.com', 'www.example.com']);
+  const text = [
+    '# Example',
+    '- [Docs](https://example.com/docs/api "title")',
+    '- [Agents](/agents) and <https://example.com/llms-full.txt>',
+    '- Read https://example.com/guide. Elsewhere: https://other.org/x',
+    '- [Top](#top), [a creature](https://example.com/creatures/{username}/{name}), GET /api/agents/:id',
+    '- https://www.example.com/hall',
+  ].join('\n');
+  assert.deepEqual(llmsLinks(text, 'https://example.com/llms.txt', hosts), [
+    'https://example.com/docs/api',
+    'https://example.com/agents',
+    'https://example.com/llms-full.txt',
+    'https://example.com/guide',
+    'https://www.example.com/hall',
+  ]);
+});
+
+test('baseMapper sends the site\'s URLs to the base and maps them back', () => {
+  const { baseOrigin, toBase, fromBase } = baseMapper('example.com', 'http://localhost:3000/ignored-path');
+  assert.equal(baseOrigin, 'http://localhost:3000');
+  assert.equal(toBase('https://example.com/a?b=1'), 'http://localhost:3000/a?b=1');
+  assert.equal(toBase('https://www.example.com/'), 'http://localhost:3000/');
+  assert.equal(toBase('https://cdn.example.org/x.png'), 'https://cdn.example.org/x.png');
+  assert.equal(fromBase('http://localhost:3000/a?b=1'), 'https://example.com/a?b=1');
+  assert.equal(fromBase('http://localhost:3000'), 'https://example.com/');
+  assert.equal(fromBase('http://localhost:30001/x'), 'http://localhost:30001/x');
+  const off = baseMapper('example.com', null);
+  assert.equal(off.toBase('https://example.com/a'), 'https://example.com/a');
+});
+
+test('formatRecorded shows structured T5 results', () => {
+  assert.equal(
+    formatRecorded({ attempts: 5, first_try: 4, model: 'claude-sonnet-5-5', max_turns: 40, median_calls: 12, stops: 1, cost_usd: 14.2, date: '2026-10-21' }),
+    '4 of 5 first try; claude-sonnet-5-5, 40 turns max; 12 calls (median); 1 stops; $14.2 (2026-10-21)',
+  );
+});
+
+test('formatRecorded shows structured T6 numbers and free text', () => {
+  assert.equal(formatRecorded(undefined), 'not recorded');
+  assert.equal(formatRecorded({ result: '4 of 5 first try', date: '2026-10-12' }), '4 of 5 first try (2026-10-12)');
+  assert.equal(formatRecorded({ result: 'clicks 24 | CTR 3.8%' }), 'clicks 24 / CTR 3.8%');
+  assert.equal(
+    formatRecorded({ period: 'last 3 months', google: { clicks: 24, impressions: 630, ctr: 3.8, position: 18.2, indexed: 120, crawled_not_indexed: 40 }, bing: { clicks: 31 }, date: '2026-10-01' }),
+    'Google: 24 clicks, 630 impressions, 3.8% CTR, position 18.2; 120 indexed, 40 crawled but not indexed. Bing: 31 clicks (last 3 months, 2026-10-01)',
+  );
+  assert.equal(formatRecorded({ google: { clicks: 5 }, queries: [{ query: 'q', page: '/' }, { query: 'r', page: '/a' }] }), 'Google: 5 clicks. 2 top queries recorded');
+});
+
+test('samplePages reads every static page and three of each template', () => {
+  const site = (paths) => paths.map((p) => `https://example.com${p}`);
+  const statics = ['/', '/about', '/privacy', '/terms', '/hall', '/graveyard', '/skills', '/how-it-works', '/credits', '/docs/mcp', '/docs/api', '/agents/openclaw', '/agents/claude-code'];
+  const many = (prefix, n, depth = 2) => Array.from({ length: n }, (_, i) => (depth === 3 ? `${prefix}/owner-${i}/pet-${i}` : `${prefix}/item-${i}`));
+  const urls = site([...statics, ...many('/creatures', 344, 3), ...many('/agent', 274), ...many('/animals', 81)]);
+  const s = samplePages(urls);
+  assert.deepEqual(s.templates.map((t) => [t.pattern, t.count, t.urls.length]), [['/creatures/*/*', 344, 3], ['/agent/*', 274, 3], ['/animals/*', 81, 3]]);
+  assert.equal(s.static, 13);
+  assert.equal(s.skipped, 0);
+  assert.equal(s.pages.length, 22);
+  for (const p of site(statics)) assert.ok(s.pages.includes(p), p);
+  assert.equal(s.pages[9], 'https://example.com/'); // static pages after the templates, shortest path first
+});
+
+test('samplePages treats usernames at the root as a template, and holds the cap', () => {
+  const urls = ['https://example.com/', ...Array.from({ length: 500 }, (_, i) => `https://example.com/user${i}`)];
+  const s = samplePages(urls);
+  assert.deepEqual(s.templates.map((t) => [t.pattern, t.urls.length]), [['/*', 3]]);
+  assert.equal(s.pages.length, 4);
+  const wide = Array.from({ length: 60 }, (_, i) => `https://example.com/s${i}/page`); // 60 small groups of one
+  const capped = samplePages(wide);
+  assert.equal(capped.pages.length, 40);
+  assert.equal(capped.skipped, 20);
+});
+
+test('sharedCardText flags pages whose card shows the layout default', () => {
+  const home = { title: 'Home', description: 'The site, in a sentence.' };
+  const page = (path, title, description, og = {}, twitter = {}) => ({ path, title, description, og, twitter });
+  const pages = [
+    // The homepage's card title differs from its <title>: still its own.
+    page('/', 'Home | Site', home.description, { title: 'Home', description: home.description }, { title: 'Home', description: home.description }),
+    // Sets Open Graph only, so a shallow merge leaves the layout's twitter: tags.
+    page('/about', 'About', 'About the site.', { title: 'About', description: 'About the site.' }, { title: 'Home', description: home.description }),
+    // Sets neither.
+    page('/terms', 'Terms', 'The terms.', { title: 'Home', description: home.description }, { title: 'Home', description: home.description }),
+    // Its own card, with no twitter:title: X falls back to og:.
+    page('/items/a', 'Item A', 'Item A, described.', { title: 'Item A', description: 'Item A, described.' }),
+  ];
+  const shared = sharedCardText(pages);
+  assert.deepEqual(shared.x.paths, ['/about', '/terms']);
+  assert.equal(shared.x.text, 'Home');
+  assert.deepEqual(shared.og.paths, ['/terms']);
+});
+
+test('sharedCardText leaves pages alone when the shared text is their own', () => {
+  // Two items with the same name: W1 reports the duplicate title, not W5.
+  const p = (path) => ({ path, title: 'Buddy', description: 'A creature.', og: { title: 'Buddy', description: 'A creature.' }, twitter: {} });
+  const shared = sharedCardText([p('/a/buddy'), p('/b/buddy')]);
+  assert.deepEqual(shared.x.paths, []);
+  assert.deepEqual(shared.og.paths, []);
+});
+
+test('linkRels reads every rel of every link', () => {
+  const rels = linkRels('</openapi.json>; rel="service-desc", </docs/api>; rel="service-doc describedby", </.well-known/api-catalog>; rel=api-catalog');
+  assert.deepEqual(rels.get('service-desc'), ['/openapi.json']);
+  assert.deepEqual(rels.get('describedby'), ['/docs/api']);
+  assert.deepEqual(rels.get('api-catalog'), ['/.well-known/api-catalog']);
+  assert.equal(linkRels(null).size, 0);
+});
+
+test('apiPresence: an API that answers, one that is only declared, and none', () => {
+  const hosts = new Set(['example.com']);
+  const links = (text) => llmsLinks(text, 'https://example.com/llms.txt', hosts);
+  const none = { openapiSpec: null, apiIndexJson: false, rels: new Map(), catalogJson: null, llmsLinks: links('# Site\n\n- [About](https://example.com/about)') };
+  assert.deepEqual(apiPresence(none), { present: false, answers: false, declared: [] });
+  assert.equal(apiPresence({ ...none, openapiSpec: { openapi: '3.1.0' } }).answers, true);
+  assert.equal(apiPresence({ ...none, apiIndexJson: true }).present, true);
+  // Declared but not answering: the API checks still run, and fail.
+  const declared = apiPresence({ ...none, llmsLinks: links('- [API](https://example.com/openapi.json)'), rels: new Map([['service-desc', ['/openapi.json']]]) });
+  assert.deepEqual(declared, { present: true, answers: false, declared: ['a service-desc Link', 'llms.txt'] });
+  // A sibling site's API, linked from this site's llms.txt, isn't this site's API.
+  assert.equal(apiPresence({ ...none, llmsLinks: links('- Use [the sibling\'s API](https://sibling.example/api/v1) for articles') }).present, false);
+  // A service-desc that names something else isn't an API claim; D5 judges it.
+  assert.equal(apiPresence({ ...none, rels: new Map([['service-desc', ['/llms.txt']]]) }).present, false);
+  assert.equal(apiPresence({ ...none, catalogJson: { linkset: [{ anchor: 'https://example.com/api' }] } }).present, true);
+});
+
+test('declaredOpenapi finds the OpenAPI document a site names, on its own hosts', () => {
+  const hosts = new Set(['example.com', 'www.example.com']);
+  const catalogJson = { linkset: [{ anchor: 'https://example.com/api/v1', 'service-desc': [{ href: 'https://example.com/api/v1/openapi.json' }] }] };
+  assert.deepEqual(declaredOpenapi({ rels: new Map(), catalogJson, llmsLinks: [], base: 'https://example.com', hosts }), ['https://example.com/api/v1/openapi.json']);
+  assert.deepEqual(declaredOpenapi({ rels: new Map([['service-desc', ['/v2/openapi.yaml']]]), catalogJson: null, llmsLinks: ['https://example.com/api/v1/openapi.json', 'https://example.com/about'], base: 'https://example.com', hosts }), ['https://example.com/v2/openapi.yaml', 'https://example.com/api/v1/openapi.json']);
+  assert.deepEqual(declaredOpenapi({ rels: new Map(), catalogJson: { linkset: [{ 'service-desc': [{ href: 'https://other.example/openapi.json' }] }] }, llmsLinks: [], base: 'https://example.com', hosts }), []);
+});
+
+test('missingSections lists headings the page has and its markdown copy lacks', () => {
+  const html = '<h1>Projects</h1><h2 class="x">Open <em>source</em></h2><h2>Talks &amp; Writing</h2><h3>Contact</h3><h4>Ignored</h4>';
+  assert.deepEqual(missingSections(html, '# Projects\n\n## Open **source**\n\n## Talks & writing\n\n### Contact'), []);
+  assert.deepEqual(missingSections(html, '# Projects\n\n## Open source\n'), ['Talks & Writing', 'Contact']);
+  assert.deepEqual(missingSections('<p>no headings</p>', ''), []);
+  // Page chrome and screen-reader-only headings aren't sections.
+  assert.deepEqual(missingSections('<nav><h2>Menu</h2></nav><h2 class="visually-hidden">Skip</h2><h1>Home</h1><footer><h3>Links</h3></footer>', '# Home'), []);
+});
+
+test('list shows three items, then how many more', () => {
+  assert.equal(list(['a', 'b']), 'a, b');
+  assert.equal(list(['a', 'b', 'c', 'd', 'e']), 'a, b, c, +2 more');
+  assert.equal(list(['a', 'b', 'c', 'd'], '; '), 'a; b; c, +1 more');
+});
+
+test('norm and pathDepth compare URLs by what they name', () => {
+  assert.equal(norm('https://Example.com/about/#team'), 'https://example.com/about');
+  assert.equal(norm('https://example.com/?q=1'), 'https://example.com/?q=1');
+  assert.equal(pathDepth('https://example.com/'), 0);
+  assert.equal(pathDepth('/docs/mcp/'), 2);
+});
+
+test('decodeText decodes entities and collapses whitespace', () => {
+  assert.equal(decodeText(' Talks &amp; Writing&nbsp;&#8212;\n &#x27;now&#39; &lt;b&gt; '), "Talks & Writing — 'now' <b>");
+  assert.equal(decodeText('&amp;lt;'), '&lt;'); // decoded once, not twice
+});
+
+test('headings keeps the page structure, a header included, and leaves out chrome', () => {
+  const html = '<nav><h2>Menu</h2></nav><article><header><h1>Title</h1></header><h2 class="x">Part <em>one</em></h2><h3 class="sr-only">Skip</h3></article><aside><h3>Ad</h3></aside><footer><h4>Links</h4></footer>';
+  assert.deepEqual(headings(html), [{ level: 1, text: 'Title' }, { level: 2, text: 'Part one' }]);
+});
+
+test('sitemapEntries reads a urlset and an index', () => {
+  assert.deepEqual(sitemapEntries('<urlset><url><loc>https://e.com/a?x=1&amp;y=2</loc><lastmod>2026-10-01</lastmod></url><url><loc> https://e.com/b </loc></url></urlset>'),
+    [{ loc: 'https://e.com/a?x=1&y=2', lastmod: '2026-10-01' }, { loc: 'https://e.com/b', lastmod: undefined }]);
+  assert.deepEqual(sitemapEntries('<sitemapindex><sitemap><loc>https://e.com/s1.xml</loc><lastmod>2026-10-02</lastmod></sitemap></sitemapindex>'),
+    [{ loc: 'https://e.com/s1.xml', lastmod: '2026-10-02' }]);
+});
+
+test('headingSkips finds a level skipped going down, not going back up', () => {
+  const hs = (...levels) => levels.map((level) => ({ level, text: 'x' }));
+  assert.deepEqual(headingSkips(hs(1, 3, 2)), ['h1 to h3']);
+  assert.deepEqual(headingSkips(hs(1, 2, 3, 2, 3)), []);
+  assert.deepEqual(headingSkips(hs(1, 2, 4, 2, 2)), ['h2 to h4']);
+  assert.deepEqual(headingSkips([]), []);
+});
+
+test('richResultPages lists every template with rich-result markup, and static pages that add a feature', () => {
+  const pages = richResultPages([
+    { url: 'https://e.com/', types: ['Organization', 'WebSite'] },
+    { url: 'https://e.com/items/a', types: ['BreadcrumbList', 'Organization'], template: '/items/*' },
+    { url: 'https://e.com/items/c', types: ['BreadcrumbList', 'Organization'], template: '/items/*' }, // same template: once
+    { url: 'https://e.com/people/b', types: ['BreadcrumbList', 'Organization'], template: '/people/*' }, // same features, other code: listed
+    { url: 'https://e.com/about', types: ['Organization'] }, // adds nothing
+    { url: 'https://e.com/guide', types: ['Article', 'BreadcrumbList', 'FAQPage'] }, // adds Article; FAQ earns nothing
+    { url: 'https://e.com/plain', types: ['WebPage'] }, // no rich-result type
+  ]);
+  assert.deepEqual(pages.map((p) => [p.url, p.features.join('+')]), [
+    ['https://e.com/', 'Organization'],
+    ['https://e.com/items/a', 'Breadcrumb+Organization'],
+    ['https://e.com/people/b', 'Breadcrumb+Organization'],
+    ['https://e.com/guide', 'Article+Breadcrumb'],
+  ]);
+  assert.equal(pages[3].test, 'https://search.google.com/test/rich-results?url=https%3A%2F%2Fe.com%2Fguide');
+});
+
+test('safeUrl returns null for what isn\'t a URL, instead of throwing', () => {
+  assert.equal(safeUrl('http://['), null);
+  assert.equal(safeUrl('/a', 'https://example.com/b').href, 'https://example.com/a');
+});
+
+test('robotsAllowed matches the way RFC 9309 says: the longest rule wins, Allow on a tie, with * and $', () => {
+  const rules = [{ allow: false, path: '/api' }, { allow: true, path: '/api/public' }, { allow: false, path: '/*.pdf$' }];
+  assert.equal(robotsAllowed(rules, '/api/me'), false);
+  assert.equal(robotsAllowed(rules, '/api/public/x'), true);
+  assert.equal(robotsAllowed(rules, '/docs/a.pdf'), false);
+  assert.equal(robotsAllowed(rules, '/docs/a.pdf?x'), true); // $ anchors the end
+  assert.equal(robotsAllowed(rules, '/about'), true);
+  assert.equal(robotsAllowed([{ allow: false, path: '/a' }, { allow: true, path: '/a' }], '/a'), true);
+});
+
+test('robotsLeaks: a named group may be stricter than *, never looser', () => {
+  const leaks = (text) => robotsLeaks(robotsGroups(text));
+  const star = 'User-agent: *\nDisallow: /admin\nDisallow: /api\n\n';
+  assert.deepEqual(leaks(`${star}User-agent: BadBot\nDisallow: /\n`), []); // / covers everything
+  assert.deepEqual(leaks(`${star}User-agent: GPTBot\nDisallow: /admin\nDisallow: /api\nDisallow: /drafts\n`), []);
+  assert.deepEqual(leaks('User-agent: *\nDisallow: /api/me\n\nUser-agent: GPTBot\nDisallow: /api\n'), []); // /api covers /api/me
+  assert.deepEqual(leaks(`${star}User-agent: GPTBot\nDisallow: /admin\n`), ['gptbot skips Disallow /api']);
+  assert.deepEqual(leaks(`${star}User-agent: GPTBot\nDisallow: /\nAllow: /api/me\n`), ['gptbot reopens /api/me with Allow, which * disallows']);
+  // Groups for the same agent combine (RFC 9309 §2.2.1), * included.
+  assert.deepEqual(leaks('User-agent: *\nDisallow: /admin\n\nUser-agent: GPTBot\nDisallow: /admin\n\nUser-agent: *\nDisallow: /api\n'), ['gptbot skips Disallow /api']);
+  assert.deepEqual(leaks('User-agent: *\nDisallow: /admin\n\nUser-agent: GPTBot\nDisallow: /admin\n\nUser-agent: GPTBot\nDisallow: /api\n\nUser-agent: *\nDisallow: /api\n'), []);
+  // One group naming * and every crawler is the simplest setup.
+  assert.deepEqual(leaks('User-agent: *\nUser-agent: GPTBot\nDisallow: /admin\n'), []);
+});
+
+test('attrs, tags and meta read a page\'s tags, quoted or not', () => {
+  assert.deepEqual(attrs('<a href="/x" Rel=me data-x=\'y\'>'), { href: '/x', rel: 'me', 'data-x': 'y' });
+  const html = '<head><link rel="alternate ard" href="/.well-known/ard.json"><meta property="og:title" content="Hi"><META name=description content="A page"></head>';
+  assert.deepEqual(tags(html, 'link').map((a) => a.rel), ['alternate ard']);
+  assert.equal(meta(html, 'property', 'og:title'), 'Hi');
+  assert.equal(meta(html, 'name', 'description'), 'A page');
+  assert.equal(meta(html, 'name', 'robots'), undefined);
+});
+
+test('jsonLd returns each script, every @type and the nodes, @graph members included', () => {
+  const html = '<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","name":"Site","sameAs":["https://github.com/x/y"]},{"@type":["Organization","Brand"],"name":"Co"}]}</script><script type="application/ld+json">{broken</script>';
+  const { ld, types, nodes } = jsonLd(html);
+  assert.equal(ld.length, 2);
+  assert.equal(ld[1], null);
+  assert.deepEqual(types, ['WebSite', 'Organization', 'Brand']);
+  assert.deepEqual(nodes.map((n) => n.name), ['Site', 'Co']);
+});
+
+test('openapiOps lists every operation with its path parameters; openapiDeref follows local $refs', () => {
+  const spec = {
+    paths: { '/pets/{id}': { parameters: [{ name: 'id', in: 'path' }], get: { parameters: [{ $ref: '#/components/parameters/q' }] }, delete: {}, summary: 'not a method' } },
+    components: { parameters: { q: { name: 'q', in: 'query' } }, schemas: { A: { $ref: '#/components/schemas/A' } } },
+  };
+  const ops = openapiOps(spec);
+  assert.deepEqual(ops.map((o) => o.key), ['GET /pets/{id}', 'DELETE /pets/{id}']);
+  assert.equal(ops[0].params.length, 2);
+  const deref = openapiDeref(spec);
+  assert.equal(deref(ops[0].params[1]).name, 'q');
+  assert.deepEqual(deref({ $ref: '#/components/schemas/A' }), {}); // a cycle stops
+  assert.deepEqual(openapiOps(null), []);
+});
+
+test('skillFile reads the frontmatter name and description, and the body after it', () => {
+  const f = skillFile('---\nname: care\ndescription: "Use when the user wants a pet."\n---\n# Care\n\nFeed it.\n');
+  assert.deepEqual(f, { name: 'care', description: 'Use when the user wants a pet.', body: '# Care\n\nFeed it.\n', frontmatter: true });
+  assert.deepEqual(skillFile('# No frontmatter'), { name: '', description: '', body: '# No frontmatter', frontmatter: false });
+  assert.equal(skillNameProblem({ name: '', url: 'https://example.com/skills/x.md' }), 'no name in the frontmatter');
+});
+
+test('saysWhenToUse finds a when-clause in the description or a When to use heading', () => {
+  for (const description of ['Use when the user wants a pet.', 'Look after a pet. Use it when someone asks how theirs is doing.', 'For when an agent needs a sandbox.', 'Grounds an agent when the user asks about ethics.']) {
+    assert.equal(saysWhenToUse({ description, body: '' }), true, description);
+  }
+  assert.equal(saysWhenToUse({ description: 'Feeds a pet through the API.', body: '# Feed\n\n## When to use\n\nAt mealtimes.' }), true);
+  assert.equal(saysWhenToUse({ description: 'Feeds a pet through the API.', body: '# Feed\n\nCall POST /feed.' }), false);
+  assert.equal(saysWhenToUse({ description: 'Manage your pet', body: '' }), false);
+});
+
+test('markdownUrl maps a page to its .md URL, the llms.txt proposal\'s way', () => {
+  assert.equal(markdownUrl('https://example.com/'), 'https://example.com/index.md');
+  assert.equal(markdownUrl('https://example.com'), 'https://example.com/index.md');
+  assert.equal(markdownUrl('https://example.com/docs/'), 'https://example.com/docs/index.md');
+  assert.equal(markdownUrl('https://example.com/docs/api?x=1#y'), 'https://example.com/docs/api.md');
+  assert.equal(markdownUrl('not a url'), null);
+});
+
+test('MARKDOWN_LINK finds the proposal\'s [name](url) links, not bare URLs', () => {
+  const count = (t) => [...t.matchAll(MARKDOWN_LINK)].length;
+  assert.equal(count('# Site\n\n## Docs\n\n- [API](https://example.com/api): the reference\n- [MCP](/docs/mcp "MCP")\n'), 2);
+  assert.equal(count('# Site\n\nAPI: https://example.com/api\nMCP: https://example.com/mcp\n'), 0);
+});
+
+test('catalogItems lists the APIs an RFC 9727 catalog links with item', () => {
+  const catalog = { linkset: [
+    { anchor: 'https://example.com/.well-known/api-catalog', item: [{ href: 'https://example.com/api' }, { href: '/v2' }] },
+    { anchor: 'https://example.com/api', 'service-desc': [{ href: 'https://example.com/openapi.json' }] },
+  ] };
+  assert.deepEqual(catalogItems(catalog), ['https://example.com/api', '/v2']);
+  // The API as the anchor, with service-desc only: the RFC's MUST wants a hyperlink to the API itself.
+  assert.deepEqual(catalogItems({ linkset: [catalog.linkset[1]] }), []);
+  assert.deepEqual(catalogItems(null), []);
+});
+
+test('identityLinks reads sameAs from the homepage\'s WebSite and Organization', () => {
+  const nodes = jsonLd('<script type="application/ld+json">{"@graph":[{"@type":"WebSite","name":"Pets","sameAs":"https://github.com/acme/pets"},{"@type":"Organization","name":"Acme","sameAs":["https://www.npmjs.com/package/pets","https://x.com/pets"]},{"@type":"Person","sameAs":"https://example.org/me"}]}</script>').nodes;
+  assert.deepEqual(identityLinks(nodes), ['https://github.com/acme/pets', 'https://www.npmjs.com/package/pets', 'https://x.com/pets']);
+  assert.deepEqual(identityLinks(jsonLd('<script type="application/ld+json">{"@type":"WebSite","name":"Pets"}</script>').nodes), []);
+});
+
+test('untypedErrors lists 4xx, 5xx and default responses with no content schema', () => {
+  const spec = {
+    paths: { '/a': { get: { responses: { 200: { content: { 'application/json': { schema: { type: 'object' } } } }, 404: { description: 'Missing' }, 500: { $ref: '#/components/responses/Problem' } } }, post: { responses: { '4XX': { content: { 'application/problem+json': {} } }, default: { description: 'Error' } } } } },
+    components: { responses: { Problem: { content: { 'application/problem+json': { schema: { $ref: '#/components/schemas/P' } } } } } },
+  };
+  const { untyped, total } = untypedErrors(openapiOps(spec), openapiDeref(spec));
+  assert.deepEqual(untyped, ['GET /a 404', 'POST /a 4XX', 'POST /a default']);
+  assert.equal(total, 4);
+});
+
+test('apiDocLinks finds the homepage links to the API docs by path or text, whatever the site calls them', () => {
+  const hosts = new Set(['example.com', 'www.example.com']);
+  const paths = (html) => apiDocLinks(html, 'https://example.com/', hosts).map((u) => u.pathname);
+  assert.deepEqual(anchors('<a href=/x class="c">For <b>developers</b> &amp; agents</a>'), [{ href: '/x', class: 'c', text: 'For developers & agents' }]);
+  for (const href of ['/developers/', '/developer', '/api', '/api-reference', '/docs/api', '/openapi.json', '/agents', '/for-agents/']) assert.deepEqual(paths(`<a href="${href}">More</a>`), [href], href);
+  for (const text of ['API', 'API docs', 'Developers', 'For agents']) assert.equal(paths(`<a href="/build">${text}</a>`).length, 1, text);
+  // A site's docs can be its content, and words inside other words don't count.
+  for (const html of ['<a href="/docs">Docs</a>', '<a href="/docs/chants">Chants</a>', '<a href="/apiary">Bees</a>', '<a href="https://other.example/api">API</a>', '<a>API</a>']) assert.deepEqual(paths(html), [], html);
+});

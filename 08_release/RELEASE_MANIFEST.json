@@ -1,0 +1,1749 @@
+{
+  "project_id": "P032",
+  "project_name": "AcceptTwin",
+  "spec_version": "1.0.1",
+  "release_status": "READY_FOR_FINAL_REVIEW",
+  "implementation_status": "COMPLETE",
+  "final_gpt_review": "PENDING",
+  "accepted": "PENDING",
+  "git_commit": "221f902798a245b7a2672f3a53a9a63ab176e014",
+  "git_tag": "P032-v1.0.1",
+  "freeze_time_utc": "2026-11-24 ~21:07 GMT",
+  "source_zip": {
+    "filename": "source.zip",
+    "sha256": "b82cb7303b00ddbc9b195dfb3deea8b1108d5cded55c2876fa610330b0dd68a3",
+    "size_bytes": 603654,
+    "file_count": 165,
+    "built_from": "git archive 221f902798a245b7a2672f3a53a9a63ab176e014 (prefix accepttwin-1.0.1/)",
+    "excludes": [
+      ".venv",
+      "node_modules",
+      "__pycache__",
+      "evidence/ (regenerated artifacts; Drive-archived separately)",
+      "00_control/competitive_gate/ (third-party T001 gate evidence)",
+      "08_release/ (release artifacts, not source)",
+      ".gitignore"
+    ]
+  },
+  "files": [
+    {
+      "path": "accepttwin-1.0.1/00_control/ADR-001.md",
+      "sha256": "593bd0a1237532871eaee711bf2a66c87190aeb42234b325d5cfa664a1163a46",
+      "size_bytes": 1582,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/ADR-002.md",
+      "sha256": "84aa577b60e39a4033aab1c50b2c78259eaf1e27a6e3b525d304c1ba384098f4",
+      "size_bytes": 8362,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/ADR-003.md",
+      "sha256": "fde9ae2840d3f77f6100afefab53f14a48baa908f573c706e9493ed22fda7c67",
+      "size_bytes": 6854,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/ADR-004.md",
+      "sha256": "3065b9a94a8fce33768cb3481074905d78c3b8b103f1241ea81b194001fa658d",
+      "size_bytes": 4621,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/ADR-005.md",
+      "sha256": "2c8ed2fecd04bddb52d9835ee6886b693cc28159757306fdb75832be42d2ed51",
+      "size_bytes": 4081,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/ADR-006.md",
+      "sha256": "027b49d0e8bb970229ff3b2562ca04606ff6264310992cd90a4b371cc8d4998b",
+      "size_bytes": 5205,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/ADR-007.md",
+      "sha256": "dce2d7d1cbdfb573f795a806f21bd6af41cfc1ad841cae8ad6d1af3684609525",
+      "size_bytes": 13209,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/ADR-008.md",
+      "sha256": "2d3bd1e6828ddae2c1f81fd74839dd027bf3c0526e7ee9337bd0cfa679290364",
+      "size_bytes": 6087,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/ADR-009.md",
+      "sha256": "1290ab5c47f4511cd9374353582ceaf2b863b949fa05c208db2dba4bf3e46efe",
+      "size_bytes": 10698,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/GIT_LOG_T014.txt",
+      "sha256": "0c8e83af84981f9008fbbc397eb0b5b63ba8e95f957b41963f810b89763996e6",
+      "size_bytes": 2847,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/P1_03_SOURCES.md",
+      "sha256": "259ba84e0a12edaa0e64d3b845924a55e75ae46ff2aa162594a325d07fe897d8",
+      "size_bytes": 20228,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/PROJECT_STATE.md",
+      "sha256": "1fec8dd39f5c6fe1fa2a3e5cbd1e720ff3e294482610c47bbdf8fdacc241026a",
+      "size_bytes": 56490,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/VERIFY_LOG.md",
+      "sha256": "69c2b8be45a903907507dcd0bc5b8178dc6113298d28c3dcccf9ffa50c6af53e",
+      "size_bytes": 15165,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/build_docx.py",
+      "sha256": "c5c8c2e6eeca782e1f18cf1809bfdc6894de9e06b770dcb1075db82e7ee42219",
+      "size_bytes": 3074,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/00_control/split_specs.py",
+      "sha256": "cdecee24a5865027bf6aae104e841b81b67adf7fb9ef5c74f6bc5b7eb98dfe09",
+      "size_bytes": 27980,
+      "role": "decision-record"
+    },
+    {
+      "path": "accepttwin-1.0.1/01_project_book/PROJECT_BOOK.docx",
+      "sha256": "0d11ffc2e8b6168bc771a8ef1e256b9ebe7a9e72e351531702923d8f4cea2e37",
+      "size_bytes": 65909,
+      "role": "spec"
+    },
+    {
+      "path": "accepttwin-1.0.1/01_project_book/PROJECT_BOOK.md",
+      "sha256": "1e5f32bdd8200a5fd56e86cdef64c22a1731e2d9656342ea18f27298e0afd8f2",
+      "size_bytes": 82148,
+      "role": "spec"
+    },
+    {
+      "path": "accepttwin-1.0.1/02_implementation_plan/IMPLEMENTATION_PLAN.docx",
+      "sha256": "149472de1cb48f26760310b350fbd4c3c11ca5b72449075522fdb5786225e4c3",
+      "size_bytes": 57638,
+      "role": "spec"
+    },
+    {
+      "path": "accepttwin-1.0.1/02_implementation_plan/IMPLEMENTATION_PLAN.md",
+      "sha256": "7e846fab376dd55c6177f304ed28339b1687996db99015a2b35354ee8f13b2ba",
+      "size_bytes": 54476,
+      "role": "spec"
+    },
+    {
+      "path": "accepttwin-1.0.1/LICENSE",
+      "sha256": "db22e0c9e0d1017ef44fd60a90eb197d41ff22c306d7ce11d1e7bba87a64f28c",
+      "size_bytes": 1063,
+      "role": "license"
+    },
+    {
+      "path": "accepttwin-1.0.1/README.md",
+      "sha256": "6b213e79c54c5c35a13ae3f17ed83d741911986770598e34ad50780aeded6445",
+      "size_bytes": 7142,
+      "role": "doc"
+    },
+    {
+      "path": "accepttwin-1.0.1/THIRD_PARTY_NOTICES.md",
+      "sha256": "363c5e53ce857a44a2aeb1b7e9292be80f696e8006055847b848098510d19d2f",
+      "size_bytes": 1494,
+      "role": "license"
+    },
+    {
+      "path": "accepttwin-1.0.1/contracts/site.json",
+      "sha256": "1022cc43f5c71b296bb3b8d6bd5c74a7b046f169f62b1b3df300c468a2792857",
+      "size_bytes": 958,
+      "role": "contract"
+    },
+    {
+      "path": "accepttwin-1.0.1/docs/INSTALL.md",
+      "sha256": "68860ed4bae18803e561b92fe05a7445fea62b7a6b622f5d2eaa8c9500e7237c",
+      "size_bytes": 3914,
+      "role": "doc"
+    },
+    {
+      "path": "accepttwin-1.0.1/docs/LIMITATIONS.md",
+      "sha256": "f044ef3100b8254d1bd58c72c293e5b00eaee00c25cf7104e61d594516d54f81",
+      "size_bytes": 8299,
+      "role": "doc"
+    },
+    {
+      "path": "accepttwin-1.0.1/docs/USAGE.md",
+      "sha256": "3256fb1c969da893ea8d8097323a5eb74c143c8fccb3ff9d7b37748431079981",
+      "size_bytes": 14865,
+      "role": "doc"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E01.json",
+      "sha256": "110c4bbc5190c7e4e48f03f908cc5d80f1fdae66ddf461f952af4188ed954da8",
+      "size_bytes": 869,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E02.json",
+      "sha256": "a7638fa7442c2608d8b6e7037e06908d8e02dedfc286743fe31f2562446de3ed",
+      "size_bytes": 665,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E03.json",
+      "sha256": "d4131dd72e1fef11dcad4e46ab7e90cf0d65d9cb65e1e6b38af530090b49e2fa",
+      "size_bytes": 917,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E04.json",
+      "sha256": "81e3d165180eaf05fe39ea5eccad1ba8b8415b543f5c2e6c6c5f0ff5fa965cd7",
+      "size_bytes": 789,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E05.json",
+      "sha256": "1ad9b6897558a71c9b67a42e6804f73cd26b99ffed9ad96fba0e8d1048456b58",
+      "size_bytes": 575,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E06.json",
+      "sha256": "b94b1f177bc85534c228e55dc6c35c470fc07a646fee860514005117d6c37b22",
+      "size_bytes": 580,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E07.json",
+      "sha256": "8d2f4ab352921761f87b34571bff7b87faf1b6a8f6193d68acad9f5931962937",
+      "size_bytes": 1340,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E08.json",
+      "sha256": "f1b40ec819c81131d2c4eb29f03c058b5182f16982fadc79e75f22a01fa358a0",
+      "size_bytes": 1342,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E09.json",
+      "sha256": "188dc4ff69afa3571c186607195e6139f304a74c0bd1e5c2a285c6e304bcebde",
+      "size_bytes": 1099,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E10.json",
+      "sha256": "311de774d45bdc191adfb9e2921c0c2b630a59ac157d167b488b0552d8cfbe8d",
+      "size_bytes": 965,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E11.json",
+      "sha256": "63db1074d8467b6b312efcd56b5a0e9d7f2f5d5793cc1a3453ccc73a652273d2",
+      "size_bytes": 956,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E12.json",
+      "sha256": "8518520f76c31bbdf410dcba6c70e4a22985e4bca7429ca609bb5966ce33be82",
+      "size_bytes": 1756,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E13.json",
+      "sha256": "91173ca437bf804a8963023bec6ead12a3dcb3aebf3e32797153c4148196b52c",
+      "size_bytes": 1007,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E14.json",
+      "sha256": "0ee1b98f44867a19afce9d7480d55f1ecd7a391954648523ecf5c99e5c504f99",
+      "size_bytes": 1121,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E15.json",
+      "sha256": "f7859df97a9f2fcde64f08ecffcf9d09badc79705356fb89459ebe93b3c435a7",
+      "size_bytes": 665,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E16.json",
+      "sha256": "2c87f330e343856acea53e37e15d70f91dd205161598160d76d9425685a6964f",
+      "size_bytes": 670,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E17.json",
+      "sha256": "0a56b6e09f787a97669b600fb6fc3f89e9bec459fb0abbc88b300cb52f64d6f5",
+      "size_bytes": 1045,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E18.json",
+      "sha256": "9d6c336745dcd58f37e296691cf376dce7f31a17877ee0edc3cc0fb98ef24555",
+      "size_bytes": 1148,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E19.json",
+      "sha256": "a435437a49514a690ee6efdacd7c76f77c8b8ece99d1d03e659b8f5406d4ac58",
+      "size_bytes": 843,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E20.json",
+      "sha256": "f607e45612c9d3fd8ccece0e9604c8d06633645bf37017fa2f20fb2f36aeb981",
+      "size_bytes": 990,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E21.json",
+      "sha256": "f0f93fb1b23fb85d9fc9c51394cf9c2335c50c25dc8be08900a48030cdbcd315",
+      "size_bytes": 1366,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E22.json",
+      "sha256": "24c1dd4ca46026d3fc486f48fd73030be50e61db2984a424665848d7577268e3",
+      "size_bytes": 1737,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E23.json",
+      "sha256": "4df8149ea2c4d06260508ec0025c4a4c119c27f487b89f62cae8be4cbd297c4d",
+      "size_bytes": 1033,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/extended/E24.json",
+      "sha256": "de834c4bacf686097612ae54cb79884187399aab0a6555ef6973a980f79ce47c",
+      "size_bytes": 1075,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/cache_max_age_0.json",
+      "sha256": "689648dddea694de3a956f8c4dd597e05d494f55488d34d7690d01a3e35ad3ae",
+      "size_bytes": 526,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/cache_no_cache.json",
+      "sha256": "733ece66df859a8881ba3c3f4544e2daba9322ed9342f333ef313e6ea2ade7de",
+      "size_bytes": 522,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/healthy.json",
+      "sha256": "781d5cbbc45c14ad0e88c7e54a516625d229d29e63d659650a9f7077468569e2",
+      "size_bytes": 461,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/html_404.json",
+      "sha256": "9de4c8c93d405f2b382e27a030d3525a9c8cfa91c00c9d7a97e9028bd48137de",
+      "size_bytes": 424,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/html_markdown_content_type.json",
+      "sha256": "dc8dcb8fd05c986657906d9030b871e4b9e139ac82dd75dc8fbc987f114b8e25",
+      "size_bytes": 541,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/html_sentinel_wrong.json",
+      "sha256": "2697aaefd3ea68fef9d24ee0348e2f2404aeeb4d2a97eb5e4fdb448c8e5406ed",
+      "size_bytes": 502,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/html_wrong_content_type.json",
+      "sha256": "fa26f9ecc668db0252b2bb62d1c6c7b36781c2b62059600afc3dd4530ef745dd",
+      "size_bytes": 449,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/markdown_404.json",
+      "sha256": "ab4a5e1cc939568c43b70f27462c6aeb7edc9bf3e2356302b71a7c374c1aa3ed",
+      "size_bytes": 441,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/markdown_406.json",
+      "sha256": "d3446f2cd86a2da64efdc8fdb911ba0317bb301c0acf20899a78692f467583dd",
+      "size_bytes": 487,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/markdown_sentinel_missing.json",
+      "sha256": "d7969598b914c5d18a90fce36cf39185e7df2195463f5987a5118c159e05f0f6",
+      "size_bytes": 481,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/markdown_wrong_content_type.json",
+      "sha256": "5f711669aa21c0877528f33ae1ee1895f71276f26ce7e4bd95a1e76d08366a44",
+      "size_bytes": 540,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/no_vary.json",
+      "sha256": "e5bcadae6104f20f64ae9176cad1ac5dd671b86f0209a3de51229003954717b8",
+      "size_bytes": 467,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/vary_lowercase.json",
+      "sha256": "ace6dd4433670c4822378b900c1a9364d8625afac1beef4150844a05e0b7ac04",
+      "size_bytes": 592,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/vary_multi.json",
+      "sha256": "2c35272226d40836f50ef1e4481cd6da3e9a4c672bb351123cb28801662ba1af",
+      "size_bytes": 538,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/origin/vary_star.json",
+      "sha256": "ca8b5fb4cf6834fb6bebc712293dbf33ee792a5c4a9859ded8c294feab94b5f5",
+      "size_bytes": 500,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C01.json",
+      "sha256": "aa529e786ec822c45b32e2ca29c21773e4d9836f740670a7435b4f24120c9077",
+      "size_bytes": 568,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C02.json",
+      "sha256": "9d69760ebef571ab117b36401d4c03506e1bbd25e4c14d5b4ca1b88ff32e68de",
+      "size_bytes": 614,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C03.json",
+      "sha256": "73e59fda1ee6b199af2a735c4a90f5d34b67f2ba2450edd8bc0efc2312bceb04",
+      "size_bytes": 779,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C04.json",
+      "sha256": "7fd6d5fffad6a18791ee4f06add2d7b4985954cca25eeb0a0c8a1dafd90ad521",
+      "size_bytes": 693,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C05.json",
+      "sha256": "42ae56de80b06bb5a7e6fcf3c0ab8ad4c332ed32c55431daae6ed702c457994e",
+      "size_bytes": 509,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C06.json",
+      "sha256": "874c0204438fd1a15d317c9ca7f9bb19e9fdebec1b15a9d0c4d447e689beccde",
+      "size_bytes": 531,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C07.json",
+      "sha256": "33c80f29a00dca4f776fdb69294fb4cd714b6ceda4ab068e559dd3fff4d205f3",
+      "size_bytes": 809,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C08.json",
+      "sha256": "6c6c97e303f928dea98e769b314e4f09ffc75071a494ef0419618470279f7190",
+      "size_bytes": 825,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C09.json",
+      "sha256": "acbdb2a1ad4bf5d095b19025ca953704dabd0e37a3a41ef53258aab76b75c3db",
+      "size_bytes": 848,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C10.json",
+      "sha256": "ffb50739bc7ba306e96008ba022561be74d75682103181ffd442600154fc7cc0",
+      "size_bytes": 921,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C11.json",
+      "sha256": "02bfb8fbda35135e16eac6853a44766f59e422dc129f19e377fb17225602c257",
+      "size_bytes": 1004,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C12.json",
+      "sha256": "3c52f9bcf2910046e2eac98879c9dbe8c8c9b58ed407233317de5a94c4cfbf01",
+      "size_bytes": 1080,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C13.json",
+      "sha256": "197f7150b02a49c6ebee94a35876b251a762cfd8e971a6f39e8611029400d572",
+      "size_bytes": 1150,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C14.json",
+      "sha256": "ccc6884c4915f10bd8d8c1a66850a252886ff72e76af275bf38caee8216283a8",
+      "size_bytes": 1150,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C15.json",
+      "sha256": "15648d3a81283ee133cc63bb2321c1e9e5cfb4c52c4bd85cc7a1a4456b5338fa",
+      "size_bytes": 1128,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C16.json",
+      "sha256": "10ebc4f15c2b1104b3cdb8d0d7dd96e4614c36e1c2e77c0376cbbce200280ca2",
+      "size_bytes": 1152,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C17.json",
+      "sha256": "2f593dc7e4939de30d50cbe5a783b9979f673f8c92ea370b2bb6a3d62566af2d",
+      "size_bytes": 531,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C18.json",
+      "sha256": "cc56aa8743c8a769368626ba9e93b5a3fe5bc8726c6f7291d94ee1c5f159b538",
+      "size_bytes": 531,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C19.json",
+      "sha256": "1d6c4327b1e48841faf0f0eb0fc2b05547d9b12746b95d815e89389345bb9337",
+      "size_bytes": 1020,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C20.json",
+      "sha256": "f390ace8c263498f9ba8cd9059e863904e948d41ff840ce3e15a39f9b01ff387",
+      "size_bytes": 997,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C21.json",
+      "sha256": "40d3d4a5d3b9e8f1e76383c53e21e7310267eae199140652fadfea01feae7477",
+      "size_bytes": 1230,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C22.json",
+      "sha256": "f9e138468903c64a8352726c56d20fe0a4a94b0ebb8437dc4b172f64e460d4f2",
+      "size_bytes": 940,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C23.json",
+      "sha256": "743ad6278b219442a99784f1145d69fa70a707ac662dcc0a79c589fa0067181b",
+      "size_bytes": 932,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/fixtures/s0/C24.json",
+      "sha256": "32e1626dbfc89721e1a7cdced11e5bb061070e14b9fa89d9acff46c0ea0c514f",
+      "size_bytes": 1103,
+      "role": "golden"
+    },
+    {
+      "path": "accepttwin-1.0.1/oracle/package.json",
+      "sha256": "67b49fbfc1f91be49ded322b5dd9fb6cea3bbaf4c38162b90937e58b670222e6",
+      "size_bytes": 391,
+      "role": "oracle-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/oracle/src/evidence.ts",
+      "sha256": "ac69388b0ff15389b757e884a386426f47961ab715f611785b427783c62e308b",
+      "size_bytes": 8833,
+      "role": "oracle-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/oracle/src/index.ts",
+      "sha256": "ca5d1464f40d53544ee7a35d59442f0515ee5960b47feb63345cf87e082cfde2",
+      "size_bytes": 1264,
+      "role": "oracle-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/oracle/src/input.ts",
+      "sha256": "1d665587cd8e9706eb897827133890a1bb4e60ee653cf54d8e243df2b34a2d43",
+      "size_bytes": 2888,
+      "role": "oracle-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/oracle/src/oracle.ts",
+      "sha256": "5587b79f0632c0e1d78b2cd1fc9385e97e4107cc509f4e0dbaed0563327e30a4",
+      "size_bytes": 19132,
+      "role": "oracle-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/oracle/tsconfig.json",
+      "sha256": "6c2990eca5e66ed9f274661ac81bf156b6a3487d58141b9be2c5dc73bcda3a12",
+      "size_bytes": 291,
+      "role": "oracle-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/pyproject.toml",
+      "sha256": "cba02ad97fa635e1d5ebf5740cfb3a6e40bb672aaa10d055faa6d7b22e5865ad",
+      "size_bytes": 759,
+      "role": "dependency-declaration"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/T010_NOTES.md",
+      "sha256": "6772b6a187949bba5b8df7f8b32c0ec321e11588b61f6a855845e156efa459ee",
+      "size_bytes": 7732,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/index.html",
+      "sha256": "05f0d1f3211cc9d794da08ceb3c47c28de523b62f9bf33dfb63f0a3fdbc7c061",
+      "size_bytes": 3041,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/package-lock.json",
+      "sha256": "b83b414a3961c7ca7217ac303966b7da01a381c5b84394bb891a3c8fbafd6e16",
+      "size_bytes": 798,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/package.json",
+      "sha256": "5053662d73f3af0d52e9bf309073f4898ccaa5b2f20ab984e709a9f1983e5717",
+      "size_bytes": 393,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/report-ui.js",
+      "sha256": "784e3106f7a380845559690dfa04aa4f8549f0d044bf5edea66ee2aefec9c84d",
+      "size_bytes": 48694,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/src/app.ts",
+      "sha256": "292c6b22b63c877f971e46d1ce5db4dc200d20979500f630e507eb18028e785e",
+      "size_bytes": 30496,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/src/diagnostics.ts",
+      "sha256": "591542a5aca51db9798f48cae15a4f6dcbbc8d8160f42c2bede9f23aeb1c7c63",
+      "size_bytes": 5474,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/src/timeline.ts",
+      "sha256": "dd137172d4859cb8241d901d391372df1108bded198d504fa07b8d673ba65cc2",
+      "size_bytes": 7040,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/src/types.ts",
+      "sha256": "8cbe1a1694fda7bbfc01bd6c9d37b2c97e1505038bcfb3cf06137ba4f131fd18",
+      "size_bytes": 6823,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/styles.css",
+      "sha256": "6bf873eb24ef318ff6587db6765be0995e7ade7e34a3d06914890208c15c44e2",
+      "size_bytes": 4819,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/report-ui/tsconfig.json",
+      "sha256": "f345f6b8808903dd584d3b24213c8437dd096210893f4add010d138a4ebb54da",
+      "size_bytes": 259,
+      "role": "report-ui"
+    },
+    {
+      "path": "accepttwin-1.0.1/schemas/accepttwin.contract.v1.schema.json",
+      "sha256": "ff70c577b0b6cff035ed0f944b9d7f8a586113762799cffaaaf5a92fa15d5987",
+      "size_bytes": 3105,
+      "role": "schema"
+    },
+    {
+      "path": "accepttwin-1.0.1/schemas/accepttwin.report.v1.schema.json",
+      "sha256": "a7adb7823f629d2da19806f52ccbed03b0f6349899ab8c87cab337d5116ed725",
+      "size_bytes": 5859,
+      "role": "schema"
+    },
+    {
+      "path": "accepttwin-1.0.1/scripts/build_reports_48.py",
+      "sha256": "89713259380c475aa371d8a1f576a3e03c3280dcba650c906f20317f919af30a",
+      "size_bytes": 5946,
+      "role": "script"
+    },
+    {
+      "path": "accepttwin-1.0.1/scripts/clean_evidence.py",
+      "sha256": "764f71f2531fb282dd11b256ac12056fb14f80f926346fcd63e8c9fd2e28f082",
+      "size_bytes": 3302,
+      "role": "script"
+    },
+    {
+      "path": "accepttwin-1.0.1/scripts/embed_report.py",
+      "sha256": "bb6f7a7325bf745ab738759bd74e8c67945cfdee2a35195e1032dedba3da856a",
+      "size_bytes": 21947,
+      "role": "script"
+    },
+    {
+      "path": "accepttwin-1.0.1/scripts/run_all_48.py",
+      "sha256": "a6b3347845909bda9a43d1323e6bf528e23277e6682f1c13c623cddaa6142fec",
+      "size_bytes": 10225,
+      "role": "script"
+    },
+    {
+      "path": "accepttwin-1.0.1/scripts/run_s0.py",
+      "sha256": "a02e341b71b63670b6c628cb87aa754c619889e7fa20945b3fee0ebe56e7d2c7",
+      "size_bytes": 10973,
+      "role": "script"
+    },
+    {
+      "path": "accepttwin-1.0.1/scripts/s0_harness.py",
+      "sha256": "9ee1614c26701aba9e19c03eedf50786de3b0d3725fcc35d85d9237aef84e610",
+      "size_bytes": 30326,
+      "role": "script"
+    },
+    {
+      "path": "accepttwin-1.0.1/scripts/verify_s0.py",
+      "sha256": "688c317f3dab2b157447bac981c43a5d91ff8b48ade3f3b0c382c6adad267bd2",
+      "size_bytes": 32956,
+      "role": "script"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/__init__.py",
+      "sha256": "d71659fee694dc6567c1dcecae5c5aaec540fe89edc8825d889ed0cc36451177",
+      "size_bytes": 106,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/__main__.py",
+      "sha256": "22bff6c0b736d62194ce807d4d16cba20ac355d23af0828d1c03aa19ee84c2d8",
+      "size_bytes": 239,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/cache_evidence.py",
+      "sha256": "aeb6423bb78f0fc24c6899e95082c0b3e9d5c8119349a41500b94d94b048ab6a",
+      "size_bytes": 10530,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/cache_proxy.py",
+      "sha256": "cd2d985f166346307c2848b4c3f4632a7ab2f9e67c83073671dd2eddf9c8d2a2",
+      "size_bytes": 34475,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/canonical_json.py",
+      "sha256": "3f31bd8a127458801255a6e462700f489d95ba67bdd50761b71a8a0e4b7d0df4",
+      "size_bytes": 913,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/classifier.py",
+      "sha256": "4d26dc3ba6926625c278165dd36440170637add63e93466d01aa3eb0cb59f99d",
+      "size_bytes": 41099,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/cli.py",
+      "sha256": "4fce15d80a8d269b1dc74603c1f09563dbd29c2db20d94fbf85b03e39934cd20",
+      "size_bytes": 54409,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/contract.py",
+      "sha256": "17e9d1aa78135e10ce0c000dee1f3844482d3e1323f9e37bbf130d71d67591ba",
+      "size_bytes": 20063,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/diagnostics.py",
+      "sha256": "c795569b7f40d2ca43812941cc86940bd8af277e5497bf1ec7da8f861f56d632",
+      "size_bytes": 38169,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/evidence.py",
+      "sha256": "3b267f3df68e49f211ba7e6bd23db6a70322180405ed86b436a5c2a681ea9fb6",
+      "size_bytes": 11109,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/experiment_runner.py",
+      "sha256": "12030e60a05839849309beda0ac167cea5b9bc68a9ef43e742029d2d212650c5",
+      "size_bytes": 33159,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/origin_server.py",
+      "sha256": "b80d3cd6c54e6391561e3143db425f02e1b8e8fd2f6da3ad2815fabb736dcdc4",
+      "size_bytes": 30813,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/privacy.py",
+      "sha256": "911bd4cd519561983ded1c8783567dfe0f8d15ff60a14b9677fc13686f6e3f9d",
+      "size_bytes": 26181,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/report_builder.py",
+      "sha256": "d2f18d3a5d6ae9fd1652da3ec1a66e294ff675676854c5665899118603152a8e",
+      "size_bytes": 27048,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/request_headers.py",
+      "sha256": "e3357741eb51649234786b3dfcf6117d9a47cf3bace5d7c4084fc30a7447fc78",
+      "size_bytes": 5722,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/schema.py",
+      "sha256": "646b586b00f6ff532981f1a973e1fe9e655c7c56cb727a015b6071b6bb28976f",
+      "size_bytes": 10323,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/src/accepttwin/url_guard.py",
+      "sha256": "88a3e7597c79343ae955059c262cc7fc15345960da6c6d1782aed5e71839ad2c",
+      "size_bytes": 5432,
+      "role": "production-source"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/fixtures/contracts/custom-bleed.json",
+      "sha256": "9fb954061977dcf38e57b2a24bcc0876acea068a669d320031997d65eda7c972",
+      "size_bytes": 1243,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/fixtures/contracts/custom-healthy.json",
+      "sha256": "1ebb58499838efea8a32ce2438be2fcd72763a21d59a01950174db7f96f6379e",
+      "size_bytes": 1094,
+      "role": "fixture"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/golden/test_all_48.py",
+      "sha256": "5a3aa2ca51e94a250ac42add70eba4503bf7cd817f88007ecf40430ee5a51576",
+      "size_bytes": 5564,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/golden/test_extended.py",
+      "sha256": "d66eb38e690ac1fa14505ef2072d44611b33e0d9d6f33f888d935c6492397d81",
+      "size_bytes": 13891,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/golden/test_s0.py",
+      "sha256": "d105efb285db58f995f0d4fa28097f0c79161710edbe899580139c42f7ad07f5",
+      "size_bytes": 10590,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/integration/test_cache_proxy.py",
+      "sha256": "82daaadfa6dbed2ad9ec864382d61cda848fdd74e0c8d9d7b4069672d169a4a7",
+      "size_bytes": 31741,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/integration/test_cli_commands.py",
+      "sha256": "773b05000efde80e4853b5e6efbb8dbd978bdd901757ba15cb1ee46ceb786231",
+      "size_bytes": 23508,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/integration/test_experiment_runner.py",
+      "sha256": "d1c96bc8a96fd7199570327dd71dd35ee2ac3420e33cc3129d7436fd660a7584",
+      "size_bytes": 20527,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/integration/test_origin_server.py",
+      "sha256": "20bae5f1516c072451991fb2db9f6686f27447ae91576ed5e759d0f601bcc565",
+      "size_bytes": 21107,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/integration/test_report_ui.py",
+      "sha256": "7218698c157f872d12733816e4e7cfe64d38e61d7e67593e3349427e467c187d",
+      "size_bytes": 19692,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/performance/test_cli.py",
+      "sha256": "bf89902212f89019ac42c03ee6b597994bb480d3805b7c5acc507b615d1c1dff",
+      "size_bytes": 3615,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/performance/test_performance.py",
+      "sha256": "f42af1698174df0125f6a1d97eb8f21ca48261d7254638cc9f991922385a5c54",
+      "size_bytes": 3425,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/privacy/test_body_limit.py",
+      "sha256": "7bbe0d4d97f7b38858664fc150a5aac465a05b6d93fcb63deab52d189c99c580",
+      "size_bytes": 16587,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/privacy/test_cleanup_command.py",
+      "sha256": "6a6e2aa94e17635127cfcf415aa3063a55c843e9fa4b2c4793ff90047c4715a0",
+      "size_bytes": 9177,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/privacy/test_html_self_contained.py",
+      "sha256": "0b0dfb52bd604727373dc36971a3c5cd7d9d54ec55648a77cf5ae744c0f078e7",
+      "size_bytes": 5714,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/privacy/test_log_confidentiality.py",
+      "sha256": "aeb67e480a102f9ff53269c01c218a4f9656e27bc7e6fb0810916a63cc6d3d2f",
+      "size_bytes": 9472,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/privacy/test_loopback_guard.py",
+      "sha256": "1bc62b1e61ef930bf6400947264fb693c43cf372c7dd0e671e305c63f3ba0e86",
+      "size_bytes": 6915,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/privacy/test_privacy_request_headers.py",
+      "sha256": "d8057e886699187143dfeb86e255296ae7a8d0c7ac019c34377cc878dcbf0cb2",
+      "size_bytes": 6837,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/privacy/test_redirect_and_proxy.py",
+      "sha256": "ad15d448379fcf44548c5f38fe43d2e011c06c35cda00c904ef070c6ca3539c8",
+      "size_bytes": 7042,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/independent_schema_validator.py",
+      "sha256": "5c3878c8651421cddd3b99f3bf43304360d0e25c57d9928081445f19730b4b23",
+      "size_bytes": 8964,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_cache_evidence.py",
+      "sha256": "04d60decaddd0b7c7e605730cc0cfd74eee33d476b9d42b57af97c1df4ae5bc9",
+      "size_bytes": 9792,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_canonical_json.py",
+      "sha256": "f566cae24f3755a257cd1d8807b04c2fee79d432af76d207ee383583e267bdae",
+      "size_bytes": 9804,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_classifier.py",
+      "sha256": "3499805e3849270c09706ed640bf3de347762b3129dc29cc7ee230e542393b0f",
+      "size_bytes": 41043,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_contract.py",
+      "sha256": "2be2ca5e76cc70eef82633fc941230aaeb06457fea7a6c55b09e98a58c071cd1",
+      "size_bytes": 10464,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_diagnostics.py",
+      "sha256": "a8129cdc7ce1398c30833c7d23d69d287375bcd85a428d0421c07f152433d1c7",
+      "size_bytes": 33371,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_evidence.py",
+      "sha256": "7f08ab185180aecbd5e7ac9adb3a52aaa3cf6e151505044b7bae0b605b953905",
+      "size_bytes": 2159,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_port_check.py",
+      "sha256": "c1051070742bef7e17b030fa47fdb087ce6e96c2c8c75c5ca6f7d43866a4dc8c",
+      "size_bytes": 1031,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_report_builder.py",
+      "sha256": "e3c345a951c677929621b25b592f7e84649964b33a407528b16bad2f7eacbf36",
+      "size_bytes": 24375,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_report_schema.py",
+      "sha256": "e9a9ce310abab03089bf85dda5e7038705f7b66ae263a09dc4c65ce073c346e6",
+      "size_bytes": 24694,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_request_headers.py",
+      "sha256": "3b5853ead435f2e64b1447c5551fae8ad1ad6fd5d6bb3e678360f766ead3c2ca",
+      "size_bytes": 4200,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_url_guard.py",
+      "sha256": "c85ccf19a91b71f50269870a04db2bfa4e5fbef7bf2cb77091f34c10080c24be",
+      "size_bytes": 4368,
+      "role": "test"
+    },
+    {
+      "path": "accepttwin-1.0.1/tests/unit/test_verify_s0_parity.py",
+      "sha256": "0181995cd3c57fc4543803b1ab8b6b6fd0e8937bdb600e9a99f78e5f8661a5b7",
+      "size_bytes": 5650,
+      "role": "test"
+    }
+  ],
+  "samples": {
+    "note": "Formal report samples and HTML pages at the freeze commit (repo paths). NOT inside source.zip; archived on Google Drive with the release.",
+    "report_json_48": [
+      {
+        "path": "evidence/Reports/C01.json",
+        "sha256": "f30bcd7223b584a96a61a54621944357ea7edbdeaed7a8ce340ebedd65957fe8",
+        "size_bytes": 5337
+      },
+      {
+        "path": "evidence/Reports/C02.json",
+        "sha256": "88c642cf6afc9c3af4e84cf5ad30e8d822ed037b289fa92305047fdce429395a",
+        "size_bytes": 5337
+      },
+      {
+        "path": "evidence/Reports/C03.json",
+        "sha256": "d231cfb4985d82fd7721ad1eab6190c2139babcccf8529f046648de4b4ffa784",
+        "size_bytes": 6093
+      },
+      {
+        "path": "evidence/Reports/C04.json",
+        "sha256": "9940edf913cd66b626f0b6b5237b069c85affd2ce9321698ee20b995d7d05afa",
+        "size_bytes": 6093
+      },
+      {
+        "path": "evidence/Reports/C05.json",
+        "sha256": "9ae0d178e22ee714c3ef30caf78bc7e82ddca08e37255babc4fc39c76bf05d37",
+        "size_bytes": 5226
+      },
+      {
+        "path": "evidence/Reports/C06.json",
+        "sha256": "2a02de06edf1af8a6bcec25b04caa48be0f84a8c1b930dadba0fa55dc8814af4",
+        "size_bytes": 5226
+      },
+      {
+        "path": "evidence/Reports/C07.json",
+        "sha256": "9f65e89be30711bd6b463de85529feccfcdfcbe372b112d423973af338a3c513",
+        "size_bytes": 8946
+      },
+      {
+        "path": "evidence/Reports/C08.json",
+        "sha256": "35f6ad1b49ddf7c30ac315d8dcc2973eb69b3a02ba17d98ecd10d2af4a81cc5e",
+        "size_bytes": 9078
+      },
+      {
+        "path": "evidence/Reports/C09.json",
+        "sha256": "1b7944f0b6520b05e559170a48fc80fded56640f9e373ae10bc9c512e2f5a3c3",
+        "size_bytes": 9120
+      },
+      {
+        "path": "evidence/Reports/C10.json",
+        "sha256": "286e5d02576a3e8b1409cfdd975da315f9e7a41c81e6fe1e3a001158ace5fec2",
+        "size_bytes": 8769
+      },
+      {
+        "path": "evidence/Reports/C11.json",
+        "sha256": "b6abf5e97f8539b313772295cc24d4622c508294f911e661d891bf7de3b32709",
+        "size_bytes": 10375
+      },
+      {
+        "path": "evidence/Reports/C12.json",
+        "sha256": "868296184d13c020f115b0a66c45c7e2889f0fa69821b4b3b994b617b9caa2b9",
+        "size_bytes": 10375
+      },
+      {
+        "path": "evidence/Reports/C13.json",
+        "sha256": "a9200291fcb6b3bf5747fdefc53892d99d1198640d366e972faabc1159dabadc",
+        "size_bytes": 11129
+      },
+      {
+        "path": "evidence/Reports/C14.json",
+        "sha256": "e7ebc339ced972bb3639ca3c232f885a7a02fe93393228164ae8e476f054f8c4",
+        "size_bytes": 11129
+      },
+      {
+        "path": "evidence/Reports/C15.json",
+        "sha256": "a9362bd7b67aa2556d6ead8b2abfd060d608d144519908d3e73f2f2195de4531",
+        "size_bytes": 11129
+      },
+      {
+        "path": "evidence/Reports/C16.json",
+        "sha256": "64b43a24840a4bc8cf8bf641c04a9f15db9a54d5b7a968f0fb162c5e83c2cd5f",
+        "size_bytes": 11129
+      },
+      {
+        "path": "evidence/Reports/C17.json",
+        "sha256": "ba66bfa90152af3c72736a11a89154c7c420be6b882b73291ae0304681a6231b",
+        "size_bytes": 5226
+      },
+      {
+        "path": "evidence/Reports/C18.json",
+        "sha256": "2e8d2448211e9107b59169723c224c76d947ec0a48e11a4655266988ac3a0651",
+        "size_bytes": 5226
+      },
+      {
+        "path": "evidence/Reports/C19.json",
+        "sha256": "4d8e235364ac7ae90e697d40073a45fa76a9fb7e1eefb80ccf8583f1c4592102",
+        "size_bytes": 8533
+      },
+      {
+        "path": "evidence/Reports/C20.json",
+        "sha256": "c9052cbf4597a8ba7a6abbf84c1860964a057854f55f82df1301ee9b589eb70d",
+        "size_bytes": 8308
+      },
+      {
+        "path": "evidence/Reports/C21.json",
+        "sha256": "3e3b1bba200a02bdacd834b973fdf4ac5434e4bc8dab7986982085445917724d",
+        "size_bytes": 9094
+      },
+      {
+        "path": "evidence/Reports/C22.json",
+        "sha256": "fe2b57a60578a90335af023d7293ba38f0980d49c4f6a7fc47f39e94d9428167",
+        "size_bytes": 6042
+      },
+      {
+        "path": "evidence/Reports/C23.json",
+        "sha256": "89a79519ccaf5efba944d300e185c5bb3231e0b344e4e5e32a51e2760a4f2f95",
+        "size_bytes": 5812
+      },
+      {
+        "path": "evidence/Reports/C24.json",
+        "sha256": "633df035180dc1afba0a5d62f4ac7a4a8a9a7fb9dfa718f52c5ca1aa44c48309",
+        "size_bytes": 8293
+      },
+      {
+        "path": "evidence/Reports/E01.json",
+        "sha256": "d4a94d0f5b1faadf4b5060c828c549718507fc3fce401329c1dca54faa3aa79c",
+        "size_bytes": 5338
+      },
+      {
+        "path": "evidence/Reports/E02.json",
+        "sha256": "ef2c7d424c5ca471c3ffe4999a4f24ad0b9d1c7a4ddaf37da63561951702093a",
+        "size_bytes": 5338
+      },
+      {
+        "path": "evidence/Reports/E03.json",
+        "sha256": "3e7357e875837567004549ace0305d8f21c4719c23cab954847bad1d56e1d54f",
+        "size_bytes": 5230
+      },
+      {
+        "path": "evidence/Reports/E04.json",
+        "sha256": "58d607217a886faf3f31eef57df9df9ee0a61c0fc3af037dd5b7c71fc1e06af1",
+        "size_bytes": 6094
+      },
+      {
+        "path": "evidence/Reports/E05.json",
+        "sha256": "be92ecaea2076f0c2f94f7170d27d0ed66d84392671abcf21c990d7fbaf7b4dc",
+        "size_bytes": 5227
+      },
+      {
+        "path": "evidence/Reports/E06.json",
+        "sha256": "7175aa0f883c1480c050d1a167cc05dd7cb5b183c69751710766a4efb3b30d12",
+        "size_bytes": 5227
+      },
+      {
+        "path": "evidence/Reports/E07.json",
+        "sha256": "c0d63a293398b309c09ebf39eb4b74e49a89bae7762ae3aa67779afde8457af5",
+        "size_bytes": 9604
+      },
+      {
+        "path": "evidence/Reports/E08.json",
+        "sha256": "33e7477b477dee6c3025287ab36f327a34228c1bba0268a4b96e9b268e1d2a36",
+        "size_bytes": 9596
+      },
+      {
+        "path": "evidence/Reports/E09.json",
+        "sha256": "03c43d5c44affe51521b02493f026c722bf188ded154332da3c7d37755f8cea5",
+        "size_bytes": 9187
+      },
+      {
+        "path": "evidence/Reports/E10.json",
+        "sha256": "2e37016bc7e01cf65e14296afbe345e862f22a4ff52aba674a3b606cb64d57d9",
+        "size_bytes": 9175
+      },
+      {
+        "path": "evidence/Reports/E11.json",
+        "sha256": "71077b64943c476e877ae215ce156a58e1e11e1242918cd977caf6ca94286ba3",
+        "size_bytes": 9286
+      },
+      {
+        "path": "evidence/Reports/E12.json",
+        "sha256": "c628288c20907dc17e7e5574cd7715c87e6298d3d382dd3edf480155b7d0a30b",
+        "size_bytes": 11511
+      },
+      {
+        "path": "evidence/Reports/E13.json",
+        "sha256": "7d95f6f741ff78f7999b2bcca2ad2de65a6751f3a041b0abc54c6b667c7da50c",
+        "size_bytes": 10376
+      },
+      {
+        "path": "evidence/Reports/E14.json",
+        "sha256": "87c176d3b9d308c43deeb90b188e95d8f48a8ed76c5392b41033e932a5a7e40a",
+        "size_bytes": 10376
+      },
+      {
+        "path": "evidence/Reports/E15.json",
+        "sha256": "693fe21585784eb138f64544ec0f3738eb7133be04b7ec91df986669237d2a67",
+        "size_bytes": 5227
+      },
+      {
+        "path": "evidence/Reports/E16.json",
+        "sha256": "21dfeb85e2c1e2e884e8aa2ee3427935c5ba04a264369ffc43cdc67452a5c825",
+        "size_bytes": 5227
+      },
+      {
+        "path": "evidence/Reports/E17.json",
+        "sha256": "05253f8027c30877d08fc543ef70a374b620dc37dc7e6b62021fdc0c9a1172c8",
+        "size_bytes": 8309
+      },
+      {
+        "path": "evidence/Reports/E18.json",
+        "sha256": "3366e1db5b313740cab6f7847f0f7261466e22f5e71f81c4b288e157156b439a",
+        "size_bytes": 9095
+      },
+      {
+        "path": "evidence/Reports/E19.json",
+        "sha256": "a1e77937bbc72f807ee661088c93aa182ccf650df120362386db01502a04da66",
+        "size_bytes": 6043
+      },
+      {
+        "path": "evidence/Reports/E20.json",
+        "sha256": "1fc1e82c1e2ae679f9f271c352115f3250b2d8a81fe6a44e5aed881c7200e6e0",
+        "size_bytes": 6045
+      },
+      {
+        "path": "evidence/Reports/E21.json",
+        "sha256": "6e93c2448c972626d3d16c09c47fa6f494249bdc347cb813f66c7df0fd63f2c2",
+        "size_bytes": 8196
+      },
+      {
+        "path": "evidence/Reports/E22.json",
+        "sha256": "994eea3087e55fa952a8fcf95bc5c6ba7735e862e445c30302fd122ee27e769e",
+        "size_bytes": 11481
+      },
+      {
+        "path": "evidence/Reports/E23.json",
+        "sha256": "b46b88464da70ce02906a7de1825c335c5d8c8c32291e0c50ab60a7f2a673554",
+        "size_bytes": 8290
+      },
+      {
+        "path": "evidence/Reports/E24.json",
+        "sha256": "a3421dbff3c8865b630bdd31117ef6c8fabf043fbae1a73e23e531eee3e642f9",
+        "size_bytes": 6597
+      }
+    ],
+    "reports_summary": [
+      {
+        "path": "evidence/Reports/REPORTS_SUMMARY.json",
+        "sha256": "4d818f967d4e6f34548e801065b0618e1210ec60ed6028df8328612db87c5b42",
+        "size_bytes": 18867
+      }
+    ],
+    "report_html_49": [
+      {
+        "path": "evidence/Reports/html/C01.html",
+        "sha256": "f3a92c2ccc6c85354aefb36cadfc510577a898dd13d0d780392df13b7b33ad0c",
+        "size_bytes": 62022
+      },
+      {
+        "path": "evidence/Reports/html/C02.html",
+        "sha256": "70c3ba5541c66acc0dc859a2bafd18b3d03a76b93a0990309e61489973c10831",
+        "size_bytes": 62022
+      },
+      {
+        "path": "evidence/Reports/html/C03.html",
+        "sha256": "05fc8f2df4dc7412ce4be8586f96df900902b01b1309e0a02a45f8c53a08d135",
+        "size_bytes": 62778
+      },
+      {
+        "path": "evidence/Reports/html/C04.html",
+        "sha256": "6d8158ef9eeee06478e7d6360971eaaa63b9cbfae9836c6a4805aa38f7e225aa",
+        "size_bytes": 62778
+      },
+      {
+        "path": "evidence/Reports/html/C05.html",
+        "sha256": "50189225e51b5e5c5cdc3e8c0ede382862df51f2968614896f0164f5c1df5f3f",
+        "size_bytes": 61911
+      },
+      {
+        "path": "evidence/Reports/html/C06.html",
+        "sha256": "e5097315841c2c90dcbf88a8b328013aa70ba6e7fa2b9a0de5ac2d76174700c9",
+        "size_bytes": 61911
+      },
+      {
+        "path": "evidence/Reports/html/C07.html",
+        "sha256": "6808e7a3f1cd3227a84c02b26899c37ec1d2c9636baf76523370bc621ab2acc8",
+        "size_bytes": 65631
+      },
+      {
+        "path": "evidence/Reports/html/C08.html",
+        "sha256": "0eec0c6c4bb0039a0c3f395e3e38169b60b469b7f9749dbbd6e5601930ab025a",
+        "size_bytes": 65763
+      },
+      {
+        "path": "evidence/Reports/html/C09.html",
+        "sha256": "c175644f6dfe28e197c80da8d2250c82e1be2bafc4b7195c9d74d06244f4a79f",
+        "size_bytes": 65805
+      },
+      {
+        "path": "evidence/Reports/html/C10.html",
+        "sha256": "a42d51dbbc3a9e5016fd63051133d5494d76bc579af3edb8121034686bdd655e",
+        "size_bytes": 65454
+      },
+      {
+        "path": "evidence/Reports/html/C11.html",
+        "sha256": "081bd16381d9a0a3b0871c267d26cc0503c784103f62cffcfc78b560342bf975",
+        "size_bytes": 67060
+      },
+      {
+        "path": "evidence/Reports/html/C12.html",
+        "sha256": "28fcab0d6944beb5db28a54ea530546adfad18a8e2718afcdcbda3bca043c8c5",
+        "size_bytes": 67060
+      },
+      {
+        "path": "evidence/Reports/html/C13.html",
+        "sha256": "79051a8f88b4f420c6554bb43391487511b96b926df40566c90ad8c45e14551a",
+        "size_bytes": 67814
+      },
+      {
+        "path": "evidence/Reports/html/C14.html",
+        "sha256": "3017b650df2633a78ffcfe19aad8448c82b15a5ae29cdbea3b5e84fd3a9bf0cd",
+        "size_bytes": 67814
+      },
+      {
+        "path": "evidence/Reports/html/C15.html",
+        "sha256": "85148e1fe160d430a9bbad46d32b865926dd8d7f841856595862f4d29ef2c8cf",
+        "size_bytes": 67814
+      },
+      {
+        "path": "evidence/Reports/html/C16.html",
+        "sha256": "3eb870cb31a7aae6d522cca10cf1858d77f45b6b89e598f0860b1161b0e1c977",
+        "size_bytes": 67814
+      },
+      {
+        "path": "evidence/Reports/html/C17.html",
+        "sha256": "597d2313d1dc1a51ac299a0d874648c7a328104b4ddafc5e0b3c5ec5c3f155c9",
+        "size_bytes": 61911
+      },
+      {
+        "path": "evidence/Reports/html/C18.html",
+        "sha256": "267e1499523c76cc72b0265c050f019a51873f442aeca9416a5211f14163ced2",
+        "size_bytes": 61911
+      },
+      {
+        "path": "evidence/Reports/html/C19.html",
+        "sha256": "61eaa8213df752967117c71764421cb769b8753e85779a8da19e7816ded8ee56",
+        "size_bytes": 65218
+      },
+      {
+        "path": "evidence/Reports/html/C20.html",
+        "sha256": "73682b98655ec583fe010e2f9f9f26c9fc25811330934ed9adf4a813604b782c",
+        "size_bytes": 64993
+      },
+      {
+        "path": "evidence/Reports/html/C21.html",
+        "sha256": "71160b0d48f294fe3f5f7b11c58bfe1ca8733f659b4000d5c82a61a442b2ee8f",
+        "size_bytes": 65779
+      },
+      {
+        "path": "evidence/Reports/html/C22.html",
+        "sha256": "7d82122ffb210ea83f6d44237c573640a3dfc88ff3b93a7eef3af5c0a100efd8",
+        "size_bytes": 62727
+      },
+      {
+        "path": "evidence/Reports/html/C23.html",
+        "sha256": "1fdf591f87d217c70d759406ccc1b464f25ef4e34ba0d36b5680e77c873313b0",
+        "size_bytes": 62497
+      },
+      {
+        "path": "evidence/Reports/html/C24.html",
+        "sha256": "96d3351e97719bdb495b30873989a8baa19d9cf3c642127c6cd3cbeadc640b0d",
+        "size_bytes": 64978
+      },
+      {
+        "path": "evidence/Reports/html/E01.html",
+        "sha256": "250a4d3139052952576cddf6166b7c864b93a080e2057fd7fbb9508bc8a5a085",
+        "size_bytes": 62023
+      },
+      {
+        "path": "evidence/Reports/html/E02.html",
+        "sha256": "04bdb8143b77976fd618de912df7945e618910002027cc60bb3c2fd16388fbc7",
+        "size_bytes": 62023
+      },
+      {
+        "path": "evidence/Reports/html/E03.html",
+        "sha256": "0735e0af23ba793708204a43868bc3477758d48f7572e4944152fe9acb292d6c",
+        "size_bytes": 61915
+      },
+      {
+        "path": "evidence/Reports/html/E04.html",
+        "sha256": "a736cdca25f3c91010c3e2487520585b0c27c58b0a280f8e9f64d5ec16212ef4",
+        "size_bytes": 62779
+      },
+      {
+        "path": "evidence/Reports/html/E05.html",
+        "sha256": "37ac0ec99291036035f17b14783c2bd0400065dff7d72576ce7664e68a28432a",
+        "size_bytes": 61912
+      },
+      {
+        "path": "evidence/Reports/html/E06.html",
+        "sha256": "13764a84d1524a3416d1c78d06d2ad483cfe7d8184907b8462a320f8e4911df5",
+        "size_bytes": 61912
+      },
+      {
+        "path": "evidence/Reports/html/E07.html",
+        "sha256": "4f158c02e52bc47741ab7476980f24b31d050a0b64a7222ad4d2db2ca57e73b1",
+        "size_bytes": 66289
+      },
+      {
+        "path": "evidence/Reports/html/E08.html",
+        "sha256": "cece9a97534c1a757d13d8f03a0e44c955fbc82a40543488014cfdb7cc07710c",
+        "size_bytes": 66281
+      },
+      {
+        "path": "evidence/Reports/html/E09.html",
+        "sha256": "6b401feaf708a4424adf006dd2290274725999575396adae36110a88fa211b91",
+        "size_bytes": 65872
+      },
+      {
+        "path": "evidence/Reports/html/E10.html",
+        "sha256": "ddb04dd0071885dbc64f3748b72d4778357ed22b6d726cbe289fc15953ec9b9b",
+        "size_bytes": 65860
+      },
+      {
+        "path": "evidence/Reports/html/E11.html",
+        "sha256": "bf5d178aebba572b6f4fa96146d2860a7c678e015c6cf6b62256135b6b0527f5",
+        "size_bytes": 65971
+      },
+      {
+        "path": "evidence/Reports/html/E12.html",
+        "sha256": "1adaaaddb744765c9fb3afbf9441c4d54ca3466db4937c3aebfd463f56752997",
+        "size_bytes": 68196
+      },
+      {
+        "path": "evidence/Reports/html/E13.html",
+        "sha256": "334d39ac56ec04f1cd8d9ab6fc882cbb1a141dd7353015d6592bed0dba04dc05",
+        "size_bytes": 67061
+      },
+      {
+        "path": "evidence/Reports/html/E14.html",
+        "sha256": "a1485bebbd9f3ebdd194ab27ac1b1d4abf2a948b0f306a5aab2ae87ad8c60153",
+        "size_bytes": 67061
+      },
+      {
+        "path": "evidence/Reports/html/E15.html",
+        "sha256": "d8eb96f90566d9e9639af4ef336a6f399dffe473c3110ab6a784824885c82bcc",
+        "size_bytes": 61912
+      },
+      {
+        "path": "evidence/Reports/html/E16.html",
+        "sha256": "07e99bda64174f928d67af9a97514a2579457e4e8f6e7cbf04022c6bded6d211",
+        "size_bytes": 61912
+      },
+      {
+        "path": "evidence/Reports/html/E17.html",
+        "sha256": "f6b8463c2745244971d01d314478eb6de93c6aecfc9c3533117976cce711faf0",
+        "size_bytes": 64994
+      },
+      {
+        "path": "evidence/Reports/html/E18.html",
+        "sha256": "65f9d6b1951a49b49b5b99e7ca00d450c29ba93d97fb0fca20c50179e9d00f51",
+        "size_bytes": 65780
+      },
+      {
+        "path": "evidence/Reports/html/E19.html",
+        "sha256": "32967c88c59de355ff9a084a8a549c4ffdc543f5fa91a0f17a68a16809e2d65a",
+        "size_bytes": 62728
+      },
+      {
+        "path": "evidence/Reports/html/E20.html",
+        "sha256": "636e39d66b03d48eded97adbdb47d10d3212d5a364196da108b49e2eb252e349",
+        "size_bytes": 62730
+      },
+      {
+        "path": "evidence/Reports/html/E21.html",
+        "sha256": "be3424d1d3b92994ff614dc1eb681f0bc4336de8652bf55ddaf1d42b32b7de83",
+        "size_bytes": 64881
+      },
+      {
+        "path": "evidence/Reports/html/E22.html",
+        "sha256": "68070f67bfc205bcc562958b165ccbc72cac545aa0bd31a34151fac30af9926e",
+        "size_bytes": 68166
+      },
+      {
+        "path": "evidence/Reports/html/E23.html",
+        "sha256": "76dcc67d63fe8350d247d14b9ea61c68d7ee2be3b2b12b4f60ab6f6e6ce59930",
+        "size_bytes": 64975
+      },
+      {
+        "path": "evidence/Reports/html/E24.html",
+        "sha256": "f5c0a07bf2dcd3c84c614809b3d7fe4cbc0ae012c0df8e8a30b169451874a813",
+        "size_bytes": 63282
+      },
+      {
+        "path": "evidence/Reports/html/index.html",
+        "sha256": "3593b8f19713fee7d00df29d22f1c5b3f4ea653df9e832af6c1404272a9c6951",
+        "size_bytes": 70812
+      }
+    ]
+  },
+  "tests_status": "PASS",
+  "gate": {
+    "pytest": {
+      "command": ".venv/bin/python -m pytest -q",
+      "result": "1026 passed, 0 failed, 0 skipped, 84.54s",
+      "where": "main worktree, clean tree at freeze commit 221f902, .venv pytest 9.2.0"
+    },
+    "verify_s0": {
+      "command": ".venv/bin/python -m accepttwin verify --suite s0",
+      "result": "S0_STATUS PASS, 24/24 golden, parity 24/24, C11 bleed 3/3, repeat-100 distinct_hashes=1, max 0.0306s, C01 report hash 67e69e68e128441b67fae155ac1af8dbb4e7992b4dfe70db7dcef1f04e62acde"
+    },
+    "verify_all": {
+      "command": ".venv/bin/python -m accepttwin verify --suite all",
+      "result": "VERIFY_STATUS PASS, ALL48 48/48 golden, parity 48/48; S0 24/24 golden, parity 24/24, repeat-100 distinct_hashes=1"
+    },
+    "all48_detail": {
+      "false_positives": 0,
+      "known_failures_detected": "19/19",
+      "warm_cache_orders_executed": "48/48 scenarios both HTML_TO_MARKDOWN and MARKDOWN_TO_HTML",
+      "bleed_reproduction_E13": "3/3",
+      "determinism_E01": "distinct_hashes=1",
+      "max_scenario_seconds": 0.0408
+    },
+    "benchmark": {
+      "command": ".venv/bin/python -m accepttwin benchmark --suite all",
+      "result": "BENCHMARK_STATUS PASS, max single-scenario 0.0408s, repeat-100 distinct=1, schema 48/48, HTML 49 pages clean 0 violations, verdicts PASS_OBSERVED 16 / ORIGIN_NEGOTIATION_ERROR 7 / REPRESENTATION_BLEED 8 / CONTRACT_MISMATCH 4 / INCONCLUSIVE 13"
+    },
+    "offline": {
+      "command": "bash evidence/Performance/offline_verify.sh",
+      "result": "OFFLINE_VERIFY PASS"
+    },
+    "npm_build": {
+      "command": "cd report-ui && npm run build",
+      "result": "exit 0, TypeScript 5.9.3, report-ui.js sha256 784e3106f7a380845559690dfa04aa4f8549f0d044bf5edea66ee2aefec9c84d (identical to committed file)"
+    },
+    "independent_review": "T013 REVIEW COMPLETE, 0 P0 / 0 P1 / 15 P2 / 1 P3, reviewed commit c02387c; T014 disposed of all 16 findings (see findings below); FIX-R1 disposed of R1 FAIL (0 P0 / 3 P1 / 4 P2) — see fix_r1 below; R2 PENDING"
+  },
+  "findings": [
+    {
+      "id": "T013-F01",
+      "severity": "P2",
+      "disposition": "ACCEPTED (ADR-007 decision 1): port-swap contract-hash collision is forced by PROJECT_BOOK §10.4; role-placeholder fix probed and proven mathematically ineffective; pinning test added; no production change",
+      "commit": "1419ae4"
+    },
+    {
+      "id": "T013-F02",
+      "severity": "P2",
+      "disposition": "FIXED: Oracle parity widened to per-request verified MISS/HIT/BYPASS states; production side is the classifier's confirmed states (ADR-007 decision 3)",
+      "commit": "8afd7c1"
+    },
+    {
+      "id": "T013-F03",
+      "severity": "P2",
+      "disposition": "FIXED (documentation): frozen clean-checkout rebuild path written to docs/INSTALL.md and docs/LIMITATIONS.md (npm ci, or offline reuse of installed node_modules with pinned tsc 5.9.3; byte-identical output)",
+      "commit": "4aa43a1"
+    },
+    {
+      "id": "T013-F04",
+      "severity": "P2",
+      "disposition": "FIXED: bounded streaming read in cache_proxy._fetch_origin, same helper as T011 F-01 (ADR-007 decision 2)",
+      "commit": "f07b875"
+    },
+    {
+      "id": "T013-F05",
+      "severity": "P2",
+      "disposition": "FIXED: Oracle claim now from raw cache-status header; HIT tie from Oracle's own confirmed MISS; no Oracle code reads production verified_cache_state (ADR-007 decision 4)",
+      "commit": "8afd7c1"
+    },
+    {
+      "id": "T012 P2-1",
+      "severity": "P2",
+      "disposition": "FIXED in FIX-R1 (ADR-008 supersedes ADR-005): all §4.1 CLI commands (demo, run --contract, verify --report, report preview/export/delete, clean, contract delete) are implemented and really execute; independently reviewed PASS (P1-01 review f7d726bf, 2026-11-24); v1.0.1 CLI is verify/benchmark + all §4.1 commands",
+      "commit": "55ad6bc"
+    },
+    {
+      "id": "T012 P2-2",
+      "severity": "P2",
+      "disposition": "FIXED: docs/USAGE.md now cites committed evidence/Performance/VERIFY_LOG.txt",
+      "commit": "c4daaae"
+    },
+    {
+      "id": "T011 F-01",
+      "severity": "P2",
+      "disposition": "FIXED: bounded streaming read in experiment_runner._http_get via privacy.read_http_body_bounded (ADR-007 decision 2)",
+      "commit": "f07b875"
+    },
+    {
+      "id": "T011 P2",
+      "severity": "P2",
+      "disposition": "FIXED: scripts/clean_evidence.py default subtree narrowed to evidence/; rule stated in CLI help and docs (ADR-007 decision 7)",
+      "commit": "c4daaae"
+    },
+    {
+      "id": "T010 P2-1",
+      "severity": "P2",
+      "disposition": "FIXED: report-ui/T010_NOTES.md point 5 wording corrected",
+      "commit": "c4daaae"
+    },
+    {
+      "id": "T010 P2-2",
+      "severity": "P2",
+      "disposition": "FIXED: two conditional pytest.skip changed to hard pytest.fail (CI must provide headless Chromium)",
+      "commit": "c4daaae"
+    },
+    {
+      "id": "T008 P2-2",
+      "severity": "P2",
+      "disposition": "FIXED: RFC 9111-tolerant revalidation parsing in classifier and Oracle (ADR-007 decision 5)",
+      "commit": "2da97ce"
+    },
+    {
+      "id": "T003 P2-01",
+      "severity": "P2",
+      "disposition": "FIXED: q=0 Accept returns 406 per RFC 9110 §12.5.1 (ADR-007 decision 6)",
+      "commit": "6e126b2"
+    },
+    {
+      "id": "T003 P2-02",
+      "severity": "P2",
+      "disposition": "FIXED: q-tie rule ('first listed wins') now has live-origin tests (ADR-007 decision 6)",
+      "commit": "6e126b2"
+    },
+    {
+      "id": "T006 P3",
+      "severity": "P3",
+      "disposition": "FIXED: origin_journal_available is now a literal True with comment (no behaviour change)",
+      "commit": "2da97ce"
+    },
+    {
+      "id": "D-03",
+      "severity": "P2",
+      "disposition": "CLOSED: honest boundary centralised as a single clause in 00_control/ADR-006.md; README and docs/LIMITATIONS.md cite it",
+      "commit": "4aa43a1"
+    }
+  ],
+  "remaining_p2": [
+    "T013-F01 (ACCEPTED residual, not a fix): contract identity is modulo ephemeral loopback ports by design (§10.4); see ADR-007 decision 1.",
+    "D-01, D-05–D-08 (spec-verification annotations, recorded with the frozen spec; no action): GPT's false '§19–§21 already existed' claim; frontmatter note retained (D-05); §5.1.2 JSON written from the field table. D-04 truncation markers are GONE in v1.0.1 (fixed by P1-03, 45 placeholders completed)."
+  ],
+  "licenses": {
+    "license": "MIT (LICENSE)",
+    "third_party": "THIRD_PARTY_NOTICES.md; production package has zero runtime dependencies (pyproject.toml dependencies = []); test-only pytest==9.2.0; report-ui TypeScript 5.9.3 (package-lock.json); Oracle is dependency-free TypeScript (oracle/package.json declares no dependencies)"
+  },
+  "drive_folder_id": "1W_LWORvFNOMqBIz-hIu_31aInA46C5Z1",
+  "notes": [
+    "T014 SUCCESS means construction and release evidence are ready; it does NOT mean GPT final review has PASSED. ACCEPTED remains PENDING until ChatGPT gives an explicit FINAL_VERDICT: PASS in the establishment conversation. R1 returned FAIL (2026-11-24); FIX-R1 closed all 3 P1 + 4 P2 (see fix_r1); R2 is PENDING.",
+    "The T014 task card's 08_release/ file list was truncated mid-sentence (\"HOW_TO_REPRODUCE.md（任务卡原文此处截断，…）\"). The full set was completed per T014-F/T014-G: README.md, LICENSE, THIRD_PARTY_NOTICES.md, RELEASE_NOTES.md (this file), HOW_TO_REPRODUCE.md, RELEASE_MANIFEST.json, SHA256SUMS.txt, source.zip. Nothing in the truncated list was dropped; the completion is stated here, in the manifest's notes, and in the release README.",
+    "Per-file SHA-256 for every file in source.zip is in this manifest's files[] array (with roles). SHA256SUMS.txt (in 08_release/) carries the top-level hashes (source.zip and this manifest) so that `sha256sum -c SHA256SUMS.txt` passes from inside 08_release/. After unpacking, verify every extracted file against files[] with the T014-H procedure in HOW_TO_REPRODUCE.md. files[] was built from the zip bytes and cross-checked 165/165 against `git show P032-v1.0.1:<path>`, so the manifest also proves zip<->commit provenance.",
+    "No Golden expected value was changed in T014 or FIX-R1. Recorded evidence (evidence/Golden, evidence/S0, evidence/Reports) was regenerated by live re-execution after the parity widening (T014 WP-9/WP-10) and again at the v1.0.1 refreeze (verify --suite all + benchmark --suite all); all 48 Golden report hashes and all 48 Reports hashes are identical to before regeneration except for the v1.0.1 spec-version bump, which changes only the formal report_hash values (project.version is in the formal hash payload) — verdicts, diagnostics and observations are unchanged. Live-run harness hashes (e.g. C01 67e69e68...) are unchanged across the bump.",
+    "Execution deviation recorded in ADR-007: the T014 coordinator (depth-2 subagent, can_spawn=no) implemented all fixes directly, sequentially, with probe-first reproduction and independent probe re-verification (T014-C, 25 checks) plus a full gate re-run in a clean worktree (T014-D); builder/reviewer model separation from the task card could not be applied. The same deviation applies to the FIX-R1 refreeze executor (depth-2 subagent, can_spawn=no): the refreeze, gate re-runs and release rebuild were executed directly, with per-item independent reviews already done for P1-01/P1-02/P1-03 and a clean-worktree gate confirmation run at the freeze tag; a separate independent release review is dispatched by the parent agent before R2."
+  ],
+  "fix_r1": {
+    "review": "GPT final review R1, 2026-11-24 ~18:06 GMT, GPT-6.2 + Extra High, FINAL_VERDICT: FAIL, P0=0 / P1=3 / P2=4, freeze d3bee54 (tag P032-v1.0.0)",
+    "fixes": [
+      {
+        "id": "P1-01",
+        "fix": "All §4.1 CLI commands implemented (run --contract, demo, verify --report, report preview/export/delete, clean, contract delete); ADR-008 supersedes ADR-005",
+        "commit": "55ad6bc",
+        "independent_review": "PASS (f7d726bf, 2026-11-24): all nine commands really execute; 59 new tests pass; full suite 1024 passed + 2 port-environment failures, re-run green at refreeze (1026 passed, 0 failed)"
+      },
+      {
+        "id": "P1-02",
+        "fix": "T001 competitive-gate evidence completed (cache-tests, readiness-audit, Cloudflare Playground live runs; acceptmarkdown API retried x4; Hurl M->H re-run resolves N-1); decision stays CONTINUE",
+        "commit": "d5fa420",
+        "independent_review": "FAIL (narrow, 7358f41c, 2026-11-24): substance all PASS; only two text errors (readiness-acceptmarkdown 31->32 checks; 4th acceptmarkdown POST session-lost, not a confirmed timeout); fixed in 1be77fb"
+      },
+      {
+        "id": "P1-03",
+        "fix": "All 45 truncated spec placeholders (58 occurrences) completed with per-item source table (00_control/P1_03_SOURCES.md); both DOCX regenerated",
+        "commit": "2cefa36",
+        "independent_review": "PASS (8f70bda8, 2026-11-24): 0 placeholders repo-wide and in DOCX; 6 source spot-checks pass; UNSOURCED 0"
+      },
+      {
+        "id": "P2-01",
+        "fix": "scripts/verify_s0.py parity widened to 8 verified_cache_states (fail-closed); verify_s0 19/19",
+        "commit": "55ad6bc",
+        "independent_review": "PASS (f7d726bf, 2026-11-24)"
+      },
+      {
+        "id": "P2-02",
+        "fix": "T013-F01 hash-collision scope sentence added to docs/LIMITATIONS.md and ADR-007 decision 1",
+        "commit": "2cefa36",
+        "independent_review": "PASS (8f70bda8, 2026-11-24)"
+      },
+      {
+        "id": "P2-03",
+        "fix": "Fresh GIT_LOG (00_control/GIT_LOG_FIXR1.txt) + git bundle (08_release/P032-v1.0.1.bundle) archived on Drive with the release",
+        "commit": "post-freeze release commit (see GIT_LOG_FIXR1.txt)",
+        "independent_review": "refreeze executor verified zip<->tag per-file provenance 165/165 (this manifest)"
+      },
+      {
+        "id": "P2-04",
+        "fix": "T014-C probe count unified to 25 (was 23 in three release texts); FINDINGS.json MD5 confirmed 4edbc89accc32f92f47a5ae5dc5616f0",
+        "commit": "2cefa36",
+        "independent_review": "PASS (8f70bda8, 2026-11-24)"
+      }
+    ],
+    "version_bump": "v1.0.0 -> v1.0.1 (ADR-009): spec-only patch; product version stays 1.0.0 (pyproject, __version__, User-Agent AcceptTwin/1.0.0). Formal report sample hashes changed (project.version enters the formal report_hash payload); live-run harness hashes unchanged (67e69e68... for C01) because the harness hashes a reduced dict without project. IMPLEMENTATION_PLAN.md has no frontmatter (D-05 retained); its v1.0.0 mentions are frozen historical/format examples.",
+    "refreeze": "freeze commit 221f902 (tag P032-v1.0.1); full gate re-run at the freeze commit, all PASS (see gate above); review packs regenerated from the tag (evidence/Review/)"
+  },
+  "gate_evidence": {
+    "note": "T001 competitive-gate files (R1 P1-02): excluded from source.zip by design (third-party gate evidence) but Drive-archived with this release and hashed here; the supporting evidence/ subdirectory (28 fix-r1 files + cloned cache-tests repo) stays in git under 00_control/competitive_gate/evidence/.",
+    "files": [
+      {
+        "path": "00_control/competitive_gate/T001_COMPETITIVE_GATE.md",
+        "sha256": "85d8dd966e7e3f720d0713bef880dec8bc9ed4f77514298d4a8b44d7d109a2ed",
+        "size_bytes": 44110
+      },
+      {
+        "path": "00_control/competitive_gate/comparison_matrix.csv",
+        "sha256": "3eb5a2037e87ef284c7ba450a602a9f41a5c9e7068029a621dd678c956cda234",
+        "size_bytes": 561
+      },
+      {
+        "path": "00_control/competitive_gate/tool_versions.json",
+        "sha256": "d4fcfc9d290d721594a6e8a21f34b6309fcae5bc120c087b4cad6006a85774fe",
+        "size_bytes": 9009
+      },
+      {
+        "path": "00_control/competitive_gate/commands.log",
+        "sha256": "f5b4b19659501a4d2f65fcb42b75c72c0ab998765556eeb1f72099238450f125",
+        "size_bytes": 19752
+      },
+      {
+        "path": "00_control/competitive_gate/decision.json",
+        "sha256": "4c33898d22507a2f195a223f4ac62c64b8cc6ddba8de10dd6c9755c6bee04fee",
+        "size_bytes": 6981
+      }
+    ]
+  }
+}

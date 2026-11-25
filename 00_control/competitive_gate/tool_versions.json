@@ -1,0 +1,105 @@
+{
+  "environment": {
+    "cpu_cores": 4,
+    "disk_home_available": "122G",
+    "disk_home_total": "150G",
+    "git": "2.43.0",
+    "memory_available_at_start": "663Mi",
+    "memory_total": "7.7Gi",
+    "node": "v24.22.1",
+    "npm": "10.9.4",
+    "os": "Linux htch-runtime 7.0.0-44-generic x86_64",
+    "python": "3.12.3"
+  },
+  "fix_r1": {
+    "base_commit": "6303d82",
+    "environment_note": "Same cloud VM as T001 round (Python 3.12.3, Node v24.22.1, npm 10.9.4). One service restart ~19:18-19:41 UTC during the round killed the T001 harness; all harness-dependent runs had already completed and been logged.",
+    "executed_at": "2026-11-24T18:11:26Z to ~2026-11-24T20:30Z",
+    "runs": {
+      "Cloudflare": {
+        "docs_fetch": "curl developers.cloudflare.com/fundamentals/reference/markdown-for-agents/ -> HTTP 200, 1.614 s, 199,239 B, 538 lines (evidence/fix-r1/cf-markdown-docs.html)",
+        "isitagentready": "curl https://isitagentready.com/ -> HTTP 200, 0.844 s, 27,116 B (evidence/fix-r1/isitagentready.html); public-site scanner, no scan run",
+        "playground_probe": "curl to https://dash.cloudflare.com/?to=/:account/:zone/agent-readiness/markdown-for-agents -> HTTP 403 Forbidden, 0.936 s, 1,851 B (evidence/fix-r1/cf-playground.headers + .body) — login + zone required, cannot run"
+      },
+      "Hurl": {
+        "artifact_sha256": "006a9032401b61004d9e104b06aa0973413f7b36dc5437063b0bf028188c0cf9",
+        "artifact_size_bytes": 3412516,
+        "re_downloaded_from": "https://github.com/Orange-OpenSource/hurl/releases/download/7.0.0/hurl-7.0.0-x86_64-unknown-linux-gnu.tar.gz",
+        "runs": {
+          "dual_healthy": "exit 4 — jsonpath $.count == 9, actual 7 (origin 5 -> 7); correct behaviour, stale hardcoded absolute count (evidence/fix-r1/hurl_dual_healthy_fixr1.log)",
+          "hm_bleed": "exit 4 — request 2 actual HIT + text/html + AT_HTML_SENTINEL_001 vs expected MISS/text/markdown/MD sentinel; origin 4 -> 5 (evidence/fix-r1/hurl_hm_bleed_fixr1.log)",
+          "hm_healthy": "exit 0 — 2 requests in 16 ms; origin 2 -> 4 (evidence/fix-r1/hurl_hm_healthy_fixr1.log)",
+          "mh_healthy_N1_rerun": "exit 0 — 'Success hurl/mh.hurl (2 request(s) in 48 ms)', 0.078 s wall; origin 0 -> 2; proxy holds 2 entries (evidence/fix-r1/hurl_mh_healthy_fixr1.log). N-1 RESOLVED: archived exit=4 was the missing-reset artifact."
+        },
+        "version": "hurl 7.0.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13"
+      },
+      "acceptmarkdown.com": {
+        "api_posts": "4 attempts: 3 confirmed timeouts, HTTP 000 with zero bytes received — /api/readiness self 30 s; /api/negotiate self 30 s; /api/readiness self 60 s — plus a 4th attempt (/api/readiness self 30 s, retry) lost to a dropped exec session with no response file on disk (not counted as a confirmed timeout). Header files (39 B each) contain only the proxy CONNECT line; no response body files exist (evidence/fix-r1/am_api1/2/3.headers). 6 confirmed timeouts total across T001 + FIX-R1 rounds (3 + 3).",
+        "endpoints_confirmed_live": "JS chunk /_astro/index.astro_astro_type_script_index_0_lang.C6-pp5ff.js fetched 200 in 0.587 s (7,456 B) contains /api/negotiate and /api/readiness (evidence/fix-r1/am_index.chunk.js)",
+        "gets": "GET / Accept: text/html -> 200, 1.129 s, 24,502 B, Content-Type text/html, Vary: Accept; GET / Accept: text/markdown -> 200, 0.557 s, 2,514 B, Content-Type text/markdown; charset=utf-8, Cache-Control public max-age=300 stale-while-revalidate=86400, Vary: Accept (evidence/fix-r1/am_html.* + am_md.*)"
+      },
+      "cache-tests": {
+        "cli_control_run": "npm run --silent cli --base=http://127.0.0.1:8000 --id=vary-match -> npm exit 0, 0.465 s; 'Response 2 does not come from cache' (server-request-count 1 -> 2, no cache in path) — proves the runner works (evidence/fix-r1/cachetests-cli-vary-match-direct8000.log)",
+        "cli_vs_harness_proxy": "npm run --silent cli --base=http://127.0.0.1:18765 --id=vary-match -> npm exit 0, 0.356 s; test FAILS: 'Setup PUT config resulted in 501 Unsupported method (PUT)' + request 1 HTTP 404 + 'Response 1 status is 404, not 200' (evidence/fix-r1/cachetests-cli-vary-match.log)",
+        "code_greps": "vary.mjs: 16 'Accept' lines, ALL Accept-Language normalisation (lines 347-406); ZERO reset/purge/clear-cache matches in tests/ + test-engine/ + spec/; ZERO text/html|text/markdown in tests/ (only hit: test-engine/lib/defines.mjs:24 MIME map); test.mjs:148 Server-Request-Count, :119/:308 checkServerRequests, :160-187 expected_type cached/not_cached",
+        "npm_install": "npm install --no-audit --no-fund -> 'added 278 packages in 31s' (31.767 s wall); node_modules + package-lock.json ignored by evidence/cache-tests/.gitignore (evidence/fix-r1/cachetests-npm-install.log)",
+        "npm_test": "npm test -> exit 0, 20/20 pass, 0.446 s (node --test locate-failure.test.mjs) (evidence/fix-r1/cachetests-npm-test.log)",
+        "server": "npm run server on 127.0.0.1:8000, probe HTTP 200 (evidence/fix-r1/cachetests-server.log); stopped after runs (probe 000)",
+        "validate": "npm run --silent validate -> exit 0, 0.539 s, zero output = silent success (evidence/fix-r1/cachetests-validate.log, 0 B)"
+      },
+      "readiness-audit": {
+        "code_lines": "audit.mjs:202-230 initial requests are mapLimit([...], limit(6)) incl. get('/', {headers:{accept:'text/markdown'}}) at :204 — concurrency 6, no ordered warm sequence; D8 at :360-375; cdnCacheNote helpers.mjs:540-547 is a note string only",
+        "live_vs_acceptmarkdown": "node bin/readiness-audit.mjs acceptmarkdown.com --json -> completed, 32 checks, D8 pass: 'markdown by Accept and at the .md URL, with Vary: Accept on both and a markdown 404; no page llms.txt links serves markdown, so no copy was compared' (evidence/fix-r1/readiness-acceptmarkdown.json, 6,503 B; stderr empty). Exit code not captured — exec session delivery lost; file on disk is the record.",
+        "live_vs_harness": "node bin/readiness-audit.mjs t001.local --base http://127.0.0.1:18765 --json -> exit 1 (audit's own failing-site exit), 32 checks: 1 pass / 10 fail / 7 warn / 14 skip; D8 warn: 'Accept: text/markdown on / returns no body' (evidence/fix-r1/readiness-harness.json, 6,235 B; stderr empty)"
+      }
+    }
+  },
+  "measured_at": "2026-11-24T12:57:10Z",
+  "probe_harness": {
+    "file": "evidence/t001_harness.py",
+    "fix_r1_note": "Re-started for FIX-R1 runs (pid 2698); killed by the ~19:18-19:41 UTC service restart after all harness-dependent runs had completed. Final FIX-R1 origin count 7 (mh 2 + hm 2 + bleed 1 + dual 2).",
+    "note": "Throwaway competitor-probing harness only, NOT AcceptTwin product code. Origin 127.0.0.1:18766, proxy 127.0.0.1:18765. Stopped after probing; final origin request count 16."
+  },
+  "task_id": "P032-T001",
+  "tools": [
+    {
+      "artifact_bytes": 3412516,
+      "name": "Hurl",
+      "source": "https://github.com/Orange-OpenSource/hurl/releases/download/7.0.0/hurl-7.0.0-x86_64-unknown-linux-gnu.tar.gz",
+      "verified_by": "real runs: hm.hurl / mh.hurl / dual.hurl against throwaway harness (healthy + force_uri_only bleed proxy)",
+      "version": "7.0.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13"
+    },
+    {
+      "commit": "3942fbfe1f6d23406e55b4120cde61da98080539",
+      "commit_date": "2026-11-17T09:47:55-08:00",
+      "commit_subject": "update fastly",
+      "license": "BSD-3-Clause",
+      "name": "cache-tests",
+      "verified_by": "read tests/vary.mjs (478 lines), tests/lib/templates.mjs, tests/index.mjs, test-engine/client/test.mjs (full), fetching.mjs; grep for reset/purge/Accept; suite NOT executed",
+      "version": "package 0.4.6"
+    },
+    {
+      "name": "acceptmarkdown.com",
+      "verified_by": "curl: homepage 200 (1.5s), Accept text/html vs text/markdown responses; page text (23844 B) + JS chunk endpoint discovery (/api/readiness, /api/negotiate); 3x POST to those APIs timed out HTTP 000 after 30.0s each, not retried",
+      "version": "live site, no version string"
+    },
+    {
+      "commit": "9ce02f858d50df407b8d0e73f77673f4805caa64",
+      "commit_date": "2026-11-19T20:32:11-03:00",
+      "commit_subject": "2.9.0: A5 finds the API link by what it says",
+      "license": "MIT",
+      "name": "readiness-audit",
+      "verified_by": "read src/audit.mjs (986 lines, D1-D8/D11/A1), src/helpers.mjs cdnCacheNote, bin/readiness-audit.mjs, AGENTS.md; live run NOT executed (execution-risk check requires user approval)",
+      "version": "2.9.0"
+    },
+    {
+      "name": "Cloudflare Agent Readiness",
+      "sources": [
+        "https://developers.cloudflare.com/fundamentals/reference/markdown-for-agents/ (634 lines)",
+        "https://blog.cloudflare.com/agent-readiness/ (450 lines)"
+      ],
+      "verified_by": "full text read of both official pages; Playground / isitagentready.com NOT run live (login/zone required, public sites only)",
+      "version": "docs crawled 2026-11-24 13:10-13:11 UTC"
+    }
+  ]
+}

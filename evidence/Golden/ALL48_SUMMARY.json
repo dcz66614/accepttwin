@@ -1,0 +1,3020 @@
+{
+  "ALL48_GOLDEN": "48/48",
+  "ALL48_ORACLE_PARITY": "48/48",
+  "ALL48_STATUS": "PASS",
+  "EXTENDED_GOLDEN": "24/24",
+  "FALSE_POSITIVE": 0,
+  "KNOWN_FAILURE_DETECTED": 19,
+  "KNOWN_FAILURE_TOTAL": 19,
+  "S0_GOLDEN": "24/24",
+  "bleed_reproduction": {
+    "reproduced_3_of_3": true,
+    "runs": [
+      {
+        "attempt": 1,
+        "bleed_diagnostics": [
+          {
+            "code": "REPRESENTATION_BLEED",
+            "request_index": 6
+          },
+          {
+            "code": "REPRESENTATION_BLEED",
+            "request_index": 8
+          }
+        ],
+        "first_error": 6,
+        "report_hash": "6439c929a09fd47aa023b3d4ce602b8fa4b5e63cc5373d32442cdc66a41b92d4",
+        "verdict": "REPRESENTATION_BLEED"
+      },
+      {
+        "attempt": 2,
+        "bleed_diagnostics": [
+          {
+            "code": "REPRESENTATION_BLEED",
+            "request_index": 6
+          },
+          {
+            "code": "REPRESENTATION_BLEED",
+            "request_index": 8
+          }
+        ],
+        "first_error": 6,
+        "report_hash": "6439c929a09fd47aa023b3d4ce602b8fa4b5e63cc5373d32442cdc66a41b92d4",
+        "verdict": "REPRESENTATION_BLEED"
+      },
+      {
+        "attempt": 3,
+        "bleed_diagnostics": [
+          {
+            "code": "REPRESENTATION_BLEED",
+            "request_index": 6
+          },
+          {
+            "code": "REPRESENTATION_BLEED",
+            "request_index": 8
+          }
+        ],
+        "first_error": 6,
+        "report_hash": "6439c929a09fd47aa023b3d4ce602b8fa4b5e63cc5373d32442cdc66a41b92d4",
+        "verdict": "REPRESENTATION_BLEED"
+      }
+    ],
+    "scenario": "E13"
+  },
+  "determinism_spot_check": {
+    "all_equal": true,
+    "distinct_hashes": 1,
+    "fresh_pair_per_run": true,
+    "hash": "9c75e73f76fcb5fba0a1f4a3d27f05731150d4d0403b362069b5a22f1a11d573",
+    "runs": 3,
+    "scenario": "E01"
+  },
+  "gate": "ALL48",
+  "max_scenario_duration_seconds": 0.0395,
+  "scenarios": {
+    "C01": {
+      "diagnostics": [],
+      "duration_seconds": 0.0141,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "67e69e68e128441b67fae155ac1af8dbb4e7992b4dfe70db7dcef1f04e62acde",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C01",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C02": {
+      "diagnostics": [],
+      "duration_seconds": 0.0148,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "e463739fd907a0a4ad06d02e2added61e5e39eb7ecf4a74a4a11e0826286bcdf",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C02",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C03": {
+      "diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        }
+      ],
+      "duration_seconds": 0.0259,
+      "expected_diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        }
+      ],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "294f457ebb316f5775b5fa0deaa5ea46142bb516bcde109a8e25e764a911e84d",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C03",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C04": {
+      "diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        }
+      ],
+      "duration_seconds": 0.0151,
+      "expected_diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        }
+      ],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "9ac0c100bce53242b1a9d8c0fc96e598e1c282960d1672ab428203ff2f073ead",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C04",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C05": {
+      "diagnostics": [],
+      "duration_seconds": 0.015,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "8adb450978fcf777dbd5422f72ea097cad92ffadd521780d88c7c96333ae8c93",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C05",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C06": {
+      "diagnostics": [],
+      "duration_seconds": 0.015,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "f6c457af50ac813ddfc86c6ca454560788b55a516bc27bcb579b891b27c4a427",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C06",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C07": {
+      "diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 1
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 3
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 5
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0139,
+      "expected_diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 1
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 3
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 5
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 1,
+      "expected_ok": true,
+      "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "first_error": 1,
+      "first_error_experiment_id": "ORIGIN_HTML",
+      "oracle_first_error": 1,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "origin_counter_delta_total": 8,
+      "report_hash": "3e36c2cb80bcb1bf39f4803dfd510f49e20bbd8113be9f96e158869056b7b4a5",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C07",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C08": {
+      "diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 2
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 7
+        }
+      ],
+      "duration_seconds": 0.0168,
+      "expected_diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 2
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 7
+        }
+      ],
+      "expected_first_error": 2,
+      "expected_ok": true,
+      "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "first_error": 2,
+      "first_error_experiment_id": "ORIGIN_MARKDOWN",
+      "oracle_first_error": 2,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "origin_counter_delta_total": 8,
+      "report_hash": "2cd93bb673e2693c43923c1e6e61720c9902c7da68c7bf1d0c00a4eeea9a98fa",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C08",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C09": {
+      "diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 1
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 3
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 5
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0136,
+      "expected_diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 1
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 3
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 5
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 1,
+      "expected_ok": true,
+      "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "first_error": 1,
+      "first_error_experiment_id": "ORIGIN_HTML",
+      "oracle_first_error": 1,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "origin_counter_delta_total": 8,
+      "report_hash": "8ad6dc8d7bf3a3015a55c63df9f1fb8cbfe48ba5f0904237562e54fb4529983d",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C09",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C10": {
+      "diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 2
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 2
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 7
+        }
+      ],
+      "duration_seconds": 0.0146,
+      "expected_diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 2
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 2
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 7
+        }
+      ],
+      "expected_first_error": 2,
+      "expected_ok": true,
+      "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "first_error": 2,
+      "first_error_experiment_id": "ORIGIN_MARKDOWN",
+      "oracle_first_error": 2,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "origin_counter_delta_total": 8,
+      "report_hash": "42293ff31e58b0396b77830eed79e4a93c100fbe12a7ec4f8269e94dff04594c",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C10",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C11": {
+      "diagnostics": [
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0176,
+      "expected_diagnostics": [
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "REPRESENTATION_BLEED",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "REPRESENTATION_BLEED",
+      "origin_counter_delta_total": 6,
+      "report_hash": "795194abf70b5fce8d88d90e827b8d257fd1323c9059c81ddab016bf85c44a91",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C11",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "REPRESENTATION_BLEED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C12": {
+      "diagnostics": [
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0173,
+      "expected_diagnostics": [
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "REPRESENTATION_BLEED",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "REPRESENTATION_BLEED",
+      "origin_counter_delta_total": 6,
+      "report_hash": "856405fb3081cf74af3f8ba0c900ebf77ba5867751dead7955257aafd58fa6e5",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C12",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "REPRESENTATION_BLEED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C13": {
+      "diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0117,
+      "expected_diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "REPRESENTATION_BLEED",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "REPRESENTATION_BLEED",
+      "origin_counter_delta_total": 6,
+      "report_hash": "5c73bcd8e410eea5842e395f3a5ee8fff4d049f566d3593f81f8751a90e722b3",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C13",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "REPRESENTATION_BLEED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C14": {
+      "diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0112,
+      "expected_diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "REPRESENTATION_BLEED",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "REPRESENTATION_BLEED",
+      "origin_counter_delta_total": 6,
+      "report_hash": "a7e648c55c225ff482a15ec4da077f094524ec7e7d122f473e9e9450c31a193b",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C14",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "REPRESENTATION_BLEED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C15": {
+      "diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.012,
+      "expected_diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "REPRESENTATION_BLEED",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "REPRESENTATION_BLEED",
+      "origin_counter_delta_total": 6,
+      "report_hash": "5beff72c30141791ac597a7fa52d79a788f67cb6ec1461dfdb440940de83a26a",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C15",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "REPRESENTATION_BLEED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C16": {
+      "diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.011,
+      "expected_diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "REPRESENTATION_BLEED",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "REPRESENTATION_BLEED",
+      "origin_counter_delta_total": 6,
+      "report_hash": "6539c0ca1024b1b9e9117d2bcdf562f00516d406fa50858dc36833b2cca52aaf",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C16",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "REPRESENTATION_BLEED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C17": {
+      "diagnostics": [],
+      "duration_seconds": 0.0147,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "38b0c5ee247ea641b8af8335a365f5c5b2e220cd65f9c9f606a9eeab4800dd87",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C17",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C18": {
+      "diagnostics": [],
+      "duration_seconds": 0.015,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "5ccab1326287d06de3bc52591e789b54347fdc99d7631a2fa44147b76793901a",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C18",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C19": {
+      "diagnostics": [
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0135,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_POLICY_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 3,
+      "expected_ok": true,
+      "expected_verdict": "CONTRACT_MISMATCH",
+      "first_error": 3,
+      "first_error_experiment_id": "HTML_COLD",
+      "oracle_first_error": 3,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "CONTRACT_MISMATCH",
+      "origin_counter_delta_total": 8,
+      "report_hash": "cace5a2eb85b9825818b3166c7942f0f1cef75683dec9adc4efe150e63a13f7c",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C19",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "CONTRACT_MISMATCH",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C20": {
+      "diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0209,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 3,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 3,
+      "first_error_experiment_id": "HTML_COLD",
+      "oracle_first_error": 3,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 8,
+      "report_hash": "79fa30d3ba5a1e065ee05676d6395c4a3ec3d8e6805ae3006aaceefc737549fa",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C20",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C21": {
+      "diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0136,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 3,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 3,
+      "first_error_experiment_id": "HTML_COLD",
+      "oracle_first_error": 3,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 8,
+      "report_hash": "632effe01de11959aaaa49e43eb251bf11e73744ab7283c39bbfec3dfa4013e5",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C21",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C22": {
+      "diagnostics": [
+        {
+          "code": "CACHE_EVIDENCE_CONFLICT",
+          "request_index": 6
+        }
+      ],
+      "duration_seconds": 0.0142,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_EVIDENCE_CONFLICT",
+          "request_index": 6
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 8,
+      "report_hash": "193f9bceaea3222920ab0192e440279f591adf1d197d8b2229ede73fbf045c92",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C22",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C23": {
+      "diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": null
+        }
+      ],
+      "duration_seconds": 0.013,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": null
+        }
+      ],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 8,
+      "report_hash": "c3f1b68418c740e960c91162e6032cc475e5503ea276580f3ac4a5f2c28486ab",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C23",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "C24": {
+      "diagnostics": [
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 7
+        }
+      ],
+      "duration_seconds": 0.0149,
+      "expected_diagnostics": [
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 7
+        }
+      ],
+      "expected_first_error": 4,
+      "expected_ok": true,
+      "expected_verdict": "CONTRACT_MISMATCH",
+      "first_error": 4,
+      "first_error_experiment_id": "MARKDOWN_COLD",
+      "oracle_first_error": 4,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "CONTRACT_MISMATCH",
+      "origin_counter_delta_total": 8,
+      "report_hash": "90944803011fe4064dbe85dcdea362d78cb14014dfd7b6eb893aa9be5370b373",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "C24",
+      "step_count": 25,
+      "suite": "S0",
+      "verdict": "CONTRACT_MISMATCH",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E01": {
+      "diagnostics": [],
+      "duration_seconds": 0.014,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "9c75e73f76fcb5fba0a1f4a3d27f05731150d4d0403b362069b5a22f1a11d573",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E01",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E02": {
+      "diagnostics": [],
+      "duration_seconds": 0.0134,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "2aee7f1e40354fafb455d0be5c66f643856b23717d5e6bc26529eb203630cba5",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E02",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E03": {
+      "diagnostics": [],
+      "duration_seconds": 0.0143,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "f06a9ef485b933523e0cf3ba74db432c5a066dab4fef2b1c80c29ae3efe34f7d",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E03",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E04": {
+      "diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        }
+      ],
+      "duration_seconds": 0.0142,
+      "expected_diagnostics": [
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 1
+        },
+        {
+          "code": "VARY_ACCEPT_ABSENT",
+          "request_index": 2
+        }
+      ],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "2325155033a5cab5566877f1800e2cbbfe8140f686ee29dfffd9954885e9913e",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E04",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E05": {
+      "diagnostics": [],
+      "duration_seconds": 0.0141,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "abb3f22266e4272667ec253624b5cd33fbccb51f6bc6f385329a5896ddd3be68",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E05",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E06": {
+      "diagnostics": [],
+      "duration_seconds": 0.0135,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "6c07b0226fd5cba3e9019cb838d8a2434579f43920babe97deae7df8b9d40830",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E06",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E07": {
+      "diagnostics": [
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 1
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 2
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 3
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 4
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 5
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 6
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 7
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0166,
+      "expected_diagnostics": [
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 1
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 2
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 3
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 4
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 5
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 6
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 7
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 1,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 1,
+      "first_error_experiment_id": "ORIGIN_HTML",
+      "oracle_first_error": 1,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 8,
+      "report_hash": "0d4e5847ae184ec45e904183a6b160e675c4794eef4a714e407068107c41a489",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E07",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E08": {
+      "diagnostics": [
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 1
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 2
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 3
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 4
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 5
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 6
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 7
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0152,
+      "expected_diagnostics": [
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 1
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 2
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 3
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 4
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 5
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 6
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 7
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 1,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 1,
+      "first_error_experiment_id": "ORIGIN_HTML",
+      "oracle_first_error": 1,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 8,
+      "report_hash": "2b550c3d9851d63bd97695088f33d80c917b647625f9fc8ef2b94935ff60075b",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E08",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E09": {
+      "diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 2
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 7
+        }
+      ],
+      "duration_seconds": 0.0159,
+      "expected_diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 2
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 7
+        }
+      ],
+      "expected_first_error": 2,
+      "expected_ok": true,
+      "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "first_error": 2,
+      "first_error_experiment_id": "ORIGIN_MARKDOWN",
+      "oracle_first_error": 2,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "origin_counter_delta_total": 8,
+      "report_hash": "be87cae4db8e59ea7c5455e0e836db7c6bd1512d11550a5468a78efd263c9a1e",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E09",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E10": {
+      "diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 1
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 3
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 5
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0148,
+      "expected_diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 1
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 3
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 5
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 1,
+      "expected_ok": true,
+      "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "first_error": 1,
+      "first_error_experiment_id": "ORIGIN_HTML",
+      "oracle_first_error": 1,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "origin_counter_delta_total": 8,
+      "report_hash": "57fb3aacd4579dca1fe07dcb0a73e2b23fa92be0db08d9bc8b3fc923d4c76c77",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E10",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E11": {
+      "diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 2
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 7
+        }
+      ],
+      "duration_seconds": 0.024,
+      "expected_diagnostics": [
+        {
+          "code": "ORIGIN_NEGOTIATION_ERROR",
+          "request_index": 2
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 4
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 7
+        }
+      ],
+      "expected_first_error": 2,
+      "expected_ok": true,
+      "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "first_error": 2,
+      "first_error_experiment_id": "ORIGIN_MARKDOWN",
+      "oracle_first_error": 2,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "origin_counter_delta_total": 8,
+      "report_hash": "4e8df2c0fe32825b4c0bb93dec07eb9a4d05931d42069c6aaae76fc62fd788a7",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E11",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "ORIGIN_NEGOTIATION_ERROR",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E12": {
+      "diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.01,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 3,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 3,
+      "first_error_experiment_id": "HTML_COLD",
+      "oracle_first_error": 3,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 2,
+      "report_hash": "728c3dbfee7de0ae6c3edc352ebb38820d629a66864201c95bf90ce7b891002a",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E12",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E13": {
+      "diagnostics": [
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0138,
+      "expected_diagnostics": [
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "REPRESENTATION_BLEED",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "REPRESENTATION_BLEED",
+      "origin_counter_delta_total": 6,
+      "report_hash": "6439c929a09fd47aa023b3d4ce602b8fa4b5e63cc5373d32442cdc66a41b92d4",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E13",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "REPRESENTATION_BLEED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E14": {
+      "diagnostics": [
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0141,
+      "expected_diagnostics": [
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 6
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "REPRESENTATION_BLEED",
+          "request_index": 8
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "REPRESENTATION_BLEED",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "REPRESENTATION_BLEED",
+      "origin_counter_delta_total": 6,
+      "report_hash": "af0d5608c0a9f0eddcd1c4ea1138dd34d18c5c8f6b23f9d1281ff4fe137dd56c",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E14",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "REPRESENTATION_BLEED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E15": {
+      "diagnostics": [],
+      "duration_seconds": 0.0146,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "16d6be39b3fd432546dfafb4663d18c4e372bc2e13143d5844b23bf902095479",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E15",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E16": {
+      "diagnostics": [],
+      "duration_seconds": 0.016,
+      "expected_diagnostics": [],
+      "expected_first_error": null,
+      "expected_ok": true,
+      "expected_verdict": "PASS_OBSERVED",
+      "first_error": null,
+      "first_error_experiment_id": null,
+      "oracle_first_error": null,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "PASS_OBSERVED",
+      "origin_counter_delta_total": 8,
+      "report_hash": "8939d3880441d0c691bdcc414fe746acb59a496a99b5948dc756015f53c3e7a9",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E16",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "PASS_OBSERVED",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E17": {
+      "diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0172,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 3,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 3,
+      "first_error_experiment_id": "HTML_COLD",
+      "oracle_first_error": 3,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 8,
+      "report_hash": "fff800f9244c59b1ab67c227f61140b8e64b891c91020581f67d6f1b291e8089",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E17",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E18": {
+      "diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0165,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 3,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 3,
+      "first_error_experiment_id": "HTML_COLD",
+      "oracle_first_error": 3,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 8,
+      "report_hash": "e11c3ce0cec9f2f102a5bc933b2f2320c62db2804ff70e6d205d1148c158653a",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E18",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E19": {
+      "diagnostics": [
+        {
+          "code": "CACHE_EVIDENCE_CONFLICT",
+          "request_index": 6
+        }
+      ],
+      "duration_seconds": 0.0172,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_EVIDENCE_CONFLICT",
+          "request_index": 6
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 8,
+      "report_hash": "e24ca4a487c981550d0edaaedc382bdbb014cb1d7efd4ff17e8c0d75048e402b",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E19",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E20": {
+      "diagnostics": [
+        {
+          "code": "CACHE_EVIDENCE_CONFLICT",
+          "request_index": 6
+        }
+      ],
+      "duration_seconds": 0.0175,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_EVIDENCE_CONFLICT",
+          "request_index": 6
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 7,
+      "report_hash": "9b81b7c55b6103e428eb3781dab47d9cf01e21574611f00d14b5b15d3643f09a",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E20",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E21": {
+      "diagnostics": [
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 3
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 4
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 5
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 6
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 7
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0395,
+      "expected_diagnostics": [
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 3
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 4
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 5
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 6
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 7
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 3,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 3,
+      "first_error_experiment_id": "HTML_COLD",
+      "oracle_first_error": 3,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 8,
+      "report_hash": "0353d7366d122d7dd69bc0a1b44076264e48b8726dce5815e6e53394aeef8682",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E21",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E22": {
+      "diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0093,
+      "expected_diagnostics": [
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 3
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 3
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 4
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 4
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 5
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 5
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 6
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 6
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 7
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 7
+        },
+        {
+          "code": "CACHE_STATE_UNKNOWN",
+          "request_index": 8
+        },
+        {
+          "code": "INCONCLUSIVE_LIMIT",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 3,
+      "expected_ok": true,
+      "expected_verdict": "INCONCLUSIVE",
+      "first_error": 3,
+      "first_error_experiment_id": "HTML_COLD",
+      "oracle_first_error": 3,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "INCONCLUSIVE",
+      "origin_counter_delta_total": 2,
+      "report_hash": "65d9c404f417888f1e960b0d6a2db26c3a2e5767784722cf12eba51c01f7234f",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E22",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "INCONCLUSIVE",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E23": {
+      "diagnostics": [
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 3
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 5
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.015,
+      "expected_diagnostics": [
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 3
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 5
+        },
+        {
+          "code": "CONTRACT_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 3,
+      "expected_ok": true,
+      "expected_verdict": "CONTRACT_MISMATCH",
+      "first_error": 3,
+      "first_error_experiment_id": "HTML_COLD",
+      "oracle_first_error": 3,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "CONTRACT_MISMATCH",
+      "origin_counter_delta_total": 8,
+      "report_hash": "1bc46e84f82f81eb4a2ead89e0c88da1e9e859722be88a5c87309c2ee89f48c3",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E23",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "CONTRACT_MISMATCH",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    },
+    "E24": {
+      "diagnostics": [
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "duration_seconds": 0.0161,
+      "expected_diagnostics": [
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 6
+        },
+        {
+          "code": "SENTINEL_MISMATCH",
+          "request_index": 8
+        }
+      ],
+      "expected_first_error": 6,
+      "expected_ok": true,
+      "expected_verdict": "CONTRACT_MISMATCH",
+      "first_error": 6,
+      "first_error_experiment_id": "HTML_TO_MARKDOWN",
+      "oracle_first_error": 6,
+      "oracle_mismatches": [],
+      "oracle_parity": true,
+      "oracle_verdict": "CONTRACT_MISMATCH",
+      "origin_counter_delta_total": 8,
+      "report_hash": "1f8ff4e638dd05c73595a4b47f92e54cc4e086b63edd53b972a269cd0aa6b263",
+      "request_count": 8,
+      "reset_count": 4,
+      "scenario_id": "E24",
+      "step_count": 25,
+      "suite": "extended",
+      "verdict": "CONTRACT_MISMATCH",
+      "warm_hm_requests": [
+        5,
+        6
+      ],
+      "warm_mh_requests": [
+        7,
+        8
+      ]
+    }
+  },
+  "spec": "PROJECT_BOOK.md \u00a711",
+  "total_seconds": 12.57
+}

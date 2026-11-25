@@ -1,0 +1,30 @@
+{
+  "diagnostics": [],
+  "duration_seconds": 0.0148,
+  "expected_diagnostics": [],
+  "expected_first_error": null,
+  "expected_ok": true,
+  "expected_verdict": "PASS_OBSERVED",
+  "first_error": null,
+  "first_error_experiment_id": null,
+  "oracle_first_error": null,
+  "oracle_mismatches": [],
+  "oracle_parity": true,
+  "oracle_verdict": "PASS_OBSERVED",
+  "origin_counter_delta_total": 8,
+  "report_hash": "e463739fd907a0a4ad06d02e2added61e5e39eb7ecf4a74a4a11e0826286bcdf",
+  "request_count": 8,
+  "reset_count": 4,
+  "scenario_id": "C02",
+  "step_count": 25,
+  "suite": "S0",
+  "verdict": "PASS_OBSERVED",
+  "warm_hm_requests": [
+    5,
+    6
+  ],
+  "warm_mh_requests": [
+    7,
+    8
+  ]
+}

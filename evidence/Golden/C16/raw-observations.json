@@ -1,0 +1,580 @@
+{
+  "cache_verifications": [
+    {
+      "header_status": "MISS",
+      "reasons": [
+        "header MISS with key and entry id; origin counter +1 with matching event; entry created"
+      ],
+      "request_index": 3,
+      "state": "MISS",
+      "verified": true
+    },
+    {
+      "header_status": "MISS",
+      "reasons": [
+        "header MISS with key and entry id; origin counter +1 with matching event; entry created"
+      ],
+      "request_index": 4,
+      "state": "MISS",
+      "verified": true
+    },
+    {
+      "header_status": "MISS",
+      "reasons": [
+        "header MISS with key and entry id; origin counter +1 with matching event; entry created"
+      ],
+      "request_index": 5,
+      "state": "MISS",
+      "verified": true
+    },
+    {
+      "header_status": "HIT",
+      "reasons": [
+        "header HIT with key and entry id; origin counter unchanged; entry id and body hash match"
+      ],
+      "request_index": 6,
+      "state": "HIT",
+      "verified": true
+    },
+    {
+      "header_status": "MISS",
+      "reasons": [
+        "header MISS with key and entry id; origin counter +1 with matching event; entry created"
+      ],
+      "request_index": 7,
+      "state": "MISS",
+      "verified": true
+    },
+    {
+      "header_status": "HIT",
+      "reasons": [
+        "header HIT with key and entry id; origin counter unchanged; entry id and body hash match"
+      ],
+      "request_index": 8,
+      "state": "HIT",
+      "verified": true
+    }
+  ],
+  "contract_id": "s0-C16",
+  "contract_sha256": "741741e44ad37e2ed906a52e93676072778f35b0017cf478540d47e6ade636f7",
+  "format": "accepttwin.raw-observations/v1",
+  "observations": [
+    {
+      "accept": "text/html",
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "body_size": 203,
+      "cache_entry_count_after": null,
+      "cache_entry_count_before": null,
+      "cache_entry_id": null,
+      "cache_key_sha256": null,
+      "cache_status_header": null,
+      "cache_verification_reasons": [],
+      "experiment_id": "ORIGIN_HTML",
+      "method": "GET",
+      "origin_counter_after": 1,
+      "origin_counter_before": 0,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 1,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_headers": {
+        "content-length": "203",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:56:25 GMT",
+        "server": "AcceptTwinOrigin/1.0.0 Python/3.12.3"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "193d6ddfaa446cc12061188e4b3118f18601f7d64945297ea56965c98f7735d1",
+      "transport_error": null,
+      "url": "http://127.0.0.1:40995/doc",
+      "verified_cache_state": null
+    },
+    {
+      "accept": "text/markdown",
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "body_size": 94,
+      "cache_entry_count_after": null,
+      "cache_entry_count_before": null,
+      "cache_entry_id": null,
+      "cache_key_sha256": null,
+      "cache_status_header": null,
+      "cache_verification_reasons": [],
+      "experiment_id": "ORIGIN_MARKDOWN",
+      "method": "GET",
+      "origin_counter_after": 2,
+      "origin_counter_before": 1,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 2,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_headers": {
+        "content-length": "94",
+        "content-type": "text/markdown; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:56:25 GMT",
+        "server": "AcceptTwinOrigin/1.0.0 Python/3.12.3"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+      "transport_error": null,
+      "url": "http://127.0.0.1:40995/doc",
+      "verified_cache_state": null
+    },
+    {
+      "accept": "text/html",
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "body_size": 203,
+      "cache_entry_count_after": 1,
+      "cache_entry_count_before": 0,
+      "cache_entry_id": "entry-db22b42da9a82fa0",
+      "cache_key_sha256": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+      "cache_status_header": "MISS",
+      "cache_verification_reasons": [
+        "header MISS with key and entry id; origin counter +1 with matching event; entry created"
+      ],
+      "experiment_id": "HTML_COLD",
+      "method": "GET",
+      "origin_counter_after": 3,
+      "origin_counter_before": 2,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 3,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_headers": {
+        "content-length": "203",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:56:25 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "x-accepttwin-cache-key": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+        "x-accepttwin-cache-status": "MISS",
+        "x-accepttwin-entry-id": "entry-db22b42da9a82fa0"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "193d6ddfaa446cc12061188e4b3118f18601f7d64945297ea56965c98f7735d1",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33839/doc",
+      "verified_cache_state": "MISS"
+    },
+    {
+      "accept": "text/markdown",
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "body_size": 94,
+      "cache_entry_count_after": 1,
+      "cache_entry_count_before": 0,
+      "cache_entry_id": "entry-db22b42da9a82fa0",
+      "cache_key_sha256": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+      "cache_status_header": "MISS",
+      "cache_verification_reasons": [
+        "header MISS with key and entry id; origin counter +1 with matching event; entry created"
+      ],
+      "experiment_id": "MARKDOWN_COLD",
+      "method": "GET",
+      "origin_counter_after": 4,
+      "origin_counter_before": 3,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 4,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_headers": {
+        "content-length": "94",
+        "content-type": "text/markdown; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:56:25 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "x-accepttwin-cache-key": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+        "x-accepttwin-cache-status": "MISS",
+        "x-accepttwin-entry-id": "entry-db22b42da9a82fa0"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33839/doc",
+      "verified_cache_state": "MISS"
+    },
+    {
+      "accept": "text/html",
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "body_size": 203,
+      "cache_entry_count_after": 1,
+      "cache_entry_count_before": 0,
+      "cache_entry_id": "entry-db22b42da9a82fa0",
+      "cache_key_sha256": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+      "cache_status_header": "MISS",
+      "cache_verification_reasons": [
+        "header MISS with key and entry id; origin counter +1 with matching event; entry created"
+      ],
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "method": "GET",
+      "origin_counter_after": 5,
+      "origin_counter_before": 4,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 5,
+      "requested_representation": "html",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_headers": {
+        "content-length": "203",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:56:25 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "x-accepttwin-cache-key": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+        "x-accepttwin-cache-status": "MISS",
+        "x-accepttwin-entry-id": "entry-db22b42da9a82fa0"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "193d6ddfaa446cc12061188e4b3118f18601f7d64945297ea56965c98f7735d1",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33839/doc",
+      "verified_cache_state": "MISS"
+    },
+    {
+      "accept": "text/markdown",
+      "body_sha256": "dec04243cd1fbcc1c3c7ef5a4f505366e138551cf43eba96ce7fe36ce09addd4",
+      "body_size": 203,
+      "cache_entry_count_after": 1,
+      "cache_entry_count_before": 1,
+      "cache_entry_id": "entry-db22b42da9a82fa0",
+      "cache_key_sha256": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+      "cache_status_header": "HIT",
+      "cache_verification_reasons": [
+        "header HIT with key and entry id; origin counter unchanged; entry id and body hash match"
+      ],
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "method": "GET",
+      "origin_counter_after": 5,
+      "origin_counter_before": 5,
+      "origin_counter_delta": 0,
+      "origin_event_present": false,
+      "request_index": 6,
+      "requested_representation": "markdown",
+      "response_content_type": "text/html; charset=utf-8",
+      "response_headers": {
+        "content-length": "203",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:56:25 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "x-accepttwin-cache-key": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+        "x-accepttwin-cache-status": "HIT",
+        "x-accepttwin-entry-id": "entry-db22b42da9a82fa0"
+      },
+      "response_status": 200,
+      "sentinel_match": false,
+      "sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33839/doc",
+      "verified_cache_state": "HIT"
+    },
+    {
+      "accept": "text/markdown",
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "body_size": 94,
+      "cache_entry_count_after": 1,
+      "cache_entry_count_before": 0,
+      "cache_entry_id": "entry-db22b42da9a82fa0",
+      "cache_key_sha256": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+      "cache_status_header": "MISS",
+      "cache_verification_reasons": [
+        "header MISS with key and entry id; origin counter +1 with matching event; entry created"
+      ],
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "method": "GET",
+      "origin_counter_after": 6,
+      "origin_counter_before": 5,
+      "origin_counter_delta": 1,
+      "origin_event_present": true,
+      "request_index": 7,
+      "requested_representation": "markdown",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_headers": {
+        "content-length": "94",
+        "content-type": "text/markdown; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:56:25 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "x-accepttwin-cache-key": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+        "x-accepttwin-cache-status": "MISS",
+        "x-accepttwin-entry-id": "entry-db22b42da9a82fa0"
+      },
+      "response_status": 200,
+      "sentinel_match": true,
+      "sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33839/doc",
+      "verified_cache_state": "MISS"
+    },
+    {
+      "accept": "text/html",
+      "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+      "body_size": 94,
+      "cache_entry_count_after": 1,
+      "cache_entry_count_before": 1,
+      "cache_entry_id": "entry-db22b42da9a82fa0",
+      "cache_key_sha256": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+      "cache_status_header": "HIT",
+      "cache_verification_reasons": [
+        "header HIT with key and entry id; origin counter unchanged; entry id and body hash match"
+      ],
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "method": "GET",
+      "origin_counter_after": 6,
+      "origin_counter_before": 6,
+      "origin_counter_delta": 0,
+      "origin_event_present": false,
+      "request_index": 8,
+      "requested_representation": "html",
+      "response_content_type": "text/markdown; charset=utf-8",
+      "response_headers": {
+        "content-length": "94",
+        "content-type": "text/markdown; charset=utf-8",
+        "date": "Tue, 24 Nov 2026 21:56:25 GMT",
+        "server": "AcceptTwinProxy/1.0.0 Python/3.12.3",
+        "x-accepttwin-cache-key": "db22b42da9a82fa078269f60c7d91225124cd65be41dc9163ae060ebed62aeae",
+        "x-accepttwin-cache-status": "HIT",
+        "x-accepttwin-entry-id": "entry-db22b42da9a82fa0"
+      },
+      "response_status": 200,
+      "sentinel_match": false,
+      "sentinel_sha256": "193d6ddfaa446cc12061188e4b3118f18601f7d64945297ea56965c98f7735d1",
+      "transport_error": null,
+      "url": "http://127.0.0.1:33839/doc",
+      "verified_cache_state": "HIT"
+    }
+  ],
+  "origin_counter_baseline": 0,
+  "origin_counter_final": 6,
+  "origin_events": [
+    {
+      "accept": "text/html",
+      "index": 1,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/markdown",
+      "index": 2,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/html",
+      "index": 3,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/markdown",
+      "index": 4,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/html",
+      "index": 5,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    },
+    {
+      "accept": "text/markdown",
+      "index": 6,
+      "method": "GET",
+      "path": "/doc",
+      "status": 200
+    }
+  ],
+  "proxy_mode": "force_uri_only",
+  "resets": [
+    {
+      "entries_after": 0,
+      "entries_before": 0,
+      "entries_removed": 0,
+      "namespace": "all48-C16-html-cold",
+      "success": true
+    },
+    {
+      "entries_after": 0,
+      "entries_before": 1,
+      "entries_removed": 1,
+      "namespace": "all48-C16-markdown-cold",
+      "success": true
+    },
+    {
+      "entries_after": 0,
+      "entries_before": 1,
+      "entries_removed": 1,
+      "namespace": "all48-C16-html-to-markdown",
+      "success": true
+    },
+    {
+      "entries_after": 0,
+      "entries_before": 1,
+      "entries_removed": 1,
+      "namespace": "all48-C16-markdown-to-html",
+      "success": true
+    }
+  ],
+  "scenario_id": "no_vary",
+  "steps": [
+    {
+      "detail": "contract_id=s0-C16",
+      "name": "ValidateContract",
+      "ok": true,
+      "step": 1
+    },
+    {
+      "detail": "url=http://127.0.0.1:33839/doc origin_url=http://127.0.0.1:40995/doc",
+      "name": "ValidateLoopbackTargets",
+      "ok": true,
+      "step": 2
+    },
+    {
+      "detail": "origin=http://127.0.0.1:40995/doc scenario=no_vary",
+      "name": "StartSyntheticOrigin",
+      "ok": true,
+      "step": 3
+    },
+    {
+      "detail": "proxy=http://127.0.0.1:33839/doc mode=force_uri_only",
+      "name": "StartControlledCacheProxy",
+      "ok": true,
+      "step": 4
+    },
+    {
+      "detail": "origin=127.0.0.1:40995 proxy=127.0.0.1:33839",
+      "name": "VerifyLocalPorts",
+      "ok": true,
+      "step": 5
+    },
+    {
+      "detail": "origin_counter_baseline=0",
+      "name": "CaptureOriginCounterBaseline",
+      "ok": true,
+      "step": 6
+    },
+    {
+      "detail": "status=200 sentinel_match=True",
+      "name": "DirectOriginHTML",
+      "ok": true,
+      "step": 7
+    },
+    {
+      "detail": "status=200 sentinel_match=True",
+      "name": "DirectOriginMarkdown",
+      "ok": true,
+      "step": 8
+    },
+    {
+      "detail": "namespace=all48-C16-html-cold entries_before=0 entries_after=0 empty=True",
+      "name": "ResetCache",
+      "ok": true,
+      "step": 9
+    },
+    {
+      "detail": "entry_count=0",
+      "name": "VerifyCacheEmpty",
+      "ok": true,
+      "step": 10
+    },
+    {
+      "detail": "status=200 cache=MISS",
+      "name": "HTMLColdRequest",
+      "ok": true,
+      "step": 11
+    },
+    {
+      "detail": "request=003 verified_cache_state=MISS header=MISS",
+      "name": "VerifyMissOrBypass",
+      "ok": true,
+      "step": 12
+    },
+    {
+      "detail": "namespace=all48-C16-markdown-cold entries_before=1 entries_after=0 empty=True",
+      "name": "ResetCache",
+      "ok": true,
+      "step": 13
+    },
+    {
+      "detail": "entry_count=0",
+      "name": "VerifyCacheEmpty",
+      "ok": true,
+      "step": 14
+    },
+    {
+      "detail": "status=200 cache=MISS",
+      "name": "MarkdownColdRequest",
+      "ok": true,
+      "step": 15
+    },
+    {
+      "detail": "request=004 verified_cache_state=MISS header=MISS",
+      "name": "VerifyMissOrBypass",
+      "ok": true,
+      "step": 16
+    },
+    {
+      "detail": "namespace=all48-C16-html-to-markdown entries_before=1 entries_after=0 empty=True",
+      "name": "ResetCache",
+      "ok": true,
+      "step": 17
+    },
+    {
+      "detail": "entry_count=0",
+      "name": "VerifyCacheEmpty",
+      "ok": true,
+      "step": 18
+    },
+    {
+      "detail": "status=200 cache=MISS",
+      "name": "HTMLWarmFirst",
+      "ok": true,
+      "step": 19
+    },
+    {
+      "detail": "status=200 cache=HIT",
+      "name": "MarkdownWarmSecond",
+      "ok": true,
+      "step": 20
+    },
+    {
+      "detail": "requests=005/006 first=MISS second=HIT",
+      "name": "VerifyCacheEvidence",
+      "ok": true,
+      "step": 21
+    },
+    {
+      "detail": "namespace=all48-C16-markdown-to-html entries_before=1 entries_after=0 empty=True",
+      "name": "ResetCache",
+      "ok": true,
+      "step": 22
+    },
+    {
+      "detail": "entry_count=0",
+      "name": "VerifyCacheEmpty",
+      "ok": true,
+      "step": 23
+    },
+    {
+      "detail": "status=200 cache=MISS",
+      "name": "MarkdownWarmFirst",
+      "ok": true,
+      "step": 24
+    },
+    {
+      "detail": "status=200 cache=HIT",
+      "name": "HTMLWarmSecond",
+      "ok": true,
+      "step": 25
+    }
+  ],
+  "verification_failures": []
+}

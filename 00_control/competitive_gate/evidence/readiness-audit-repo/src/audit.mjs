@@ -1,0 +1,986 @@
+// readiness-audit: score a live site against the Agent and Search Readiness Standard.
+//
+// Library entry. The command-line tool is bin/readiness-audit.mjs.
+// The standard and what each ID means: STANDARD.md in
+// https://github.com/geeks-accelerator/agent-and-search-readiness
+// Read-only: GETs plus a few POSTs that create nothing (an MCP initialize, server/discover and
+// tools/list, an empty POST to /). Node 22, 24 or 26 at its security release, no dependencies.
+
+import { lookup, resolveTxt, Resolver } from 'node:dns/promises';
+import { lookup as dnsLookup } from 'node:dns';
+import { isIP } from 'node:net';
+import { request } from './http.mjs';
+import { SKILL_NAME, sampleSkillEntries, skillNameProblem, cdnCacheNote, repeatsSummary, hasVariantDescription, spread, samplePages, sharedCardText, API_LINK, MCP_LINK, linkRels, apiPresence, DISCOVERY_FILES, AI_BOTS, missingSections, richResultPages, list, norm, pathDepth, decodeText, headings, headingSkips, sitemapEntries, llmsLinks, baseMapper, formatRecorded, safeUrl, robotsGroups, robotsLeaks, siteDomain, tags, meta, jsonLd, openapiDeref, openapiOps, skillFile, saysWhenToUse, markdownUrl, MARKDOWN_LINK, catalogItems, identityLinks, untypedErrors, declaredOpenapi, apiDocLinks } from './helpers.mjs';
+
+export const VERSION = '2.9.0';
+export const REPO = 'https://github.com/geeks-accelerator/agent-and-search-readiness';
+const UA = `readiness-audit/${VERSION} (+${REPO})`;
+const AID_PROTOCOLS = ['mcp', 'a2a', 'openapi', 'grpc', 'graphql', 'websocket', 'local', 'zeroconf', 'ucp'];
+// The most any documented agent fetch tool reads of one file by default: Claude Code's WebFetch
+// (100,000 characters; the MCP reference fetch server reads 5,000, OpenClaw 20,000). STANDARD.md §16.
+const FETCH_CHARS = 100_000;
+const SKILLS_SCHEMA = 'https://schemas.agentskills.io/discovery/0.2.0/schema.json';
+const CARD_SCHEMA = 'https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json';
+export const LEVELS = ['required', 'recommended', 'next'];
+const ORDER = ['D1', 'D2', 'D4', 'D6', 'D11', 'D12', 'W1', 'W2', 'W3', 'W4', 'W5', 'W6', 'A1', 'A2', 'A6', 'A7', 'M1', 'M4', 'S1', 'D5', 'D7', 'D9', 'D10', 'D15', 'D8', 'A3', 'A4', 'A5', 'M5', 'S2', 'N5', 'N6'];
+// Items the scorecard can't see from outside. Each project checks these in review and tests.
+export const REVIEW = [
+  ['D3', 'pages read well: server-rendered, unique prose on generated pages (the scorecard checks W1 to W6 on a sample)'],
+  ['W4', 'Google\'s Rich Results Test on one page per kind of markup (listed below: the scorecard checks the markup parses, Google checks its required properties), after deploying a change to a template\'s markup; Search Console\'s rich result reports cover every page (T6)'],
+  ['W7', 'internal links: entity names link to their pages, anchors that say what the target is (not the brand alone), no orphan pages; sibling links in context, never sitewide (E6)'],
+  ['W8', 'Core Web Vitals on the main pages (Lighthouse or PageSpeed Insights)'],
+  ['W9', 'listed in the directories your audience uses'],
+  ['D13', 'a page for agents\' builders with a copy-paste prompt'],
+  ['D14', 'AGENTS.md in public repos, imported from CLAUDE.md'],
+  ['A6', 'next_steps and suggestion on every response (the scorecard only tests one unauthenticated call)'],
+  ['A8', 'forgiving input (aliases, Bearer in any case), writes never guess'],
+  ['A9', 'Retry-After on 429, documented limits'],
+  ['A10', 'self-service keys, rotation, attribution'],
+  ['A11', 'public and private stated honestly, one privacy filter'],
+  ['A12', 'breaking changes in a new version, the old one kept for a stated time'],
+  ['M2', 'stdio package: saved key, register guard, rotate, User-Agent'],
+  ['M3', 'published to npm, the MCP Registry, Smithery and Glama, one version'],
+  ['S1', 'skills: triggers name the job, lasting actions say what they do, and an agent can follow them through the core loop on its own (the scorecard checks names, descriptions and links on a sample)'],
+  ['S3', 'ClawHub owners map'],
+  ['S4', 'plugin bundle with generated manifests'],
+  ['E1-E6', 'first-call value, reasons to return, scheduled-agent performance'],
+  ['T1-T4', 'logs, attribution, come-back measure, guard tests'],
+  ['T6', 'Search Console and Bing Webmaster Tools: coverage, queries, clicks and click-through rate, monthly'],
+  ['T5', 'agent usability test: a fresh agent, only the domain and a goal; report its first-try success rate'],
+];
+
+// Loopback, private, shared, link-local, unique-local, benchmarking, multicast and reserved
+// addresses, and IPv4 ones carried inside IPv6. A site's own content (its sitemap, share images,
+// skills, catalog, DNS record) must not send the auditor there.
+export function isPrivateAddress(ip) {
+  if (isIP(ip) === 4) {
+    const [a, b] = ip.split('.').map(Number);
+    return a === 0 || a === 10 || a === 127 || (a === 100 && b >= 64 && b <= 127) || (a === 169 && b === 254)
+      || (a === 172 && b >= 16 && b <= 31) || (a === 192 && b === 168) || (a === 198 && (b === 18 || b === 19)) || a >= 224;
+  }
+  if (isIP(ip) === 6) {
+    const x = ipv6Bytes(ip);
+    const v4 = (i) => x.slice(i, i + 4).join('.');
+    const zeros = (from, to) => x.slice(from, to).every((n) => n === 0);
+    if (zeros(0, 16) || (zeros(0, 15) && x[15] === 1)) return true; // :: and ::1
+    // The URL parser writes ::ffff:127.0.0.1 as ::ffff:7f00:1, so read the bytes, not the text.
+    if (zeros(0, 10) && x[10] === 0xff && x[11] === 0xff) return isPrivateAddress(v4(12)); // IPv4-mapped
+    if (zeros(0, 12)) return isPrivateAddress(v4(12)); // IPv4-compatible
+    if (x[0] === 0 && x[1] === 0x64 && x[2] === 0xff && x[3] === 0x9b && (zeros(4, 12) || x[4] === 0 && x[5] === 1)) return isPrivateAddress(v4(12)); // NAT64 (64:ff9b::/96, and 64:ff9b:1::/48 for local use)
+    if (x[0] === 0x20 && x[1] === 0x02) return isPrivateAddress(v4(2)); // 6to4
+    return (x[0] & 0xfe) === 0xfc || (x[0] === 0xfe && (x[1] & 0xc0) === 0x80) || x[0] === 0xff; // unique-local, link-local, multicast
+  }
+  return false;
+}
+
+// An IPv6 address as its 16 bytes. Accepts :: and a dotted IPv4 tail; a zone (%eth0) is dropped.
+function ipv6Bytes(ip) {
+  let s = ip.toLowerCase().replace(/%.*$/, '');
+  const tail = s.match(/(\d+\.\d+\.\d+\.\d+)$/);
+  if (tail) { const [a, b, c, d] = tail[1].split('.').map(Number); s = s.slice(0, -tail[1].length) + `${((a << 8) | b).toString(16)}:${((c << 8) | d).toString(16)}`; }
+  const [head, rest] = s.split('::');
+  const part = (t) => (t ? t.split(':') : []);
+  const left = part(head), right = rest === undefined ? [] : part(rest);
+  const groups = rest === undefined ? left : [...left, ...Array(8 - left.length - right.length).fill('0'), ...right];
+  return groups.flatMap((g) => { const n = parseInt(g, 16); return [n >> 8, n & 0xff]; });
+}
+
+// Run fn over items with at most `limit` in flight, so the audit doesn't hammer a site.
+async function mapLimit(items, limit, fn) {
+  const out = new Array(items.length);
+  let next = 0;
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (next < items.length) { const i = next++; out[i] = await fn(items[i], i); }
+  }));
+  return out;
+}
+
+// TXT lookups go to public resolvers first: the machine's own resolver can hold an answer
+// from before a change. Falls back to the system resolver when they can't be reached.
+async function resolveTxtFresh(name) {
+  try {
+    const resolver = new Resolver({ timeout: 3000, tries: 2 });
+    resolver.setServers(['1.1.1.1', '8.8.8.8']);
+    return await resolver.resolveTxt(name);
+  } catch (e) {
+    if (e?.code === 'ENOTFOUND' || e?.code === 'ENODATA') throw e; // a real answer: no record
+    return resolveTxt(name);
+  }
+}
+
+// Which URLs the audit may request. The site you chose to audit (and its www or bare variant) is
+// always allowed; anything else must be a public http(s) address, checked again at every redirect hop.
+// isSafe gives a clear refusal up front; connectLookup checks the addresses the request actually
+// connects to, so a name that resolves to a public address for the check and a private one for the
+// connection (DNS rebinding) is still refused.
+export function makeGuard(domain) {
+  domain = siteDomain(domain);
+  const siteHosts = new Set([domain, domain.startsWith('www.') ? domain.slice(4) : `www.${domain}`]);
+  const hostCache = new Map();
+  async function isSafe(url) {
+    let u;
+    try { u = new URL(url); } catch { return false; }
+    if (!['http:', 'https:'].includes(u.protocol)) return false;
+    const host = u.hostname.replace(/^\[|\]$/g, '');
+    if (siteHosts.has(host)) return true;
+    if (host === 'localhost' || /\.(localhost|local|internal)$/.test(host)) return false;
+    if (isIP(host)) return !isPrivateAddress(host);
+    if (!hostCache.has(host)) {
+      // A name that doesn't resolve isn't known to be public, so it isn't safe.
+      hostCache.set(host, lookup(host, { all: true }).then((addrs) => addrs.length > 0 && addrs.every((a) => !isPrivateAddress(a.address)), () => false));
+    }
+    return hostCache.get(host);
+  }
+  // The lookup option of http(s).request: resolve, then refuse if any address is private.
+  function connectLookup(hostname, options, callback) {
+    dnsLookup(hostname, { ...options, all: true }, (err, addrs) => {
+      if (err) return callback(err);
+      if (!addrs.length || addrs.some((a) => isPrivateAddress(a.address))) return callback(new Error(`refused: ${hostname} resolves to a private address`));
+      if (options.all) return callback(null, addrs);
+      return callback(null, addrs[0].address, addrs[0].family);
+    });
+  }
+  return { siteHosts, isSafe, connectLookup };
+}
+
+export async function audit(domain, { mcpPath = '/mcp', base = null, concurrency = null } = {}) {
+  domain = siteDomain(domain); // the package exports audit(), so normalize here as well as in the CLI
+  const BASE = `https://${domain}`;
+  // Requests in flight to the site at once. By default, 6 for the discovery files and 4 for
+  // sitemaps and pages; `concurrency` sets one limit for all of them, for a site that slows
+  // under parallel requests.
+  const limit = (byDefault) => concurrency ?? byDefault;
+  const rand = Math.random().toString(36).slice(2, 10);
+
+  const { siteHosts, isSafe, connectLookup } = makeGuard(domain);
+  // --base scores a local or preview build as the domain: the site's URLs are requested from the
+  // base (which may be a local address, because you chose it) and reported under the domain.
+  const { baseOrigin, toBase, fromBase } = baseMapper(domain, base);
+
+  // Redirects are followed here, one hop at a time, so every hop passes isSafe.
+  async function get(path, { headers = {}, method = 'GET', body, redirect = 'follow' } = {}) {
+    let url = path.startsWith('http') ? path : BASE + path; // always in the domain's terms
+    let m = method, b = body;
+    for (let hop = 0; ; hop++) {
+      const target = toBase(url);
+      if (target === url && !(await isSafe(url))) return { status: 0, headers: new Headers(), text: '', url, type: '', error: 'refused: not a public address' };
+      // The site's own hosts and the --base you chose may be local; anything else is checked again at connect time.
+      const res = await request(target, { method: m, body: b, headers, userAgent: UA, lookup: target === url && !siteHosts.has(safeUrl(url)?.hostname) ? connectLookup : undefined });
+      const loc = res.headers.get('location');
+      if (redirect === 'follow' && res.status >= 300 && res.status < 400 && loc && hop < 5) {
+        const next = safeUrl(loc, target);
+        if (!next) return { ...res, url, type: res.headers.get('content-type') ?? '', error: `redirect Location isn't a URL: ${loc.slice(0, 100)}` };
+        url = fromBase(next.href);
+        if (res.status !== 307 && res.status !== 308) { m = 'GET'; b = undefined; }
+        continue;
+      }
+      return { ...res, url, type: res.headers.get('content-type') ?? '' };
+    }
+  }
+  const json = (r) => { try { return JSON.parse(r.text); } catch { return null; } };
+  const isJson = (r) => /json/.test(r.type) && json(r) !== null;
+  const ok = (r) => r.status >= 200 && r.status < 300;
+  const cached = (r) => cdnCacheNote(r.headers);
+  const ct = (r) => r.type.split(';')[0] || (r.status ? 'no body' : 'no answer');
+  const rpc = (r) => {
+    if (/event-stream/.test(r.type)) {
+      const line = r.text.split('\n').find((l) => l.startsWith('data:'));
+      try { return line ? JSON.parse(line.slice(5)) : null; } catch { return null; }
+    }
+    return json(r);
+  };
+
+  const results = [];
+  const record = (id, name, level, status, detail) => results.push({ id, name, level, status, detail });
+  const pass = (id, name, level, detail) => record(id, name, level, 'pass', detail);
+  const miss = (id, name, level, detail) => record(id, name, level, level === 'required' ? 'fail' : 'warn', detail);
+  const wrong = (id, name, level, detail) => record(id, name, level, 'fail', detail); // present but false or invalid
+  const skip = (id, name, level, detail) => record(id, name, level, 'skip', detail);
+
+  const D = DISCOVERY_FILES;
+  const [home, homeMd, robots, sitemap, llms, llmsFull, openapi, apiIndex, apiCatalog, security, authMd, docsMd,
+    agentCard, ard, aiCatalog, skills, prm, asMeta, aiPlugin, wkMiss, apiMiss, pageMiss, pageMissMd, homeMdUrl, postRoot, legacyCard, wkCard] = await mapLimit([
+    () => get('/'),
+    () => get('/', { headers: { accept: 'text/markdown' } }),
+    () => get(D.robots),
+    () => get(D.sitemap),
+    () => get(D.llms),
+    () => get(D.llmsFull),
+    () => get(D.openapi),
+    () => get(D.apiIndex, { headers: { accept: 'application/json' } }),
+    () => get(D.apiCatalog),
+    () => get(D.security),
+    () => get(D.authMd),
+    () => get(D.docsMd),
+    () => get(D.agentCard),
+    () => get(D.ard),
+    () => get(D.aiCatalog),
+    () => get(D.skills),
+    () => get(D.prm),
+    () => get(D.asMeta),
+    () => get(D.aiPlugin),
+    () => get(`/.well-known/no-such-file-${rand}`),
+    () => get(`/api/no-such-endpoint-${rand}`, { headers: { accept: 'application/json' } }),
+    () => get(`/no-such-page-${rand}`, { headers: { accept: 'text/html' } }),
+    () => get(`/no-such-page-${rand}`, { headers: { accept: 'text/markdown' } }),
+    () => get(markdownUrl(`${BASE}/`)),
+    () => get('/', { method: 'POST', redirect: 'manual' }),
+    () => get(D.legacyCard),
+    () => get(D.wkCard),
+  ], limit(6), (job) => job());
+  const catalogEntries = [...(json(ard)?.entries ?? []), ...(json(aiCatalog)?.entries ?? [])];
+  const rels = linkRels(home.headers.get('link'));
+  const spec = ok(openapi) ? json(openapi) : null; // the OpenAPI document, parsed once for every check that reads it
+  // llms.txt's links on the site's own hosts: D4 samples them, and they can declare the API.
+  const llmsSiteLinks = ok(llms) ? llmsLinks(llms.text, `${BASE}/llms.txt`, siteHosts) : [];
+  const catalogJson = ok(apiCatalog) ? json(apiCatalog) : null;
+  const api = apiPresence({ openapiSpec: spec, apiIndexJson: ok(apiIndex) && isJson(apiIndex), rels, catalogJson, llmsLinks: llmsSiteLinks });
+
+  // ---- D1 robots.txt (required) and D15 AI crawlers and Content-Signal (recommended) ----
+  const groups = ok(robots) ? robotsGroups(robots.text) : [];
+  const sitemapLine = ok(robots) && /^\s*sitemap\s*:/im.test(robots.text);
+  {
+    const id = 'D1', name = 'robots.txt', level = 'required';
+    const leaks = robotsLeaks(groups);
+    if (!ok(robots)) miss(id, name, level, `/robots.txt answered ${robots.status}${cached(robots)}`);
+    else if (leaks.length) miss(id, name, level, `named groups drop rules from the * group (a crawler obeys only its own group): ${list(leaks, '; ')}${cached(robots)}`);
+    else if (!sitemapLine) miss(id, name, level, `no Sitemap line${cached(robots)}`);
+    else pass(id, name, level, `${groups.length} group${groups.length === 1 ? '' : 's'} with consistent rules, Sitemap listed`);
+  }
+  {
+    const id = 'D15', name = 'AI crawlers named, Content-Signal', level = 'recommended';
+    const named = AI_BOTS.filter((b) => groups.some((g) => g.agents.includes(b)));
+    const unsignaled = groups.filter((g) => !g.signal);
+    const problems = [];
+    if (unsignaled.length) problems.push(`${unsignaled.length} of ${groups.length} group${groups.length === 1 ? '' : 's'} ${unsignaled.length === 1 ? 'has' : 'have'} no Content-Signal (${list(unsignaled.map((g) => g.agents[0]))})`);
+    if (named.length < 3) problems.push(`names ${named.length} of the main AI crawlers`);
+    if (!ok(robots)) miss(id, name, level, 'no robots.txt');
+    else if (problems.length) miss(id, name, level, problems.join('; ') + cached(robots));
+    else pass(id, name, level, `${named.length} AI crawlers named, Content-Signal in every group`);
+  }
+
+  // ---- The sitemap, read once for D2 and the W checks: an index is expanded to its pages ----
+  const sitemapIndex = /<sitemapindex/.test(sitemap.text);
+  const sitemapLists = sitemapIndex
+    ? await mapLimit(sitemapEntries(sitemap.text).slice(0, 10), limit(4), async (e) => sitemapEntries((await get(e.loc)).text))
+    : [sitemapEntries(sitemap.text)];
+  const seenLocs = new Set();
+  const entries = sitemapLists.flat().filter((e) => {
+    try { if (!siteHosts.has(new URL(e.loc).hostname) || seenLocs.has(e.loc)) return false; } catch { return false; }
+    seenLocs.add(e.loc);
+    return true;
+  });
+
+  // ---- D2 sitemap ----
+  {
+    const id = 'D2', name = 'sitemap.xml', level = 'required';
+    const lastmods = entries.map((e) => e.lastmod?.slice(0, 10)).filter(Boolean);
+    if (!ok(sitemap) || !/<urlset|<sitemapindex/.test(sitemap.text)) miss(id, name, level, `/sitemap.xml answered ${sitemap.status}${cached(sitemap)}`);
+    else if (!entries.length) miss(id, name, level, `${sitemapIndex ? 'the sitemap index\'s sitemaps list' : 'the sitemap lists'} no URLs on this site${cached(sitemap)}`);
+    else if (!lastmods.length) miss(id, name, level, `no lastmod dates${cached(sitemap)}`);
+    else if (new Set(lastmods).size === 1 && lastmods.length > 5) miss(id, name, level, `all ${lastmods.length} lastmod dates are ${lastmods[0]}; use each page's real change date${cached(sitemap)}`);
+    else pass(id, name, level, `${lastmods.length} URLs with ${new Set(lastmods).size} distinct lastmod dates`);
+  }
+
+  // ---- D4 llms.txt ----
+  let llmsAnswers = []; // D8 compares one of these pages with its markdown copy
+  {
+    const id = 'D4', name = 'llms.txt', level = 'required';
+    // Agents follow the links in llms.txt, so a sample of the site's own links must answer 200.
+    const sample = spread(llmsSiteLinks, 10);
+    const answers = await mapLimit(sample, limit(4), async (u) => ({ u, r: await get(u) }));
+    llmsAnswers = answers;
+    // Missing pages, server errors and no answer are broken. A 401, 403 or 405 is an endpoint that
+    // exists but wants a key or another method, which is fine to list.
+    const broken = answers.filter(({ r }) => !r.status || r.status === 404 || r.status === 410 || r.status >= 500).map(({ u, r }) => `${u.replace(BASE, '') || '/'} (${r.status || 'no answer'})`);
+    // A retired page redirects; the files that list it should name where it went.
+    const redirected = answers.filter(({ u, r }) => r.status >= 200 && r.status < 300 && norm(r.url) !== norm(u)).map(({ u, r }) => `${u.replace(BASE, '') || '/'} → ${r.url.replace(BASE, '') || '/'}`);
+    const linkProblems = [];
+    if (broken.length) linkProblems.push(`broken links in llms.txt: ${list(broken)} (${broken.length} of ${sample.length} sampled)`);
+    if (redirected.length) linkProblems.push(`llms.txt links that redirect (link the destination): ${list(redirected)}`);
+    // The proposal's file lists are markdown links; a file of bare URLs gives the tools that parse it nothing.
+    if (ok(llms) && ![...llms.text.matchAll(MARKDOWN_LINK)].length) linkProblems.push('llms.txt has no markdown links: list each page as - [name](url): notes, as the llms.txt proposal does');
+    // llms-full.txt is optional: one file an agent reads in one fetch. When a site serves one, it lists
+    // every page llms.txt links and fits in what a fetch reads. Pages are the sampled links that answer
+    // HTML, besides the homepage; files like /openapi.json are surfaces, not pages.
+    const fullServed = ok(llmsFull) && !/text\/html/.test(llmsFull.type);
+    let pagesListed = 0;
+    if (ok(llmsFull) && /text\/html/.test(llmsFull.type)) linkProblems.push('/llms-full.txt answers 200 with HTML: answer 404 when you don\'t serve one');
+    if (fullServed && (llmsFull.tooBig || llmsFull.text.length > FETCH_CHARS)) {
+      linkProblems.push(`llms-full.txt is ${llmsFull.tooBig ? llmsFull.error.replace(/^.*?over /, 'over ') : `${llmsFull.text.length.toLocaleString('en-US')} characters`}, more than an agent's fetch reads at once (${FETCH_CHARS.toLocaleString('en-US')}): keep it to what agents act on, or leave it out and let each page's markdown (D8) carry the rest`);
+    } else if (fullServed) {
+      const covered = new Set(llmsLinks(llmsFull.text, `${BASE}/llms-full.txt`, siteHosts).map(norm));
+      const pagesLinked = answers.filter(({ u, r }) => ok(r) && /text\/html/.test(r.type) && norm(r.url) === norm(u) && new URL(u).pathname !== '/');
+      const uncovered = pagesLinked.filter(({ u }) => !covered.has(norm(u))).map(({ u }) => u.replace(BASE, '') || '/');
+      if (uncovered.length) linkProblems.push(`pages llms.txt links that llms-full.txt doesn't list: ${list(uncovered)} (${uncovered.length} of ${pagesLinked.length} sampled pages)`);
+      else pagesListed = pagesLinked.length;
+    }
+    const kb = (r, digits) => (r.tooBig ? r.error.replace(/^.*?over /, 'over ') : `${(r.text.length / 1024).toFixed(digits)} KB`);
+    const sizes = `llms.txt ${kb(llms, 1)}${fullServed ? `, llms-full.txt ${kb(llmsFull, 0)}` : ', no llms-full.txt (optional)'}`;
+    if (!ok(llms) || !/^\s*# \S/.test(llms.text)) miss(id, name, level, (ok(llms) ? 'llms.txt has no H1 title on its first line' : `/llms.txt answered ${llms.status}`) + cached(llms));
+    else if (linkProblems.length) record(id, name, level, 'warn', `${linkProblems.join('; ')}${cached(llms)}`);
+    else pass(id, name, level, `${sizes}${sample.length ? `; ${sample.length} sampled link${sample.length === 1 ? '' : 's'} resolve without a redirect` : ''}${pagesListed ? `; llms-full.txt lists the ${pagesListed} sampled page${pagesListed === 1 ? '' : 's'}` : ''}`);
+  }
+
+  // ---- D5 Link headers (recommended; a wrong service-desc is a false declaration) ----
+  {
+    const id = 'D5', name = 'Link headers', level = 'recommended';
+    const link = home.headers.get('link') ?? '';
+    const desc = rels.get('service-desc') ?? [];
+    const missing = ['describedby', ...(api.present ? ['service-desc', 'api-catalog'] : [])].filter((r) => !rels.has(r)); // with no API, a service-desc would declare one
+    if (!link) miss(id, name, level, 'no Link header on the homepage');
+    else if (api.present && desc.length && !desc.some((h) => /openapi/i.test(h))) wrong(id, name, level, `service-desc points at ${desc.join(', ')}; it must name the OpenAPI document`);
+    else if (missing.length) miss(id, name, level, `missing rel ${missing.join(', ')} (has ${[...rels.keys()].join(', ')})`);
+    else pass(id, name, level, `rels: ${[...rels.keys()].join(', ')}`);
+  }
+
+  // ---- D6 security.txt ----
+  {
+    const id = 'D6', name = 'security.txt', level = 'required';
+    const expires = [...security.text.matchAll(/^expires:\s*(.+)$/gim)].map((m) => Date.parse(m[1].trim()));
+    const days = expires.length === 1 ? (expires[0] - Date.now()) / 86_400_000 : NaN;
+    if (!ok(security) || !/text\/plain/.test(security.type)) miss(id, name, level, `/.well-known/security.txt answered ${security.status}${cached(security)}`);
+    else if (!/^contact:\s*\S/im.test(security.text)) miss(id, name, level, `no Contact field${cached(security)}`);
+    else if (expires.length !== 1) miss(id, name, level, `${expires.length} Expires fields (RFC 9116 requires exactly one)${cached(security)}`);
+    else if (!(days > 0)) miss(id, name, level, `Expires passed ${Math.round(-days)} days ago${cached(security)}`);
+    else pass(id, name, level, `Contact present, Expires in ${Math.round(days)} days${days > 366 ? ' (the RFC recommends under a year)' : ''}`);
+  }
+
+  // ---- D7 JSON answers for unknown well-known paths and POST / (recommended) ----
+  {
+    const id = 'D7', name = 'JSON 404s and a JSON 405 on POST /', level = 'recommended';
+    const problems = [];
+    if (!isJson(wkMiss)) problems.push(`an unknown /.well-known path answers ${wkMiss.status} ${ct(wkMiss)}`);
+    if (!(postRoot.status === 405 && isJson(postRoot))) problems.push(`POST / answers ${postRoot.status} ${ct(postRoot)}`);
+    else if (!postRoot.headers.get('allow')) problems.push('POST / answers a JSON 405 with no Allow header (RFC 9110 requires one, naming the methods that work)');
+    if (problems.length) miss(id, name, level, problems.join('; '));
+    else pass(id, name, level, `JSON 404 for unknown well-known paths, JSON 405 for POST / (Allow: ${postRoot.headers.get('allow')})`);
+  }
+
+  // ---- D8 markdown for agents ----
+  {
+    const id = 'D8', name = 'Markdown for agents', level = 'recommended';
+    const varyAccept = (r) => /(^|,)\s*accept\s*(,|$)/i.test(r.headers.get('vary') ?? '');
+    // Markdown served as text/markdown, or as text/plain with a markdown heading (as llms.txt often is).
+    const markdownBody = (r) => /text\/markdown/.test(r.type) || (/text\/plain/.test(r.type) && /^\s*#/.test(r.text));
+    const isMarkdown = (r) => ok(r) && markdownBody(r);
+    const tokens = homeMd.headers.get('x-markdown-tokens');
+    // The homepage's markdown may be llms.txt, so compare a page llms.txt links instead, when it serves markdown.
+    const copy = { path: null, gone: [], mdUrl: null };
+    // The first linked page that serves markdown; pages that don't are fine (start with the homepage and docs).
+    for (const { u, r } of llmsAnswers.filter(({ u, r }) => ok(r) && /text\/html/.test(r.type) && new URL(u).pathname !== '/')) {
+      const md = await get(u, { headers: { accept: 'text/markdown' } });
+      if (ok(md) && /text\/markdown/.test(md.type)) { Object.assign(copy, { path: new URL(u).pathname, gone: missingSections(r.text, md.text), mdUrl: await get(markdownUrl(u)) }); break; }
+    }
+    if (!/text\/markdown/.test(homeMd.type)) miss(id, name, level, `Accept: text/markdown on / returns ${ct(homeMd)}`);
+    else {
+      // Accept and the .md URL both return a page's markdown: agents that pick a URL themselves can't send Accept.
+      const noMdUrl = [['/', homeMdUrl], ...(copy.path ? [[copy.path, copy.mdUrl]] : [])].filter(([, r]) => !isMarkdown(r))
+        .map(([path, r]) => `${path} (${new URL(markdownUrl(BASE + path)).pathname} answered ${r.status ? `${r.status}${ok(r) ? ` ${ct(r)}` : ''}` : 'no answer'})`);
+      const problems = [];
+      if (!varyAccept(homeMd) || !varyAccept(home)) problems.push(`Vary: Accept missing on the ${!varyAccept(home) ? 'HTML' : 'markdown'} response`);
+      if (copy.gone.length) problems.push(`the markdown copy of ${copy.path} lacks ${copy.gone.length} section${copy.gone.length === 1 ? '' : 's'} the page has: ${list(copy.gone.map((h) => `"${h}"`))}`);
+      if (noMdUrl.length) problems.push(`no markdown at the .md URL of ${list(noMdUrl)}`);
+      // A missing page still answers 404, but with markdown that sends the agent somewhere (W3 reports a 200).
+      if ((pageMissMd.status === 404 || pageMissMd.status === 410) && !markdownBody(pageMissMd)) problems.push(`a missing page answers Accept: text/markdown with ${ct(pageMissMd)}: send a short markdown 404 that links llms.txt`);
+      if (problems.length) miss(id, name, level, problems.join('; '));
+      else pass(id, name, level, `markdown by Accept and at the .md URL, with Vary: Accept on both and a markdown 404${tokens ? `, x-markdown-tokens ${tokens}` : ''}${copy.path ? `; ${copy.path}'s markdown copy has every section` : '; no page llms.txt links serves markdown, so no copy was compared'}`);
+    }
+  }
+
+  // ---- D9 AI catalog (ARD) ----
+  {
+    const id = 'D9', name = 'AI catalog (ARD)', level = 'recommended';
+    const rels = tags(home.text, 'link').flatMap((a) => (a.rel ?? '').toLowerCase().split(/\s+/)).filter((r) => r === 'ard' || r === 'ai-catalog');
+    const problems = [];
+    for (const [file, r] of [['ard.json', ard], ['ai-catalog.json', aiCatalog]]) {
+      if (!ok(r)) { problems.push(`${file} answered ${r.status}`); continue; }
+      if (!/application\/ai-catalog\+json/.test(r.type)) problems.push(`${file} served as ${ct(r)}`);
+      const entries = json(r)?.entries;
+      if (!Array.isArray(entries) || !entries.length) problems.push(`${file} has no entries`);
+      else if (entries.some((e) => !String(e.identifier ?? '').startsWith('urn:air:'))) problems.push(`${file} has identifiers outside urn:air:`);
+    }
+    if (!rels.includes('ard')) problems.push('no <link rel="ard"> in the page head');
+    if (problems.length) miss(id, name, level, problems.join('; '));
+    else pass(id, name, level, 'ard.json and ai-catalog.json as application/ai-catalog+json, linked from the page head');
+  }
+
+  // ---- D11 the A2A path ----
+  let a2aValid = false;
+  {
+    const id = 'D11', name = 'A2A path is honest', level = 'required';
+    const card = json(agentCard);
+    if (ok(agentCard) && card) {
+      const ifaces = Array.isArray(card.supportedInterfaces) ? card.supportedInterfaces : [];
+      const validIfaces = ifaces.length && ifaces.every((i) => i.url && i.protocolBinding && i.protocolVersion);
+      const fields = ['name', 'description', 'version', 'capabilities', 'defaultInputModes', 'defaultOutputModes', 'skills'].filter((f) => card[f] === undefined);
+      if (validIfaces && !fields.length) { a2aValid = true; pass(id, name, level, `A2A v1.0 card with ${ifaces.length} interface(s); confirm each one answers`); }
+      else wrong(id, name, level, `200 without a valid A2A v1.0 card (${!validIfaces ? 'no supportedInterfaces with url, protocolBinding and protocolVersion' : `missing ${fields.join(', ')}`}). Answer a JSON 404 that points to your real entry points`);
+    } else if (!ok(agentCard) && isJson(agentCard)) pass(id, name, level, `JSON ${agentCard.status} pointing elsewhere`);
+    else if (!ok(agentCard)) record(id, name, level, 'warn', `honest ${agentCard.status}, but ${ct(agentCard)} body. It's the most requested agent path: answer with JSON that points to your real entry points`);
+    else wrong(id, name, level, `200 at the A2A path that isn't JSON (${ct(agentCard)})`);
+  }
+
+  // ---- A: API ----
+  if (!api.present) {
+    for (const [id, name, level] of [['A1', 'OpenAPI 3.1', 'required'], ['A2', 'GET /api index', 'required'], ['A6', 'Errors that teach (401 without a key)', 'required'], ['A7', 'JSON catch-all for wrong API paths', 'required'], ['A3', 'API catalog (RFC 9727)', 'recommended'], ['A4', 'auth.md', 'recommended'], ['A5', 'API reference as markdown, linked from the homepage', 'recommended']]) skip(id, name, level, 'no public API: /openapi.json and /api don\'t answer, and nothing declares one');
+  } else {
+    {
+      const id = 'A1', name = 'OpenAPI 3.1', level = 'required';
+      // A document the site names elsewhere is named in the failure, so the fix is a redirect, not a search.
+      const elsewhere = declaredOpenapi({ rels, catalogJson, llmsLinks: llmsSiteLinks, base: BASE, hosts: siteHosts }).filter((u) => new URL(u).pathname !== '/openapi.json');
+      if (!spec?.openapi) miss(id, name, level, `/openapi.json answered ${openapi.status}${elsewhere.length ? `; the site names its OpenAPI document at ${list(elsewhere.map((u) => u.replace(BASE, '')))}: serve it at /openapi.json too, or redirect there` : ''}`);
+      else {
+        const deref = openapiDeref(spec);
+        // `nested` collects fields whose only description sits inside anyOf, oneOf or allOf.
+        const undescribedProps = (schema, seen = new Set(), nested = null) => {
+          const s = deref(schema);
+          if (!s || typeof s !== 'object' || seen.has(s)) return [];
+          seen.add(s);
+          const out = [];
+          for (const [k, v] of Object.entries(s.properties ?? {})) {
+            const d = deref(v);
+            if (!(v?.description || d?.description)) {
+              out.push(k);
+              if (nested && hasVariantDescription(d, deref)) nested.add(k);
+            }
+            out.push(...undescribedProps(d, seen, nested));
+          }
+          for (const key of ['items', 'allOf', 'anyOf', 'oneOf']) for (const sub of [].concat(s[key] ?? [])) out.push(...undescribedProps(sub, seen, nested));
+          return out;
+        };
+        const ops = openapiOps(spec);
+        const noDesc = ops.filter(({ o }) => !String(o.description ?? '').trim());
+        const inVariant = [];
+        const fieldGaps = ops.flatMap(({ key, o, params }) => {
+          const nested = new Set();
+          const gaps = [
+            ...params.map((p) => deref(p)).filter((p) => p && !p.description && !deref(p.schema)?.description).map((p) => `${key} ${p.name}`),
+            ...Object.values(deref(o.requestBody)?.content ?? {}).flatMap((c) => undescribedProps(c.schema, new Set(), nested)).map((f) => `${key} ${f}`),
+          ];
+          inVariant.push(...[...nested].map((f) => `${key} ${f}`));
+          return gaps;
+        });
+        const variantNote = inVariant.length ? `; ${inVariant.length === fieldGaps.length ? 'each has' : `${inVariant.length} of them ${inVariant.length === 1 ? 'has' : 'have'}`} one inside anyOf or oneOf: put it on the field itself (in Zod, call .describe() last, after .optional() and .nullable())` : '';
+        const repeats = ops.filter(({ o }) => repeatsSummary(o));
+        const repeatNote = repeats.length ? `; ${repeats.length} operation${repeats.length === 1 ? "'s description only repeats its" : "s' descriptions only repeat their"} summary (say when to use ${repeats.length === 1 ? 'it' : 'each'})` : '';
+        const respGaps = new Set(ops.flatMap(({ o }) => Object.values(o.responses ?? {}).flatMap((r) => Object.values(deref(r)?.content ?? {}).flatMap((c) => undescribedProps(c.schema)))));
+        const respNote = respGaps.size ? `; ${respGaps.size} response field${respGaps.size === 1 ? ' has' : 's have'} no description (see N7)` : '';
+        const errors = untypedErrors(ops, deref);
+        const errorNote = errors.untyped.length ? `; error responses with no schema: ${list(errors.untyped)} (${errors.untyped.length} of ${errors.total}): give them one error object or application/problem+json (RFC 9457)` : '';
+        if (!String(spec.openapi).startsWith('3.1')) miss(id, name, level, `OpenAPI ${spec.openapi} (use 3.1)`);
+        else if (noDesc.length) miss(id, name, level, `${noDesc.length} of ${ops.length} operations ${noDesc.length === 1 ? 'has' : 'have'} no description (${list(noDesc.map((x) => x.key))})${errorNote}${repeatNote}${respNote}`);
+        else if (fieldGaps.length) miss(id, name, level, `${fieldGaps.length} request field${fieldGaps.length === 1 ? ' has' : 's have'} no description (${list(fieldGaps)})${variantNote}${errorNote}${repeatNote}${respNote}`);
+        else if (errors.untyped.length) record(id, name, level, 'warn', `OpenAPI ${spec.openapi}; all ${ops.length} operations and their request fields described${errorNote}${repeatNote}${respNote}`);
+        else pass(id, name, level, `OpenAPI ${spec.openapi}; all ${ops.length} operations and their request fields described, with typed errors${repeatNote}${respNote}`);
+      }
+    }
+    {
+      const id = 'A2', name = 'GET /api index', level = 'required';
+      if (ok(apiIndex) && isJson(apiIndex)) pass(id, name, level, 'JSON index');
+      else miss(id, name, level, `/api answered ${apiIndex.status} ${ct(apiIndex)}`);
+    }
+    {
+      // A6, partly: an authenticated operation called without a key should answer JSON that says how to get one.
+      const id = 'A6', name = 'Errors that teach (401 without a key)', level = 'required';
+      const globalSec = Array.isArray(spec?.security) && spec.security.length > 0;
+      const protectedOps = openapiOps(spec).filter(({ m, o }) => ['get', 'post'].includes(m) && (Array.isArray(o?.security) ? o.security.some((r) => Object.keys(r).length) : globalSec));
+      const target = protectedOps.find((x) => x.m === 'get' && !x.p.includes('{')) ?? protectedOps.find((x) => !x.p.includes('{'));
+      if (!target) skip(id, name, level, 'no authenticated operation in the OpenAPI document');
+      else {
+        const r = await get(target.p, { method: target.m.toUpperCase(), headers: { accept: 'application/json', ...(target.m === 'post' ? { 'content-type': 'application/json' } : {}) }, body: target.m === 'post' ? '{}' : undefined });
+        const body = json(r);
+        if (!(r.status === 401 || r.status === 403)) miss(id, name, level, `${target.m.toUpperCase()} ${target.p} without a key answered ${r.status}`);
+        else if (!isJson(r) || !(body.suggestion || body.next_steps)) miss(id, name, level, `${target.m.toUpperCase()} ${target.p} without a key answered ${r.status} ${ct(r)} with no suggestion or next_steps`);
+        else pass(id, name, level, `${target.m.toUpperCase()} ${target.p} without a key: ${r.status} JSON with ${['suggestion', 'next_steps'].filter((k) => body[k]).join(' and ')}`);
+      }
+    }
+    {
+      const id = 'A7', name = 'JSON catch-all for wrong API paths', level = 'required';
+      const body = json(apiMiss);
+      if (!isJson(apiMiss)) miss(id, name, level, `an unknown /api path answers ${apiMiss.status} ${ct(apiMiss)}`);
+      else if (!(body.next_steps || body.suggestion || body.did_you_mean)) miss(id, name, level, 'JSON, but no next_steps, suggestion or did_you_mean');
+      else pass(id, name, level, `JSON ${apiMiss.status} with ${['next_steps', 'suggestion', 'did_you_mean'].filter((k) => body[k]).join(', ')}`);
+    }
+    {
+      const id = 'A3', name = 'API catalog (RFC 9727)', level = 'recommended';
+      const doc = json(apiCatalog);
+      if (!ok(apiCatalog) || !Array.isArray(doc?.linkset)) miss(id, name, level, `/.well-known/api-catalog answered ${apiCatalog.status}`);
+      else if (!/application\/linkset\+json/.test(apiCatalog.type)) miss(id, name, level, `served as ${ct(apiCatalog)} (must be application/linkset+json)`);
+      else {
+        const problems = [];
+        if (!/rfc9727/.test(apiCatalog.type)) problems.push('add profile="https://www.rfc-editor.org/info/rfc9727" to the content type');
+        const items = catalogItems(doc);
+        if (!items.length) problems.push('no item link to the API: RFC 9727 says the catalog links to each API, so add a context anchored at the catalog with item links');
+        if (problems.length) miss(id, name, level, problems.join('; '));
+        else pass(id, name, level, `linkset+json with the RFC 9727 profile, linking ${items.length} API${items.length === 1 ? '' : 's'}`);
+      }
+    }
+    {
+      const id = 'A4', name = 'auth.md', level = 'recommended';
+      if (ok(authMd) && /text\/(markdown|plain)/.test(authMd.type)) pass(id, name, level, `served as ${ct(authMd)}`);
+      else miss(id, name, level, `/auth.md answered ${authMd.status} ${ct(authMd)}`);
+    }
+    {
+      const id = 'A5', name = 'API reference as markdown, linked from the homepage', level = 'recommended';
+      // Most agents start at the homepage, and an agent reads what it's pointed at: a link whose path or text names the API, developers or agents.
+      const docLinks = apiDocLinks(home.text, BASE, siteHosts);
+      const problems = [];
+      if (!(ok(docsMd) && /text\/(markdown|plain)/.test(docsMd.type))) problems.push(`/docs/api.md answered ${docsMd.status} ${ct(docsMd)}`);
+      if (!docLinks.length) problems.push('the homepage links no API docs: link a page whose path or text names the API, developers or agents');
+      if (problems.length) miss(id, name, level, problems.join('; '));
+      else pass(id, name, level, `/docs/api.md; the homepage links ${new URL(docLinks[0].href).pathname}`);
+    }
+  }
+
+  // ---- S1 skill files, on a sample from the skills index ----
+  {
+    const id = 'S1', name = 'Skill files', level = 'required';
+    const listed = json(skills)?.skills;
+    const sample = sampleSkillEntries(listed);
+    if (!ok(skills) || !sample.length) {
+      skip(id, name, level, Array.isArray(listed) && listed.length
+        ? 'the skills index lists no SKILL.md files to sample (archives only); check your SKILL.md files in review'
+        : 'no skills index to sample; check your SKILL.md files in review');
+    } else {
+      // Entry URLs may be relative, and resolve against the index (RFC 3986).
+      const indexUrl = `${BASE}/.well-known/agent-skills/index.json`;
+      const files = await mapLimit(sample, limit(5), async (e) => {
+        const url = safeUrl(e.url, indexUrl)?.href;
+        if (!url) return { url: e.url, status: 'not a URL', text: '', label: typeof e.name === 'string' && e.name ? e.name : e.url };
+        const r = await get(url);
+        const label = typeof e.name === 'string' && e.name ? e.name : url;
+        return { url, status: r.status, text: r.text, ...skillFile(r.text), entryName: e.name, label, lines: r.text.split('\n').length };
+      });
+      const unreachable = files.filter((f) => f.status !== 200).map((f) => `${f.label} (${f.status})`);
+      const read = files.filter((f) => f.status === 200);
+      // A file with no frontmatter is one problem, not a missing name and a missing description.
+      const noFrontmatter = read.filter((f) => !f.frontmatter).map((f) => f.label);
+      const withFm = read.filter((f) => f.frontmatter);
+      const badName = withFm.map((f) => [f, skillNameProblem(f)]).filter(([, why]) => why).map(([f, why]) => `${f.label} (${why})`);
+      const badDesc = withFm.filter((f) => !f.description || f.description.length > 1024).map((f) => f.label);
+      const noWhen = withFm.filter((f) => f.description && !saysWhenToUse(f)).map((f) => f.label);
+      const noMap = read.filter((f) => !/llms\.txt/.test(f.text)).map((f) => f.label);
+      const noApi = read.filter((f) => !API_LINK.test(f.text) && !MCP_LINK.test(f.text)).map((f) => f.label);
+      const long = read.filter((f) => f.lines > 500).map((f) => `${f.label} (${f.lines} lines)`);
+      const problems = [], warns = [];
+      if (unreachable.length) problems.push(`skill files that don't load: ${list(unreachable)}`);
+      if (noFrontmatter.length) problems.push(`no frontmatter (the spec puts name and description in a --- block at the top): ${list(noFrontmatter)}`);
+      if (badName.length) problems.push(`names that break the spec (a lowercase slug, matching its folder and its index entry): ${list(badName)}`);
+      if (badDesc.length) problems.push(`missing or over-long descriptions: ${list(badDesc)}`);
+      if (noWhen.length) warns.push(`descriptions that don't say when to use the skill: ${list(noWhen)}`);
+      if (noMap.length) warns.push(`no link to llms.txt: ${list(noMap)}`);
+      if (noApi.length) warns.push(`no link to the API or MCP reference: ${list(noApi)}`);
+      if (long.length) warns.push(`over 500 lines: ${list(long)}`);
+      if (problems.length) miss(id, name, level, problems.concat(warns).join('; '));
+      else if (warns.length) record(id, name, level, 'warn', warns.join('; '));
+      else pass(id, name, level, `${read.length} sampled skills follow the spec, say when to use them, and link llms.txt and the API or MCP reference`);
+    }
+  }
+
+  // ---- S2 skills index ----
+  {
+    const id = 'S2', name = 'Agent skills index', level = 'recommended';
+    const doc = json(skills);
+    if (!ok(skills) || !doc) miss(id, name, level, `/.well-known/agent-skills/index.json answered ${skills.status}`);
+    else {
+      const list = Array.isArray(doc.skills) ? doc.skills : [];
+      const bad = [];
+      if (doc.$schema !== SKILLS_SCHEMA) bad.push(`unrecognized $schema, so clients skip the whole index (${doc.$schema ?? 'none'})`);
+      const types = list.filter((s) => !['skill-md', 'archive'].includes(s.type)).length;
+      const digests = list.filter((s) => !/^sha256:[0-9a-f]{64}$/.test(s.digest ?? '')).length;
+      const names = list.filter((s) => !SKILL_NAME.test(s.name ?? '')).length;
+      if (types) bad.push(`${types} entries with a type other than skill-md or archive`);
+      if (digests) bad.push(`${digests} entries without a sha256: digest`);
+      if (names) bad.push(`${names} names that aren't lowercase slugs`);
+      if (bad.length) wrong(id, name, level, bad.join('; '));
+      else pass(id, name, level, `${list.length} skills, v0.2.0 fields`);
+    }
+  }
+
+  // ---- M: hosted MCP endpoint ----
+  const META = { 'io.modelcontextprotocol/protocolVersion': '2026-07-28', 'io.modelcontextprotocol/clientInfo': { name: 'readiness-audit', version: VERSION }, 'io.modelcontextprotocol/clientCapabilities': {} };
+  const INIT = JSON.stringify({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { protocolVersion: '2025-11-25', capabilities: {}, clientInfo: { name: 'readiness-audit', version: VERSION } } });
+  const answersMcp = async (path) => {
+    const r = await get(path, { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream' }, body: INIT });
+    return { r, hosted: r.status !== 404 && r.status !== 0 && !/text\/html/.test(r.type) && (rpc(r)?.jsonrpc === '2.0' || r.status === 406) };
+  };
+  const modern = (method, id) => get(mcpPath, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream', 'mcp-protocol-version': '2026-07-28', 'mcp-method': method },
+    body: JSON.stringify({ jsonrpc: '2.0', id, method, params: { _meta: META } }),
+  });
+  let hosted = false;
+  if (mcpPath) {
+    const { r: probe, hosted: h } = await answersMcp(mcpPath);
+    hosted = h;
+    if (hosted) {
+      {
+        const id = 'M4', name = 'Hosted MCP edge', level = 'required';
+        const variants = [['application/json, text/event-stream', probe]];
+        for (const accept of ['application/json', '*/*']) variants.push([accept, await get(mcpPath, { method: 'POST', headers: { 'content-type': 'application/json', accept }, body: INIT })]);
+        variants.push(['(none)', await get(mcpPath, { method: 'POST', headers: { 'content-type': 'application/json', accept: null }, body: INIT })]);
+        const discover = await modern('server/discover', 2);
+        const browser = await get(mcpPath, { headers: { accept: 'text/html' }, redirect: 'manual' });
+        const aliases = await mapLimit(['/sse', '/api/mcp'], limit(2), (p) => get(p, { method: 'POST', redirect: 'manual', headers: { 'content-type': 'application/json' }, body: INIT }));
+        const problems = [];
+        const refused = variants.filter(([, r]) => r.status !== 200).map(([a, r]) => `${a} → ${r.status}`);
+        if (refused.length) problems.push(`2025-era initialize refused for Accept ${refused.join(', ')}`);
+        const sse = variants.filter(([, r]) => r.status === 200 && /event-stream/.test(r.type)).length;
+        if (sse) problems.push(`${sse} of 4 legacy answers are SSE frames, not JSON`);
+        const d = rpc(discover);
+        if (!(discover.status === 200 && d?.result?.supportedVersions?.includes('2026-07-28'))) problems.push(`2026-07-28 server/discover answered ${discover.status}`);
+        if (!(browser.status >= 300 && browser.status < 400)) problems.push(`a browser GET gets ${browser.status}, not a redirect to the docs`);
+        const badAlias = ['/sse', '/api/mcp'].filter((p, i) => !(aliases[i].status >= 300 && aliases[i].status < 400));
+        if (badAlias.length) problems.push(`no redirect from ${badAlias.join(', ')}`);
+        if (problems.length) miss(id, name, level, problems.join('; '));
+        else pass(id, name, level, 'both eras, JSON for every Accept, browsers redirected, aliases redirect');
+        const instructions = d?.result?.instructions ?? rpc(probe)?.result?.instructions;
+        if (instructions) pass('N5', 'MCP server instructions', 'next', `${instructions.length} characters`);
+        else miss('N5', 'MCP server instructions', 'next', 'no instructions in server/discover or initialize');
+      }
+      {
+        const id = 'M1', name = 'MCP tools', level = 'required';
+        let list = rpc(await modern('tools/list', 3))?.result?.tools;
+        if (!Array.isArray(list)) list = rpc(await get(mcpPath, { method: 'POST', headers: { 'content-type': 'application/json', accept: 'application/json, text/event-stream' }, body: JSON.stringify({ jsonrpc: '2.0', id: 3, method: 'tools/list', params: {} }) }))?.result?.tools;
+        if (!Array.isArray(list)) miss(id, name, level, 'tools/list failed');
+        else {
+          const undescribed = list.filter((t) => !String(t.description ?? '').trim()).length;
+          const unannotated = list.filter((t) => !t.annotations || (t.annotations.readOnlyHint === undefined && t.annotations.destructiveHint === undefined)).length;
+          if (undescribed || unannotated) miss(id, name, level, [undescribed && `${undescribed} without a description`, unannotated && `${unannotated} without readOnlyHint or destructiveHint`].filter(Boolean).join('; '));
+          else pass(id, name, level, `${list.length} tools, all described and annotated`);
+          const structured = list.filter((t) => t.outputSchema).length;
+          if (structured) pass('N6', 'MCP structured output', 'next', `${structured} of ${list.length} tools declare outputSchema`);
+          else miss('N6', 'MCP structured output', 'next', 'no tool declares outputSchema');
+        }
+      }
+      {
+        const id = 'M5', name = 'MCP server card', level = 'recommended';
+        const cardPath = `${mcpPath.replace(/\/$/, '')}/server-card`;
+        const card = await get(cardPath, { headers: { accept: 'application/mcp-server-card+json' } });
+        const doc = json(card);
+        const problems = [];
+        if (!ok(card) || !doc) problems.push(`${cardPath} answered ${card.status}`);
+        else {
+          if (!/application\/mcp-server-card\+json/.test(card.type)) problems.push(`served as ${ct(card)}`);
+          if (doc.$schema !== CARD_SCHEMA) problems.push('$schema is not the v1 server card schema');
+          if (!/^[^/\s]+\/[^/\s]+$/.test(doc.name ?? '')) problems.push(`name "${doc.name}" is not reverse-DNS`);
+          for (const f of ['version', 'description']) if (!doc[f]) problems.push(`no ${f}`);
+          if (!Array.isArray(doc.remotes) || !doc.remotes.length) problems.push('no remotes');
+        }
+        if (!catalogEntries.some((e) => e.type === 'application/mcp-server-card+json' && (e.url === BASE + cardPath || e.data))) problems.push('the AI catalog has no entry pointing at it');
+        if (problems.length) miss(id, name, level, problems.join('; '));
+        else pass(id, name, level, `${cardPath}, v1 schema, listed in the AI catalog`);
+      }
+    }
+  }
+  if (!hosted) {
+    for (const [id, name] of [['M1', 'MCP tools'], ['M4', 'Hosted MCP edge']]) skip(id, name, 'required', 'no hosted MCP endpoint');
+    skip('M5', 'MCP server card', 'recommended', 'no hosted MCP endpoint');
+    for (const [id, name] of [['N5', 'MCP server instructions'], ['N6', 'MCP structured output']]) skip(id, name, 'next', 'no hosted MCP endpoint');
+  }
+
+  // ---- W: search, on a sample of sitemap pages ----
+  let htmlKb = null; // median HTML size of the sampled pages, reported, not scored
+  let richTest = []; // the pages to run through Google's Rich Results Test (W4, in review)
+  {
+    const urls = entries.map((e) => e.loc);
+    const sample = samplePages(urls);
+    const pick = sample.pages;
+    const templateOf = new Map(sample.templates.flatMap((t) => t.urls.map((u) => [norm(u), t.pattern])));
+    const templatePages = new Set(templateOf.keys());
+    const sampled = `${pick.length} sampled pages (${sample.static} static, ${sample.templates.length ? `${sample.templates.length} template${sample.templates.length === 1 ? '' : 's'}` : 'no templates'}${sample.skipped ? `; ${sample.skipped} static pages over the cap not read` : ''})`;
+    const text = (v) => (v === undefined ? undefined : decodeText(v));
+    const tw = (html, field) => text(meta(html, 'name', `twitter:${field}`) ?? meta(html, 'property', `twitter:${field}`));
+    const parsePage = (u, r) => {
+      const h = r.text;
+      const { ld, types } = jsonLd(h);
+      return {
+        url: u, status: r.status, finalUrl: r.url, html: /text\/html/.test(r.type), bytes: Buffer.byteLength(h), error: r.error,
+        title: decodeText(h.match(/<title[^>]*>([\s\S]*?)<\/title>/i)?.[1] ?? ''),
+        description: decodeText(meta(h, 'name', 'description') ?? ''),
+        robots: (meta(h, 'name', 'robots') ?? '').toLowerCase(),
+        canonicals: tags(h, 'link').filter((a) => (a.rel ?? '').toLowerCase() === 'canonical').map((a) => a.href),
+        og: { title: text(meta(h, 'property', 'og:title')), description: text(meta(h, 'property', 'og:description')), image: meta(h, 'property', 'og:image'), width: meta(h, 'property', 'og:image:width'), alt: meta(h, 'property', 'og:image:alt') },
+        twitterCard: meta(h, 'name', 'twitter:card'),
+        twitter: { title: tw(h, 'title'), description: tw(h, 'description') },
+        headings: headings(h),
+        lang: /<html[^>]*\slang=["']?[\w-]+/i.test(h),
+        imgNoAlt: tags(h, 'img').filter((a) => a.alt === undefined).length,
+        ldBroken: ld.filter((x) => x === null).length, types,
+      };
+    };
+    const pages = await mapLimit(pick, limit(4), async (u) => parsePage(u, await get(u, { headers: { accept: 'text/html' } })));
+    // A body the audit refused (an encoding it doesn't decode) is reported once, in W3, not as missing tags everywhere.
+    const ok200 = pages.filter((p) => p.status === 200 && p.html && !p.error);
+    if (ok200.length) { const sizes = ok200.map((p) => p.bytes).sort((a, b) => a - b); htmlKb = Math.round(sizes[Math.floor(sizes.length / 2)] / 1024); }
+    const short = (u) => u.replace(BASE, '') || '/';
+    if (!pick.length) {
+      for (const [id, name] of [['W1', 'Titles and descriptions'], ['W2', 'Canonical URLs'], ['W3', 'Indexable pages only'], ['W4', 'Structured data'], ['W5', 'Link previews'], ['W6', 'Page structure']]) miss(id, name, 'required', 'no URLs in the sitemap to sample');
+    } else {
+      // W1 titles and descriptions
+      {
+        const id = 'W1', name = 'Titles and descriptions', level = 'required';
+        const noTitle = ok200.filter((p) => !p.title).map((p) => short(p.url));
+        const noDesc = ok200.filter((p) => !p.description).map((p) => short(p.url));
+        const dupe = (key) => { const seen = new Map(); for (const p of ok200) if (p[key]) seen.set(p[key], [...(seen.get(p[key]) ?? []), short(p.url)]); return [...seen.values()].filter((v) => v.length > 1); };
+        const dupTitles = dupe('title'), dupDescs = dupe('description');
+        const longTitles = ok200.filter((p) => p.title.length > 70).map((p) => `${short(p.url)} (${p.title.length})`);
+        const badDescs = ok200.filter((p) => p.description && (p.description.length < 50 || p.description.length > 160)).map((p) => `${short(p.url)} (${p.description.length})`);
+        const problems = [];
+        if (noTitle.length) problems.push(`no title on ${list(noTitle)}`);
+        if (noDesc.length) problems.push(`no meta description on ${list(noDesc)}`);
+        if (dupTitles.length) problems.push(`${dupTitles.length} title${dupTitles.length === 1 ? '' : 's'} shared by several pages (${dupTitles[0].slice(0, 2).join(', ')})`);
+        if (dupDescs.length) problems.push(`${dupDescs.length} description${dupDescs.length === 1 ? '' : 's'} shared by several pages (${dupDescs[0].slice(0, 2).join(', ')})`);
+        const lengths = [];
+        if (longTitles.length) lengths.push(`titles over 70 characters: ${list(longTitles)}`);
+        if (badDescs.length) lengths.push(`descriptions outside 50 to 160 characters: ${list(badDescs)}`);
+        if (problems.length) miss(id, name, level, problems.concat(lengths).join('; '));
+        else if (lengths.length) record(id, name, level, 'warn', lengths.join('; '));
+        else pass(id, name, level, `${sampled}, all with their own title and description`);
+      }
+      // W2 canonical URLs and one canonical host
+      {
+        const id = 'W2', name = 'Canonical URLs', level = 'required';
+        const none = ok200.filter((p) => !p.canonicals.length).map((p) => short(p.url));
+        const many = ok200.filter((p) => new Set(p.canonicals).size > 1).map((p) => short(p.url));
+        const canonical = (p) => safeUrl(p.canonicals[0], p.url)?.href;
+        const notUrl = ok200.filter((p) => p.canonicals.length && !canonical(p)).map((p) => short(p.url));
+        const elsewhere = ok200.filter((p) => p.canonicals.length && canonical(p) && norm(canonical(p)) !== norm(p.url)).map((p) => `${short(p.url)} → ${short(canonical(p))}`);
+        const origin = new URL(BASE).origin;
+        // Count only the hops it takes to reach the canonical host; a later path redirect (a language prefix, say) isn't a host hop.
+        const hostHops = async (start) => {
+          let url = start;
+          for (let n = 0; n < 5; n++) {
+            if (new URL(url).origin === origin) return { n, end: url };
+            const r = await get(url, { redirect: 'manual' }); // get() refuses an address that isn't public
+            if (!r.status) return n === 0 ? null : { n, end: url };
+            const loc = r.headers.get('location');
+            if (r.status < 300 || r.status >= 400 || !loc) return { n, end: url };
+            const next = safeUrl(loc, url);
+            if (!next) return { n, end: url };
+            url = next.href;
+          }
+          return { n: 5, end: url };
+        };
+        const alt = domain.startsWith('www.') ? `https://${domain.slice(4)}/` : `https://www.${domain}/`;
+        const hostProblems = [];
+        for (const start of baseOrigin ? [] : [`http://${domain}/`, alt]) { // --base: the live hosts aren't what's being scored
+          const h = await hostHops(start);
+          if (!h) continue; // that host doesn't resolve or answer
+          if (new URL(h.end).origin !== origin) hostProblems.push(`${start} never reaches ${origin} (ends at ${h.end})`);
+          else if (h.n > 1) hostProblems.push(`${start} takes ${h.n} redirects to reach ${origin}`);
+        }
+        const problems = [];
+        if (none.length) problems.push(`no canonical on ${list(none)}`);
+        if (many.length) problems.push(`conflicting canonicals on ${list(many)}`);
+        if (notUrl.length) problems.push(`canonical that isn't a URL on ${list(notUrl)}`);
+        if (elsewhere.length) problems.push(`sitemap URLs canonical to another URL: ${list(elsewhere)}`);
+        problems.push(...hostProblems);
+        if (problems.length) miss(id, name, level, problems.join('; '));
+        else pass(id, name, level, `self-referencing canonicals on ${sampled}; ${baseOrigin ? 'host redirects not checked with --base' : `http and the other host redirect once to ${origin}`}`);
+      }
+      // W3 only indexable pages in the sitemap; real 404s
+      {
+        const id = 'W3', name = 'Indexable pages only', level = 'required';
+        const broken = pages.filter((p) => p.status !== 200).map((p) => `${short(p.url)} (${p.status}${p.error ? `, ${p.error}` : ''})`);
+        const moved = pages.filter((p) => p.status === 200 && norm(p.finalUrl) !== norm(p.url)).map((p) => `${short(p.url)} → ${short(p.finalUrl)}`);
+        const noindex = ok200.filter((p) => /noindex/.test(p.robots)).map((p) => short(p.url));
+        // A missing item under each template: a detail route is where a loading boundary or a fallback answers 200.
+        // Templates first, then any deeper sampled page, so a small site's /blog/[post] gets a probe too.
+        const parents = [...sample.templates.map((t) => t.urls[0]), ...pick].map((u) => new URL(u).pathname).filter((path) => pathDepth(path) >= 2).map((path) => path.replace(/\/[^/]+\/?$/, ''));
+        const soft = pageMiss.status === 200 ? [`/no-such-page-${rand}`] : []; // requested with the discovery files
+        for (const path of [...new Set(parents)].slice(0, 3).map((parent) => `${parent}/no-such-item-${rand}`)) {
+          const r = await get(path, { headers: { accept: 'text/html' } });
+          if (r.status === 200) soft.push(path);
+        }
+        const problems = [];
+        if (broken.length) problems.push(`sitemap URLs that don't answer 200: ${list(broken)}`);
+        const unread = pages.filter((p) => p.status === 200 && p.error).map((p) => `${short(p.url)} (${p.error})`);
+        if (unread.length) problems.push(`pages the audit couldn't read: ${list(unread)}; send gzip or no encoding unless the request asks for another`);
+        if (moved.length) problems.push(`sitemap URLs that redirect: ${list(moved)}`);
+        if (noindex.length) problems.push(`sitemap URLs marked noindex: ${list(noindex)}`);
+        if (soft.length) problems.push(`missing pages answer 200 instead of 404: ${list(soft)}`);
+        if (problems.length) miss(id, name, level, problems.join('; '));
+        else pass(id, name, level, `${sampled} answer 200 with no redirect or noindex; missing pages get a 404`);
+      }
+      // W4 structured data
+      {
+        const id = 'W4', name = 'Structured data', level = 'required';
+        const homeLd = home.status === 200 ? jsonLd(home.text) : null;
+        const homeTypes = homeLd?.types ?? null;
+        const broken = ok200.filter((p) => p.ldBroken).map((p) => short(p.url));
+        const none = ok200.filter((p) => !p.types.length).map((p) => short(p.url));
+        const deepPages = ok200.filter((p) => templatePages.has(norm(p.url)) && pathDepth(p.url) >= 2);
+        const noCrumbs = deepPages.filter((p) => !p.types.includes('BreadcrumbList')).map((p) => short(p.url));
+        const all = new Set(ok200.flatMap((p) => p.types));
+        // One page per kind of markup: the homepage, a page of each template, then the rest.
+        const homePage = ok200.find((p) => short(p.url) === '/') ?? (home.status === 200 ? { url: `${BASE}/`, types: homeTypes } : null);
+        const isTemplate = (p) => templatePages.has(norm(p.url));
+        richTest = richResultPages([homePage, ...ok200.filter(isTemplate).map((p) => ({ ...p, template: templateOf.get(norm(p.url)) })), ...ok200.filter((p) => !isTemplate(p))].filter(Boolean));
+        const notes = [];
+        if (all.has('FAQPage') || all.has('HowTo')) notes.push(`${['FAQPage', 'HowTo'].filter((t) => all.has(t)).join(' and ')} markup earns no rich results in Google anymore (HowTo ended in 2023, FAQ in May 2026); keep it only where the page really is one`);
+        if (all.has('Person')) notes.push('Person markup found: fine on a profile the page labels as an AI agent; don\'t imply a human');
+        const problems = [];
+        if (broken.length) problems.push(`JSON-LD that doesn't parse on ${list(broken)}`);
+        if (homeTypes && !homeTypes.some((t) => ['Organization', 'WebSite'].includes(t))) problems.push('no Organization or WebSite on the homepage');
+        if (none.length) problems.push(`no JSON-LD on ${list(none)}`);
+        const warns = [];
+        if (noCrumbs.length > deepPages.length / 2) warns.push(`no BreadcrumbList on ${noCrumbs.length} of ${deepPages.length} sampled template pages`);
+        if (homeTypes?.some((t) => ['Organization', 'WebSite'].includes(t)) && !identityLinks(homeLd.nodes).length) warns.push('no sameAs on the homepage\'s WebSite or Organization: link the product\'s own profiles (its repository, package, registry entry) so agents can tell it apart');
+        if (problems.length) miss(id, name, level, problems.concat(warns, notes).join('; '));
+        else if (warns.length) record(id, name, level, 'warn', warns.concat(notes).join('; '));
+        else pass(id, name, level, [`types: ${[...all].slice(0, 8).join(', ')}`, ...notes].join('; '));
+      }
+      // W5 link previews
+      {
+        const id = 'W5', name = 'Link previews', level = 'required';
+        const missingOg = ok200.filter((p) => !(p.og.title && p.og.description && p.og.image)).map((p) => short(p.url));
+        const noCard = ok200.filter((p) => !p.twitterCard).map((p) => short(p.url));
+        const undeclared = ok200.filter((p) => p.og.image && !(p.og.width && p.og.alt)).map((p) => short(p.url));
+        const images = [...new Set(ok200.map((p) => p.og.image).filter(Boolean))].slice(0, 3);
+        const badImages = [];
+        for (const img of images) {
+          const u = safeUrl(img, BASE)?.href;
+          if (!u) { badImages.push(`${img.slice(0, 100)} (not a URL)`); continue; }
+          const r = await get(u);
+          if (!(r.status === 200 && /^image\//.test(r.type))) badImages.push(`${short(u)} (${r.status} ${ct(r)})`);
+        }
+        const problems = [];
+        if (missingOg.length) problems.push(`missing og:title, og:description or og:image on ${list(missingOg)}`);
+        if (noCard.length) problems.push(`no twitter:card on ${list(noCard)}`);
+        if (badImages.length) problems.push(`share images that don't load: ${list(badImages)}`);
+        // The homepage joins the comparison even when the sample missed it: a layout's default card is its text.
+        const cardPages = ok200.map((p) => ({ ...p, path: short(p.url) }));
+        if (home.status === 200 && !cardPages.some((p) => p.path === '/')) cardPages.push({ ...parsePage(BASE, home), path: '/' });
+        const shared = sharedCardText(cardPages);
+        const clip = (t) => (t.length > 50 ? `${t.slice(0, 50)}…` : t);
+        if (shared.x.paths.length) problems.push(`X shows another page's title or description on ${list(shared.x.paths)} ("${clip(shared.x.text)}"; twitter:title and twitter:description, else og:)`);
+        if (shared.og.paths.length) problems.push(`Facebook and LinkedIn show another page's title or description on ${list(shared.og.paths)} ("${clip(shared.og.text)}")`);
+        const warns = undeclared.length ? [`og:image size or alt text not declared on ${list(undeclared)}`] : [];
+        if (problems.length) miss(id, name, level, problems.concat(warns).join('; '));
+        else if (warns.length) record(id, name, level, 'warn', warns.join('; '));
+        else pass(id, name, level, `Open Graph and twitter:card on ${sampled}; share images load`);
+      }
+      // W6 page structure
+      {
+        const id = 'W6', name = 'Page structure', level = 'required';
+        const h1s = (p) => p.headings.filter((x) => x.level === 1).length;
+        const noH1 = ok200.filter((p) => h1s(p) === 0).map((p) => short(p.url));
+        const manyH1 = ok200.filter((p) => h1s(p) > 1).map((p) => `${short(p.url)} (${h1s(p)})`);
+        const noLang = ok200.filter((p) => !p.lang).map((p) => short(p.url));
+        const noAlt = ok200.filter((p) => p.imgNoAlt).map((p) => `${short(p.url)} (${p.imgNoAlt})`);
+        const skipped = ok200.map((p) => [p, headingSkips(p.headings)]).filter(([, sk]) => sk.length).map(([p, sk]) => `${short(p.url)} (${sk[0]})`);
+        const problems = [], warns = [];
+        if (noH1.length) problems.push(`no h1 on ${list(noH1)}`);
+        if (noLang.length) problems.push(`no html lang on ${list(noLang)}`);
+        if (manyH1.length) warns.push(`several h1s on ${list(manyH1)}`);
+        if (noAlt.length) warns.push(`images without alt on ${list(noAlt)}`);
+        if (skipped.length) warns.push(`heading levels skipped on ${list(skipped)}`);
+        const weight = `median HTML ${htmlKb} KB`;
+        if (problems.length) miss(id, name, level, problems.concat(warns, weight).join('; '));
+        else if (warns.length) record(id, name, level, 'warn', warns.concat(weight).join('; '));
+        else pass(id, name, level, `one h1, heading levels in order, html lang and alt text on ${sampled}; ${weight}`);
+      }
+    }
+  }
+
+  // ---- D10 DNS AID (recommended; a record naming a service you don't run is false) ----
+  {
+    const id = 'D10', name = 'DNS AID record', level = 'recommended';
+    const recent = ' (DNS answers stay cached until the record\'s TTL runs out, so a change can take a while to show)';
+    if (baseOrigin) skip(id, name, level, 'not checked with --base: DNS describes the live domain');
+    else {
+      let recs = [];
+      try { recs = (await resolveTxtFresh(`_agent.${domain}`)).map((r) => r.join('')).filter((r) => r.startsWith('v=aid')); } catch { recs = []; }
+      if (!recs.length) miss(id, name, level, `no TXT record at _agent.${domain}${recent}`);
+      else if (recs.length > 1) wrong(id, name, level, `${recs.length} records at _agent.${domain}; AID clients fail on ambiguity, so keep exactly one${recent}`);
+      else {
+        const kv = Object.fromEntries(recs[0].split(';').map((p) => p.split('=')).filter((p) => p.length >= 2).map(([k, ...v]) => [k.trim(), v.join('=').trim()]));
+        if (kv.v !== 'aid2') miss(id, name, level, `version ${kv.v} (current is aid2)`);
+        else if (!kv.u || !AID_PROTOCOLS.includes(kv.p)) wrong(id, name, level, `invalid record: u=${kv.u ?? 'missing'} p=${kv.p ?? 'missing'}`);
+        else {
+          let why = '';
+          if (kv.p === 'a2a' && !a2aValid) why = 'p=a2a, but there is no valid A2A card';
+          else if (kv.p === 'mcp' && !(await answersMcp(kv.u)).hosted) why = `p=mcp, but ${kv.u} doesn't answer MCP`;
+          else if (kv.p === 'openapi' && !json(await get(kv.u))?.openapi) why = `p=openapi, but ${kv.u} isn't an OpenAPI document`;
+          if (why) wrong(id, name, level, why);
+          else pass(id, name, level, `p=${kv.p} u=${kv.u}`);
+        }
+      }
+    }
+  }
+
+  // ---- D12 no false declarations (required) ----
+  {
+    const id = 'D12', name = 'No false declarations', level = 'required';
+    const fails = [], warns = [];
+    const p = ok(prm) ? json(prm) ?? {} : null;
+    const asDoc = ok(asMeta) ? json(asMeta) ?? {} : null;
+    if (p?.authorization_servers?.length && !asDoc?.token_endpoint) fails.push('the protected-resource metadata names an authorization server that has no token_endpoint');
+    else if (asDoc && !asDoc.token_endpoint) fails.push('authorization-server metadata with no token_endpoint');
+    if (!a2aValid && catalogEntries.some((e) => /a2a-agent-card/.test(e.type ?? ''))) fails.push('the AI catalog types an entry as an A2A agent card, but there is no valid A2A card');
+    for (const e of catalogEntries.filter((x) => x.type === 'application/mcp-server-card+json' && x.url)) {
+      const target = await get(e.url, { headers: { accept: 'application/mcp-server-card+json' } });
+      if (json(target)?.$schema !== CARD_SCHEMA) fails.push(`the AI catalog types ${e.url.replace(BASE, '')} as a server card, but it isn't a v1 server card`);
+    }
+    if (ok(aiPlugin)) warns.push('ai-plugin.json (ChatGPT plugins ended in 2024)');
+    if (!hosted) {
+      const strays = [['/.well-known/mcp.json', legacyCard], ['/.well-known/mcp/server-card.json', wkCard]].filter(([, r]) => ok(r) && json(r));
+      if (strays.length) warns.push(`${strays.map(([x]) => x).join(' and ')} ${strays.length === 1 ? 'implies' : 'imply'} a hosted MCP endpoint, but none answers at ${mcpPath ?? '/mcp'}`);
+    }
+    const all = [...new Set(fails)].concat(warns);
+    if (fails.length) wrong(id, name, level, all.join('; '));
+    else if (warns.length) record(id, name, level, 'warn', all.join('; '));
+    else pass(id, name, level, 'no OAuth, A2A, plugin or server-card claims without the service behind them');
+  }
+
+  results.sort((a, b) => LEVELS.indexOf(a.level) - LEVELS.indexOf(b.level) || ORDER.indexOf(a.id) - ORDER.indexOf(b.id));
+  return { domain, base: baseOrigin, version: VERSION, checked_at: new Date().toISOString(), hosted_mcp: hosted, has_api: api.present, html_kb_median: htmlKb, rich_results_test: richTest, results };
+}
+
+export function score(results, level) {
+  const rows = results.filter((r) => r.level === level && r.status !== 'skip');
+  return rows.length ? `${rows.filter((r) => r.status === 'pass').length} of ${rows.length}` : 'n/a';
+}
+
+// Markdown status page for several sites, for a project's docs/readiness-status.md.
+// `recorded` holds what the scorecard can't measure, per domain:
+// { "example.com": { "T5": { "result": "4 of 5 first try", "date": "2026-10-12" }, "T6": { ... } } }
+export function matrix(reports, command, recorded = {}) {
+  const sym = { pass: '✓', warn: '!', fail: '✗', skip: '–' };
+  const domains = reports.map((r) => r.domain);
+  const ids = reports[0].results.map((r) => [r.id, r.name, r.level]);
+  const out = [
+    '# Agent and Search Readiness Status', '',
+    `Generated ${new Date().toISOString().slice(0, 10)} by \`${command}\` (readiness-audit v${VERSION}). Don't edit it by hand: regenerate it. What each ID means: [the standard](${REPO}/blob/v${VERSION}/STANDARD.md).`, '',
+    'The scorecard sees only what is visible from outside a site. Items checked in review and tests (listed at the end) aren\'t in these numbers, so a high score can hide real gaps.', '',
+    '✓ pass, ✗ fail, ! warning, – not applicable.', '',
+    `| ID | Check | Level | ${domains.join(' | ')} |`, `|---|---|---|${domains.map(() => '---').join('|')}|`,
+    ...ids.map(([id, name, level]) => `| ${id} | ${name} | ${level} | ${reports.map((rep) => sym[rep.results.find((r) => r.id === id)?.status ?? 'skip']).join(' | ')} |`),
+    `| | **Required passed** | | ${reports.map((rep) => `**${score(rep.results, 'required')}**`).join(' | ')} |`,
+    `| | Recommended passed | | ${reports.map((rep) => score(rep.results, 'recommended')).join(' | ')} |`,
+    `| | Next level passed | | ${reports.map((rep) => score(rep.results, 'next')).join(' | ')} |`,
+    `| | Public API | | ${reports.map((rep) => (rep.has_api ? 'yes' : 'no')).join(' | ')} |`,
+    `| | Hosted MCP endpoint | | ${reports.map((rep) => (rep.hosted_mcp ? 'yes' : 'no')).join(' | ')} |`,
+    ...[['T5', 'Agent usability test (recorded)'], ['T6', 'Search numbers (recorded)']].map(([id, label]) =>
+      `| ${id} | ${label} | required | ${reports.map((rep) => formatRecorded(recorded[rep.domain]?.[id])).join(' | ')} |`),
+    '',
+    '## What to fix, per site', '',
+    'Failures and warnings with the scorecard\'s reason, required items first.', '',
+  ];
+  for (const rep of reports) {
+    out.push(`### ${rep.domain}`, '');
+    const open = rep.results.filter((r) => r.status === 'fail' || r.status === 'warn');
+    if (!open.length) out.push('Everything the scorecard can see passes.');
+    for (const r of open) out.push(`- **${r.id}** ${r.name} (${r.status === 'fail' ? 'fail' : 'warning'}, ${r.level}): ${r.detail}`);
+    out.push('');
+  }
+  out.push('## Checked in review and tests, not scored', '', ...REVIEW.map(([id, what]) => `- **${id}**: ${what}`), '');
+  const rich = reports.filter((rep) => rep.rich_results_test?.length);
+  if (rich.length) {
+    out.push('## Pages for Google\'s Rich Results Test (W4)', '', 'One page per kind of markup. Pages built from one template share it, so one tests them all.', '');
+    for (const rep of rich) out.push(`**${rep.domain}**`, '', ...rep.rich_results_test.map((p) => `- [${p.url}](${p.test}): ${p.features.join(', ')}`), '');
+  }
+  return out.join('\n');
+}
