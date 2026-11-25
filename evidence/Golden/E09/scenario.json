@@ -1,0 +1,64 @@
+{
+  "diagnostics": [
+    {
+      "code": "ORIGIN_NEGOTIATION_ERROR",
+      "request_index": 2
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 4
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 7
+    }
+  ],
+  "duration_seconds": 0.0159,
+  "expected_diagnostics": [
+    {
+      "code": "ORIGIN_NEGOTIATION_ERROR",
+      "request_index": 2
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 4
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 7
+    }
+  ],
+  "expected_first_error": 2,
+  "expected_ok": true,
+  "expected_verdict": "ORIGIN_NEGOTIATION_ERROR",
+  "first_error": 2,
+  "first_error_experiment_id": "ORIGIN_MARKDOWN",
+  "oracle_first_error": 2,
+  "oracle_mismatches": [],
+  "oracle_parity": true,
+  "oracle_verdict": "ORIGIN_NEGOTIATION_ERROR",
+  "origin_counter_delta_total": 8,
+  "report_hash": "be87cae4db8e59ea7c5455e0e836db7c6bd1512d11550a5468a78efd263c9a1e",
+  "request_count": 8,
+  "reset_count": 4,
+  "scenario_id": "E09",
+  "step_count": 25,
+  "suite": "extended",
+  "verdict": "ORIGIN_NEGOTIATION_ERROR",
+  "warm_hm_requests": [
+    5,
+    6
+  ],
+  "warm_mh_requests": [
+    7,
+    8
+  ]
+}

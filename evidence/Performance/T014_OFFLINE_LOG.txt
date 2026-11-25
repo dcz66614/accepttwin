@@ -1,0 +1,162 @@
+== offline verify: entering fresh network namespace (no external network) ==
+== STEP: loopback up ==
+loopback socket check: port 9 closed as expected
+== STEP: external network unreachable (expected failure) ==
+external connect failed as expected: [Errno 101] Network is unreachable
+== STEP: pytest -q (full suite, offline) ==
+........................................................................ [  7%]
+........................................................................ [ 14%]
+........................................................................ [ 22%]
+........................................................................ [ 29%]
+........................................................................ [ 37%]
+........................................................................ [ 44%]
+........................................................................ [ 52%]
+........................................................................ [ 59%]
+........................................................................ [ 67%]
+........................................................................ [ 74%]
+........................................................................ [ 81%]
+........................................................................ [ 89%]
+........................................................................ [ 96%]
+...............................                                          [100%]
+967 passed in 72.19s (0:01:12)
+== STEP: accepttwin verify --suite s0 (offline) ==
+C01: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.025s hash=67e69e68e128
+C02: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=e463739fd907
+C03: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.016s hash=294f457ebb31
+C04: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.016s hash=9ac0c100bce5
+C05: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=8adb450978fc
+C06: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=f6c457af50ac
+C07: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=1 parity=OK 0.019s hash=3e36c2cb80bc
+C08: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.016s hash=2cd93bb673e2
+C09: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=1 parity=OK 0.018s hash=8ad6dc8d7bf3
+C10: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.016s hash=42293ff31e58
+C11: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.014s hash=795194abf70b
+C12: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.012s hash=856405fb3081
+C13: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.015s hash=5c73bcd8e410
+C14: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=a7e648c55c22
+C15: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.015s hash=5beff72c3014
+C16: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.029s hash=6539c0ca1024
+C17: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=38b0c5ee247e
+C18: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=5ccab1326287
+C19: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=3 parity=OK 0.016s hash=cace5a2eb85b
+C20: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.016s hash=79fa30d3ba5a
+C21: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.017s hash=632effe01de1
+C22: INCONCLUSIVE (expected INCONCLUSIVE) first_error=6 parity=OK 0.017s hash=193f9bceaea3
+C23: INCONCLUSIVE (expected INCONCLUSIVE) first_error=None parity=OK 0.016s hash=c3f1b68418c7
+C24: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=4 parity=OK 0.014s hash=90944803011f
+C11 repro 1/3: REPRESENTATION_BLEED first_error=6
+C11 repro 2/3: REPRESENTATION_BLEED first_error=6
+C11 repro 3/3: REPRESENTATION_BLEED first_error=6
+repeat-100 C01: distinct_hashes=1 all_equal=True max_duration=0.102s same_pair_equal=True
+S0_STATUS: PASS (24/24 golden, parity 24/24)
+VERIFY_STATUS: PASS (S0 24/24 golden, parity 24/24)
+== STEP: build_reports_48.py (offline) ==
+C01: OK verdict=PASS_OBSERVED parity=True hash=2decfb46ff05
+C02: OK verdict=PASS_OBSERVED parity=True hash=38b88152bef1
+C03: OK verdict=PASS_OBSERVED parity=True hash=ff0bba990d6f
+C04: OK verdict=PASS_OBSERVED parity=True hash=8146b069001c
+C05: OK verdict=PASS_OBSERVED parity=True hash=e2ecb1f01a85
+C06: OK verdict=PASS_OBSERVED parity=True hash=8b15b73a06a2
+C07: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=eb4448d4ee62
+C08: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=211f85475b46
+C09: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=7ee5b166dabd
+C10: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=4ecbf64ed8d4
+C11: OK verdict=REPRESENTATION_BLEED parity=True hash=fdbce0f8f424
+C12: OK verdict=REPRESENTATION_BLEED parity=True hash=3ad3bb4d3f2f
+C13: OK verdict=REPRESENTATION_BLEED parity=True hash=80f5566fdfc9
+C14: OK verdict=REPRESENTATION_BLEED parity=True hash=128cf22727e9
+C15: OK verdict=REPRESENTATION_BLEED parity=True hash=1f49626f449a
+C16: OK verdict=REPRESENTATION_BLEED parity=True hash=d7ff5d07b49e
+C17: OK verdict=PASS_OBSERVED parity=True hash=9b0a58f08d11
+C18: OK verdict=PASS_OBSERVED parity=True hash=f91a0448819d
+C19: OK verdict=CONTRACT_MISMATCH parity=True hash=c074f6441d9b
+C20: OK verdict=INCONCLUSIVE parity=True hash=a1bd46be828d
+C21: OK verdict=INCONCLUSIVE parity=True hash=54d2539d8890
+C22: OK verdict=INCONCLUSIVE parity=True hash=b1496d7236c5
+C23: OK verdict=INCONCLUSIVE parity=True hash=b905de77063f
+C24: OK verdict=CONTRACT_MISMATCH parity=True hash=f4ea176d26ea
+E01: OK verdict=PASS_OBSERVED parity=True hash=7869f580efe5
+E02: OK verdict=PASS_OBSERVED parity=True hash=432e7ebeeff2
+E03: OK verdict=PASS_OBSERVED parity=True hash=ce5a69ab3438
+E04: OK verdict=PASS_OBSERVED parity=True hash=4e7b2f85b6e9
+E05: OK verdict=PASS_OBSERVED parity=True hash=e5bdf0e37531
+E06: OK verdict=PASS_OBSERVED parity=True hash=de841b1bef50
+E07: OK verdict=INCONCLUSIVE parity=True hash=82617c722c85
+E08: OK verdict=INCONCLUSIVE parity=True hash=58d9ea6561a5
+E09: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=e0f6af3112e9
+E10: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=dac7d8ba3664
+E11: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=6a84372dc74d
+E12: OK verdict=INCONCLUSIVE parity=True hash=d18476da2a44
+E13: OK verdict=REPRESENTATION_BLEED parity=True hash=28c9b9cb2049
+E14: OK verdict=REPRESENTATION_BLEED parity=True hash=dbb98ac07b5f
+E15: OK verdict=PASS_OBSERVED parity=True hash=6eb634349ea6
+E16: OK verdict=PASS_OBSERVED parity=True hash=d86e273d54ef
+E17: OK verdict=INCONCLUSIVE parity=True hash=2413a2f3da27
+E18: OK verdict=INCONCLUSIVE parity=True hash=15b7bbc8ceaf
+E19: OK verdict=INCONCLUSIVE parity=True hash=c23041bdc2f3
+E20: OK verdict=INCONCLUSIVE parity=True hash=0af49528cc47
+E21: OK verdict=INCONCLUSIVE parity=True hash=334e0a1dafd0
+E22: OK verdict=INCONCLUSIVE parity=True hash=5e48f3c5609a
+E23: OK verdict=CONTRACT_MISMATCH parity=True hash=a958d7887ce9
+E24: OK verdict=CONTRACT_MISMATCH parity=True hash=c966c0ba32c5
+REPORTS_STATUS: PASS (schema 48/48, verdict 48/48, parity 48/48)
+== STEP: embed_report.py --all-48 --check-only (offline) ==
+PRIVACY PREVIEW — 48 pages (export happens only after this preview)
+  pages:         48 single-report pages + index.html -> /home/hatch/workspace/p032-accepttwin/evidence/Reports/html
+  verdicts:      {'PASS_OBSERVED': 16, 'ORIGIN_NEGOTIATION_ERROR': 7, 'REPRESENTATION_BLEED': 8, 'CONTRACT_MISMATCH': 4, 'INCONCLUSIVE': 13}
+  oracle parity: 48/48
+  contains raw body text:        false (all 48 reports scanned)
+  contains sensitive headers:    false (all 48 reports scanned)
+  contains body hashes:          true (SHA-256 + Sentinel match flags only)
+  remote references in output:   none (all 49 pages scanned)
+  Sentinel literals in output:   none (all 49 pages scanned)
+CHECK ONLY: 48/48 + index OK (nothing written)
+== STEP: embed_report.py --all-48 --out-dir /tmp/t012_offline_html (offline) ==
+PRIVACY PREVIEW — 48 pages (export happens only after this preview)
+  pages:         48 single-report pages + index.html -> /tmp/t012_offline_html
+  verdicts:      {'PASS_OBSERVED': 16, 'ORIGIN_NEGOTIATION_ERROR': 7, 'REPRESENTATION_BLEED': 8, 'CONTRACT_MISMATCH': 4, 'INCONCLUSIVE': 13}
+  oracle parity: 48/48
+  contains raw body text:        false (all 48 reports scanned)
+  contains sensitive headers:    false (all 48 reports scanned)
+  contains body hashes:          true (SHA-256 + Sentinel match flags only)
+  remote references in output:   none (all 49 pages scanned)
+  Sentinel literals in output:   none (all 49 pages scanned)
+WROTE 49 files to /tmp/t012_offline_html (3168792 bytes total)
+49
+== STEP: npm run build (report-ui, offline) ==
+
+> accepttwin-report-ui@1.0.0 build
+> tsc -p tsconfig.json
+
+== STEP: fresh venv offline install ==
+Obtaining file:///home/hatch/workspace/p032-accepttwin
+  Checking if build backend supports build_editable: started
+  Checking if build backend supports build_editable: finished with status 'done'
+  Preparing editable metadata (pyproject.toml): started
+  Preparing editable metadata (pyproject.toml): finished with status 'done'
+Building wheels for collected packages: accepttwin
+  Building editable for accepttwin (pyproject.toml): started
+  Building editable for accepttwin (pyproject.toml): finished with status 'done'
+  Created wheel for accepttwin: filename=accepttwin-1.0.0-0.editable-py3-none-any.whl size=4399 sha256=a69df88bc837383906c69f5cf83c921f16ca0fe020c65348c8c7858c75d6269f
+  Stored in directory: /tmp/pip-ephem-wheel-cache-qhmt4jn7/wheels/55/ac/59/113b3da22ba191a33e685b1350888647bf92923e8cf117f89b
+Successfully built accepttwin
+Installing collected packages: accepttwin
+Successfully installed accepttwin-1.0.0
+usage: accepttwin [-h] [--version] COMMAND ...
+
+AcceptTwin (P032): same URL, two representations — verify delivery is never
+mixed up. Local-only, offline, no real users.
+
+positional arguments:
+  COMMAND
+    verify    re-run the Golden gate live (48 scenarios + Oracle parity;
+              --suite all also re-runs S0 24/24)
+    benchmark
+              measure per-scenario time (<1s), repeat-100 determinism, and re-
+              validate reports + self-contained HTML
+
+options:
+  -h, --help  show this help message and exit
+  --version   show program's version number and exit
+accepttwin 1.0.0
+OFFLINE_VERIFY: PASS

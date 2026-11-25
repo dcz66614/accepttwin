@@ -1,0 +1,48 @@
+{
+  "diagnostics": [
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 8
+    }
+  ],
+  "duration_seconds": 0.0161,
+  "expected_diagnostics": [
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 8
+    }
+  ],
+  "expected_first_error": 6,
+  "expected_ok": true,
+  "expected_verdict": "CONTRACT_MISMATCH",
+  "first_error": 6,
+  "first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "oracle_first_error": 6,
+  "oracle_mismatches": [],
+  "oracle_parity": true,
+  "oracle_verdict": "CONTRACT_MISMATCH",
+  "origin_counter_delta_total": 8,
+  "report_hash": "1f8ff4e638dd05c73595a4b47f92e54cc4e086b63edd53b972a269cd0aa6b263",
+  "request_count": 8,
+  "reset_count": 4,
+  "scenario_id": "E24",
+  "step_count": 25,
+  "suite": "extended",
+  "verdict": "CONTRACT_MISMATCH",
+  "warm_hm_requests": [
+    5,
+    6
+  ],
+  "warm_mh_requests": [
+    7,
+    8
+  ]
+}

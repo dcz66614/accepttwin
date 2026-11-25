@@ -1,0 +1,225 @@
+=== verify --suite all (clean worktree /tmp/p032-v101-check, tag P032-v1.0.1) ===
+C01: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.019s hash=67e69e68e128
+C02: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.018s hash=e463739fd907
+C03: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=294f457ebb31
+C04: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.019s hash=9ac0c100bce5
+C05: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=8adb450978fc
+C06: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.017s hash=f6c457af50ac
+C07: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=1 parity=OK 0.015s hash=3e36c2cb80bc
+C08: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.014s hash=2cd93bb673e2
+C09: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=1 parity=OK 0.016s hash=8ad6dc8d7bf3
+C10: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.015s hash=42293ff31e58
+C11: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=795194abf70b
+C12: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=856405fb3081
+C13: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=5c73bcd8e410
+C14: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.012s hash=a7e648c55c22
+C15: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.014s hash=5beff72c3014
+C16: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=6539c0ca1024
+C17: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=38b0c5ee247e
+C18: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.016s hash=5ccab1326287
+C19: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=3 parity=OK 0.014s hash=cace5a2eb85b
+C20: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.016s hash=79fa30d3ba5a
+C21: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.015s hash=632effe01de1
+C22: INCONCLUSIVE (expected INCONCLUSIVE) first_error=6 parity=OK 0.015s hash=193f9bceaea3
+C23: INCONCLUSIVE (expected INCONCLUSIVE) first_error=None parity=OK 0.014s hash=c3f1b68418c7
+C24: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=4 parity=OK 0.014s hash=90944803011f
+E01: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=9c75e73f76fc
+E02: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.016s hash=2aee7f1e4035
+E03: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=f06a9ef485b9
+E04: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=2325155033a5
+E05: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.019s hash=abb3f22266e4
+E06: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.018s hash=6c07b0226fd5
+E07: INCONCLUSIVE (expected INCONCLUSIVE) first_error=1 parity=OK 0.014s hash=0d4e5847ae18
+E08: INCONCLUSIVE (expected INCONCLUSIVE) first_error=1 parity=OK 0.015s hash=2b550c3d9851
+E09: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.017s hash=be87cae4db8e
+E10: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=1 parity=OK 0.014s hash=57fb3aacd457
+E11: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.018s hash=4e8df2c0fe32
+E12: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.008s hash=728c3dbfee7d
+E13: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=6439c929a09f
+E14: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=af0d5608c0a9
+E15: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=16d6be39b3fd
+E16: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=8939d3880441
+E17: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.016s hash=fff800f9244c
+E18: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.015s hash=e11c3ce0cec9
+E19: INCONCLUSIVE (expected INCONCLUSIVE) first_error=6 parity=OK 0.015s hash=e24ca4a487c9
+E20: INCONCLUSIVE (expected INCONCLUSIVE) first_error=6 parity=OK 0.018s hash=9b81b7c55b61
+E21: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.045s hash=0353d7366d12
+E22: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.008s hash=65d9c404f417
+E23: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=3 parity=OK 0.015s hash=1bc46e84f82f
+E24: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=6 parity=OK 0.015s hash=1f8ff4e638dd
+E13 repro 1/3: REPRESENTATION_BLEED first_error=6
+E13 repro 2/3: REPRESENTATION_BLEED first_error=6
+E13 repro 3/3: REPRESENTATION_BLEED first_error=6
+determinism E01: distinct_hashes=1 all_equal=True
+ALL48_STATUS: PASS (48/48 golden, parity 48/48)
+C01: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.016s hash=67e69e68e128
+C02: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=e463739fd907
+C03: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.017s hash=294f457ebb31
+C04: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=9ac0c100bce5
+C05: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.028s hash=8adb450978fc
+C06: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.019s hash=f6c457af50ac
+C07: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=1 parity=OK 0.016s hash=3e36c2cb80bc
+C08: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.018s hash=2cd93bb673e2
+C09: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=1 parity=OK 0.015s hash=8ad6dc8d7bf3
+C10: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.049s hash=42293ff31e58
+C11: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=795194abf70b
+C12: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=856405fb3081
+C13: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.014s hash=5c73bcd8e410
+C14: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=a7e648c55c22
+C15: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.012s hash=5beff72c3014
+C16: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.011s hash=6539c0ca1024
+C17: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=38b0c5ee247e
+C18: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.018s hash=5ccab1326287
+C19: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=3 parity=OK 0.014s hash=cace5a2eb85b
+C20: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.015s hash=79fa30d3ba5a
+C21: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.035s hash=632effe01de1
+C22: INCONCLUSIVE (expected INCONCLUSIVE) first_error=6 parity=OK 0.015s hash=193f9bceaea3
+C23: INCONCLUSIVE (expected INCONCLUSIVE) first_error=None parity=OK 0.015s hash=c3f1b68418c7
+C24: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=4 parity=OK 0.016s hash=90944803011f
+C11 repro 1/3: REPRESENTATION_BLEED first_error=6
+C11 repro 2/3: REPRESENTATION_BLEED first_error=6
+C11 repro 3/3: REPRESENTATION_BLEED first_error=6
+repeat-100 C01: distinct_hashes=1 all_equal=True max_duration=0.035s same_pair_equal=True
+S0_STATUS: PASS (24/24 golden, parity 24/24)
+VERIFY_STATUS: PASS (ALL48 48/48 golden, parity 48/48; S0 24/24 golden, parity 24/24, repeat-100 distinct_hashes=1)
+
+=== benchmark --suite all (same worktree) ===
+C01: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=67e69e68e128
+C02: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=e463739fd907
+C03: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=294f457ebb31
+C04: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.030s hash=9ac0c100bce5
+C05: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=8adb450978fc
+C06: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=f6c457af50ac
+C07: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=1 parity=OK 0.016s hash=3e36c2cb80bc
+C08: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.022s hash=2cd93bb673e2
+C09: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=1 parity=OK 0.015s hash=8ad6dc8d7bf3
+C10: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.026s hash=42293ff31e58
+C11: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.012s hash=795194abf70b
+C12: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.016s hash=856405fb3081
+C13: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.012s hash=5c73bcd8e410
+C14: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.014s hash=a7e648c55c22
+C15: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.012s hash=5beff72c3014
+C16: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.015s hash=6539c0ca1024
+C17: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.012s hash=38b0c5ee247e
+C18: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=5ccab1326287
+C19: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=3 parity=OK 0.013s hash=cace5a2eb85b
+C20: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.020s hash=79fa30d3ba5a
+C21: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.028s hash=632effe01de1
+C22: INCONCLUSIVE (expected INCONCLUSIVE) first_error=6 parity=OK 0.014s hash=193f9bceaea3
+C23: INCONCLUSIVE (expected INCONCLUSIVE) first_error=None parity=OK 0.014s hash=c3f1b68418c7
+C24: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=4 parity=OK 0.026s hash=90944803011f
+E01: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.021s hash=9c75e73f76fc
+E02: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=2aee7f1e4035
+E03: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.016s hash=f06a9ef485b9
+E04: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=2325155033a5
+E05: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.016s hash=abb3f22266e4
+E06: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=6c07b0226fd5
+E07: INCONCLUSIVE (expected INCONCLUSIVE) first_error=1 parity=OK 0.013s hash=0d4e5847ae18
+E08: INCONCLUSIVE (expected INCONCLUSIVE) first_error=1 parity=OK 0.013s hash=2b550c3d9851
+E09: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.018s hash=be87cae4db8e
+E10: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=1 parity=OK 0.014s hash=57fb3aacd457
+E11: ORIGIN_NEGOTIATION_ERROR (expected ORIGIN_NEGOTIATION_ERROR) first_error=2 parity=OK 0.014s hash=4e8df2c0fe32
+E12: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.009s hash=728c3dbfee7d
+E13: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.012s hash=6439c929a09f
+E14: REPRESENTATION_BLEED (expected REPRESENTATION_BLEED) first_error=6 parity=OK 0.013s hash=af0d5608c0a9
+E15: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.015s hash=16d6be39b3fd
+E16: PASS_OBSERVED (expected PASS_OBSERVED) first_error=None parity=OK 0.014s hash=8939d3880441
+E17: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.013s hash=fff800f9244c
+E18: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.015s hash=e11c3ce0cec9
+E19: INCONCLUSIVE (expected INCONCLUSIVE) first_error=6 parity=OK 0.018s hash=e24ca4a487c9
+E20: INCONCLUSIVE (expected INCONCLUSIVE) first_error=6 parity=OK 0.020s hash=9b81b7c55b61
+E21: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.037s hash=0353d7366d12
+E22: INCONCLUSIVE (expected INCONCLUSIVE) first_error=3 parity=OK 0.009s hash=65d9c404f417
+E23: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=3 parity=OK 0.016s hash=1bc46e84f82f
+E24: CONTRACT_MISMATCH (expected CONTRACT_MISMATCH) first_error=6 parity=OK 0.018s hash=1f8ff4e638dd
+E13 repro 1/3: REPRESENTATION_BLEED first_error=6
+E13 repro 2/3: REPRESENTATION_BLEED first_error=6
+E13 repro 3/3: REPRESENTATION_BLEED first_error=6
+determinism E01: distinct_hashes=1 all_equal=True
+ALL48_STATUS: PASS (48/48 golden, parity 48/48)
+benchmark timings: max single-scenario 0.037s (limit 1.000s), total 12.59s
+benchmark repeat-100 C01: distinct_hashes=1 all_equal=True max_duration=0.056s hash=67e69e68e128441b67fae155ac1af8dbb4e7992b4dfe70db7dcef1f04e62acde
+C01: OK verdict=PASS_OBSERVED parity=True hash=4645e3408cd6
+C02: OK verdict=PASS_OBSERVED parity=True hash=5fe642fa8173
+C03: OK verdict=PASS_OBSERVED parity=True hash=50a5bf22e084
+C04: OK verdict=PASS_OBSERVED parity=True hash=1d6dc270ceac
+C05: OK verdict=PASS_OBSERVED parity=True hash=8cc821c92cb4
+C06: OK verdict=PASS_OBSERVED parity=True hash=c68592f02deb
+C07: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=22f30d3ee90e
+C08: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=3082aaacfa01
+C09: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=6d2ba538485e
+C10: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=802883649686
+C11: OK verdict=REPRESENTATION_BLEED parity=True hash=51fab41909d7
+C12: OK verdict=REPRESENTATION_BLEED parity=True hash=11ae70842695
+C13: OK verdict=REPRESENTATION_BLEED parity=True hash=ffe6c7da2958
+C14: OK verdict=REPRESENTATION_BLEED parity=True hash=8db17ea8117f
+C15: OK verdict=REPRESENTATION_BLEED parity=True hash=37c9efee466c
+C16: OK verdict=REPRESENTATION_BLEED parity=True hash=c3e98f68a569
+C17: OK verdict=PASS_OBSERVED parity=True hash=7348f87b8489
+C18: OK verdict=PASS_OBSERVED parity=True hash=24e08184b779
+C19: OK verdict=CONTRACT_MISMATCH parity=True hash=1451ff34d618
+C20: OK verdict=INCONCLUSIVE parity=True hash=36aa850a2afc
+C21: OK verdict=INCONCLUSIVE parity=True hash=c4f1cddb2ee9
+C22: OK verdict=INCONCLUSIVE parity=True hash=439aced9ba51
+C23: OK verdict=INCONCLUSIVE parity=True hash=1cb27a7bf203
+C24: OK verdict=CONTRACT_MISMATCH parity=True hash=04a5a15d7154
+E01: OK verdict=PASS_OBSERVED parity=True hash=235449d2b89a
+E02: OK verdict=PASS_OBSERVED parity=True hash=1f8d948058b0
+E03: OK verdict=PASS_OBSERVED parity=True hash=a434495922e7
+E04: OK verdict=PASS_OBSERVED parity=True hash=a856de4cd164
+E05: OK verdict=PASS_OBSERVED parity=True hash=fc7f83f0c77d
+E06: OK verdict=PASS_OBSERVED parity=True hash=43424514e858
+E07: OK verdict=INCONCLUSIVE parity=True hash=44f14a171c54
+E08: OK verdict=INCONCLUSIVE parity=True hash=5ec1e883cc58
+E09: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=a8cda7716918
+E10: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=8fd4e25b1e58
+E11: OK verdict=ORIGIN_NEGOTIATION_ERROR parity=True hash=e66a06a6eb43
+E12: OK verdict=INCONCLUSIVE parity=True hash=f6667c6afdd1
+E13: OK verdict=REPRESENTATION_BLEED parity=True hash=8689fc846452
+E14: OK verdict=REPRESENTATION_BLEED parity=True hash=5d3ffa1f8040
+E15: OK verdict=PASS_OBSERVED parity=True hash=f33db401c37a
+E16: OK verdict=PASS_OBSERVED parity=True hash=8e0e559114d3
+E17: OK verdict=INCONCLUSIVE parity=True hash=113ff868949c
+E18: OK verdict=INCONCLUSIVE parity=True hash=6b1d5dadcced
+E19: OK verdict=INCONCLUSIVE parity=True hash=451919d1cc50
+E20: OK verdict=INCONCLUSIVE parity=True hash=2748e13705b9
+E21: OK verdict=INCONCLUSIVE parity=True hash=831a8d255246
+E22: OK verdict=INCONCLUSIVE parity=True hash=235705425e75
+E23: OK verdict=CONTRACT_MISMATCH parity=True hash=aa1e58e2e8ed
+E24: OK verdict=CONTRACT_MISMATCH parity=True hash=34099dc2a3be
+REPORTS_STATUS: PASS (schema 48/48, verdict 48/48, parity 48/48)
+PRIVACY PREVIEW — 48 pages (export happens only after this preview)
+  pages:         48 single-report pages + index.html -> /tmp/p032-v101-check/evidence/Reports/html
+  verdicts:      {'PASS_OBSERVED': 16, 'ORIGIN_NEGOTIATION_ERROR': 7, 'REPRESENTATION_BLEED': 8, 'CONTRACT_MISMATCH': 4, 'INCONCLUSIVE': 13}
+  oracle parity: 48/48
+  contains raw body text:        false (all 48 reports scanned)
+  contains sensitive headers:    false (all 48 reports scanned)
+  contains body hashes:          true (SHA-256 + Sentinel match flags only)
+  remote references in output:   none (all 49 pages scanned)
+  Sentinel literals in output:   none (all 49 pages scanned)
+WROTE 49 files to /tmp/p032-v101-check/evidence/Reports/html (3168792 bytes total)
+benchmark reports: schema 48/48, verdict 48/48, parity 48/48; HTML pages clean: {'pages': 49, 'violations': 0, 'clean': True}
+BENCHMARK_STATUS: PASS (max single-scenario 0.037s, repeat-100 distinct=1, reports PASS, html_clean=True)
+
+=== scripts/verify_s0.py (same worktree) ===
+[PASS] 24 core cases exist with full evidence (§11.2) -- 24/24 scenario dirs complete
+[PASS] 24/24 core Golden match frozen expectations (§11.2) -- 24/24
+[PASS] 24/24 Oracle parity (verdict + diagnostics + first error + 8 verified_cache_states) (§12) -- 24/24
+[PASS] known failures all detected (§8, §11.2) -- 12/12 (C07-C16, C19, C24)
+[PASS] healthy scenarios zero false positives (§7, §11.2) -- 8/8 PASS_OBSERVED (C01-C06, C17, C18)
+[PASS] both warm orders really executed (HM + MH, no mid-warm reset) (§0.2, §6) -- 8 requests, resets at 09/13/17/22 only
+[PASS] independent cold requests (reset + empty + MISS/BYPASS dual proof) (§5.4, §6) -- 4 confirmed resets, empty before 003/004/005/007
+[PASS] dual cache evidence (header + origin behaviour), recomputed (§5.3) -- every confirmed state has both legs; every UNKNOWN is justified
+[PASS] stable bleed reproduction (C11, 3/3, full dual evidence) (§8.2, §11.2) -- 3/3 REPRESENTATION_BLEED, first_error 006, 2 bleed diagnostics each
+[PASS] missing-Vary healthy scenarios pass (C03/C04, warning only) (§7.11, §11.2) -- PASS_OBSERVED + VARY_ACCEPT_ABSENT x2, no bleed
+[PASS] 100/100 identical canonical report hashes (recomputed) (§7.8, §10.4) -- 100 runs, distinct=1, fresh_pair=True, same_pair_equal=True, recomputed C01 hash matches=True, port_invariant=True (contract hash unchanged after port rewrite: 813e3913e584 vs 813e3913e584), C11 repro hashes equal main C11 hash=True
+[PASS] single scenario < 1s (all 24 + repeat max) (§10.5) -- max scenario 0.049s, repeat max 0.035s
+[PASS] insufficient evidence never misjudged (C20-C23 INCONCLUSIVE, no bleed) (§8.4, §8.8, §9.4) -- 4/4 INCONCLUSIVE, 0 bleed diagnostics
+[PASS] C21 adjudication input carries an empty, unavailable event journal (§8.4, §11.2) -- origin_events=[] and origin_events_available=false
+[PASS] first-error location exact (request + experiment, recomputed) (§6.3, §8) -- 24/24 match the smallest violating request
+[PASS] mandatory classify_run call convention (ADR-002 Decision 3) (ADR-002) -- production = classify_run(contract, run.observations, adj_origin_events, run.reset_evidence, raw_observations=run.raw_observations)
+[PASS] no None passed to classify_run (origin_events/reset_evidence) (ADR-002) -- call site passes real tuples only
+[PASS] Oracle independent (no production import/call, no production verdict read) (§12.3) -- oracle/src/*.ts clean
+[PASS] Oracle input carries no production verdict/diagnostics (§12.2, §12.3) -- 24/24 oracle-input files clean
+
+S0_STATUS: PASS (19/19 checks passed)

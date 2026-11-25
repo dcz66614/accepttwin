@@ -1,0 +1,65 @@
+{
+  "confirmed_cache_states": [
+    {
+      "request_index": 1,
+      "state": null
+    },
+    {
+      "request_index": 2,
+      "state": null
+    },
+    {
+      "request_index": 3,
+      "state": "MISS"
+    },
+    {
+      "request_index": 4,
+      "state": "MISS"
+    },
+    {
+      "request_index": 5,
+      "state": "MISS"
+    },
+    {
+      "request_index": 6,
+      "state": null
+    },
+    {
+      "request_index": 7,
+      "state": "MISS"
+    },
+    {
+      "request_index": 8,
+      "state": "MISS"
+    }
+  ],
+  "critical_count": 0,
+  "diagnostics": [
+    {
+      "code": "CACHE_EVIDENCE_CONFLICT",
+      "evidence": {
+        "cache_entry_id": "entry-cec6f4579d16d94b",
+        "cache_key_sha256": "cec6f4579d16d94bedfca3371a5a9518f13761a060540875340041a4ae5e8bc8",
+        "cache_reset_confirmed": true,
+        "cache_status": "CACHE_STATE_UNKNOWN",
+        "evidence_conflict": true,
+        "evidence_consistent": false,
+        "origin_counter_delta": 1,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": true,
+        "proxy_reported_status": "HIT"
+      },
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "message": "proxy reported HIT for request 006 but the origin counter moved by +1",
+      "request_index": 6,
+      "severity": "WARNING"
+    }
+  ],
+  "first_error": 6,
+  "first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "reasons": [
+    "key cache evidence is missing or conflicting"
+  ],
+  "verdict": "INCONCLUSIVE",
+  "warning_count": 1
+}

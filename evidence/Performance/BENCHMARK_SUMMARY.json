@@ -1,0 +1,331 @@
+{
+  "ALL48_GOLDEN": "48/48",
+  "ALL48_ORACLE_PARITY": "48/48",
+  "BENCHMARK_STATUS": "PASS",
+  "environment": {
+    "accepttwin_version": "1.0.0",
+    "machine": "x86_64",
+    "node": "v24.22.1",
+    "platform": "Linux-7.0.0-44-generic-x86_64-with-glibc2.39",
+    "python": "3.12.3",
+    "python_implementation": "CPython"
+  },
+  "gate": "BENCHMARK",
+  "html": {
+    "clean": true,
+    "pages": 49,
+    "violations": 0
+  },
+  "max_scenario_duration_seconds": 0.0395,
+  "per_scenario": {
+    "C01": {
+      "duration_seconds": 0.0141,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "C02": {
+      "duration_seconds": 0.0148,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "C03": {
+      "duration_seconds": 0.0259,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "C04": {
+      "duration_seconds": 0.0151,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "C05": {
+      "duration_seconds": 0.015,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "C06": {
+      "duration_seconds": 0.015,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "C07": {
+      "duration_seconds": 0.0139,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "ORIGIN_NEGOTIATION_ERROR"
+    },
+    "C08": {
+      "duration_seconds": 0.0168,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "ORIGIN_NEGOTIATION_ERROR"
+    },
+    "C09": {
+      "duration_seconds": 0.0136,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "ORIGIN_NEGOTIATION_ERROR"
+    },
+    "C10": {
+      "duration_seconds": 0.0146,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "ORIGIN_NEGOTIATION_ERROR"
+    },
+    "C11": {
+      "duration_seconds": 0.0176,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "REPRESENTATION_BLEED"
+    },
+    "C12": {
+      "duration_seconds": 0.0173,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "REPRESENTATION_BLEED"
+    },
+    "C13": {
+      "duration_seconds": 0.0117,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "REPRESENTATION_BLEED"
+    },
+    "C14": {
+      "duration_seconds": 0.0112,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "REPRESENTATION_BLEED"
+    },
+    "C15": {
+      "duration_seconds": 0.012,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "REPRESENTATION_BLEED"
+    },
+    "C16": {
+      "duration_seconds": 0.011,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "REPRESENTATION_BLEED"
+    },
+    "C17": {
+      "duration_seconds": 0.0147,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "C18": {
+      "duration_seconds": 0.015,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "C19": {
+      "duration_seconds": 0.0135,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "CONTRACT_MISMATCH"
+    },
+    "C20": {
+      "duration_seconds": 0.0209,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "C21": {
+      "duration_seconds": 0.0136,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "C22": {
+      "duration_seconds": 0.0142,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "C23": {
+      "duration_seconds": 0.013,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "C24": {
+      "duration_seconds": 0.0149,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "CONTRACT_MISMATCH"
+    },
+    "E01": {
+      "duration_seconds": 0.014,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "E02": {
+      "duration_seconds": 0.0134,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "E03": {
+      "duration_seconds": 0.0143,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "E04": {
+      "duration_seconds": 0.0142,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "E05": {
+      "duration_seconds": 0.0141,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "E06": {
+      "duration_seconds": 0.0135,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "E07": {
+      "duration_seconds": 0.0166,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "E08": {
+      "duration_seconds": 0.0152,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "E09": {
+      "duration_seconds": 0.0159,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "ORIGIN_NEGOTIATION_ERROR"
+    },
+    "E10": {
+      "duration_seconds": 0.0148,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "ORIGIN_NEGOTIATION_ERROR"
+    },
+    "E11": {
+      "duration_seconds": 0.024,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "ORIGIN_NEGOTIATION_ERROR"
+    },
+    "E12": {
+      "duration_seconds": 0.01,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "E13": {
+      "duration_seconds": 0.0138,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "REPRESENTATION_BLEED"
+    },
+    "E14": {
+      "duration_seconds": 0.0141,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "REPRESENTATION_BLEED"
+    },
+    "E15": {
+      "duration_seconds": 0.0146,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "E16": {
+      "duration_seconds": 0.016,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "PASS_OBSERVED"
+    },
+    "E17": {
+      "duration_seconds": 0.0172,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "E18": {
+      "duration_seconds": 0.0165,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "E19": {
+      "duration_seconds": 0.0172,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "E20": {
+      "duration_seconds": 0.0175,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "E21": {
+      "duration_seconds": 0.0395,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "E22": {
+      "duration_seconds": 0.0093,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "INCONCLUSIVE"
+    },
+    "E23": {
+      "duration_seconds": 0.015,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "CONTRACT_MISMATCH"
+    },
+    "E24": {
+      "duration_seconds": 0.0161,
+      "oracle_parity": true,
+      "request_count": 8,
+      "verdict": "CONTRACT_MISMATCH"
+    }
+  },
+  "per_scenario_duration_limit_seconds": 1.0,
+  "repeat_100": {
+    "all_equal": true,
+    "canonical_hash_recompute_matches": true,
+    "canonical_json_free_of_nondeterministic_fields": true,
+    "distinct_hashes": 1,
+    "fresh_pair_per_run": true,
+    "hash": "67e69e68e128441b67fae155ac1af8dbb4e7992b4dfe70db7dcef1f04e62acde",
+    "max_duration_seconds": 0.0501,
+    "runs": 100,
+    "scenario": "C01"
+  },
+  "reports": {
+    "ORACLE_PARITY": "48/48",
+    "REPORTS_STATUS": "PASS",
+    "SCHEMA_VALID": "48/48",
+    "VERDICT_MATCHES_RECORD": "48/48",
+    "privacy_clean": true
+  },
+  "spec": "PROJECT_BOOK.md \u00a718 AC10/AC11, \u00a710.4, \u00a710.5, \u00a714",
+  "total_seconds": 20.28
+}

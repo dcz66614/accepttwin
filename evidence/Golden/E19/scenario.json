@@ -1,0 +1,40 @@
+{
+  "diagnostics": [
+    {
+      "code": "CACHE_EVIDENCE_CONFLICT",
+      "request_index": 6
+    }
+  ],
+  "duration_seconds": 0.0172,
+  "expected_diagnostics": [
+    {
+      "code": "CACHE_EVIDENCE_CONFLICT",
+      "request_index": 6
+    }
+  ],
+  "expected_first_error": 6,
+  "expected_ok": true,
+  "expected_verdict": "INCONCLUSIVE",
+  "first_error": 6,
+  "first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "oracle_first_error": 6,
+  "oracle_mismatches": [],
+  "oracle_parity": true,
+  "oracle_verdict": "INCONCLUSIVE",
+  "origin_counter_delta_total": 8,
+  "report_hash": "e24ca4a487c981550d0edaaedc382bdbb014cb1d7efd4ff17e8c0d75048e402b",
+  "request_count": 8,
+  "reset_count": 4,
+  "scenario_id": "E19",
+  "step_count": 25,
+  "suite": "extended",
+  "verdict": "INCONCLUSIVE",
+  "warm_hm_requests": [
+    5,
+    6
+  ],
+  "warm_mh_requests": [
+    7,
+    8
+  ]
+}

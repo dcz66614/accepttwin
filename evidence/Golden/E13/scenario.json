@@ -1,0 +1,80 @@
+{
+  "diagnostics": [
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 8
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 8
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 8
+    }
+  ],
+  "duration_seconds": 0.0138,
+  "expected_diagnostics": [
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 6
+    },
+    {
+      "code": "REPRESENTATION_BLEED",
+      "request_index": 8
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "request_index": 8
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "request_index": 8
+    }
+  ],
+  "expected_first_error": 6,
+  "expected_ok": true,
+  "expected_verdict": "REPRESENTATION_BLEED",
+  "first_error": 6,
+  "first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "oracle_first_error": 6,
+  "oracle_mismatches": [],
+  "oracle_parity": true,
+  "oracle_verdict": "REPRESENTATION_BLEED",
+  "origin_counter_delta_total": 6,
+  "report_hash": "6439c929a09fd47aa023b3d4ce602b8fa4b5e63cc5373d32442cdc66a41b92d4",
+  "request_count": 8,
+  "reset_count": 4,
+  "scenario_id": "E13",
+  "step_count": 25,
+  "suite": "extended",
+  "verdict": "REPRESENTATION_BLEED",
+  "warm_hm_requests": [
+    5,
+    6
+  ],
+  "warm_mh_requests": [
+    7,
+    8
+  ]
+}

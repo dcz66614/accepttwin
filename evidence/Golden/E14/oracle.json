@@ -1,0 +1,86 @@
+{
+  "verdict": "REPRESENTATION_BLEED",
+  "diagnostics": [
+    {
+      "code": "REPRESENTATION_BLEED",
+      "severity": "CRITICAL",
+      "message": "warm-cache request 006 for markdown was served the other representation from a verified HIT of the entry stored by request 005",
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "request_index": 6
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "severity": "CRITICAL",
+      "message": "response for request 006 violates the markdown contract",
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "request_index": 6
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "severity": "CRITICAL",
+      "message": "response body for request 006 lacks the exact Sentinel of the requested markdown representation",
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "request_index": 6
+    },
+    {
+      "code": "REPRESENTATION_BLEED",
+      "severity": "CRITICAL",
+      "message": "warm-cache request 008 for html was served the other representation from a verified HIT of the entry stored by request 007",
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "request_index": 8
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "severity": "CRITICAL",
+      "message": "response for request 008 violates the html contract",
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "request_index": 8
+    },
+    {
+      "code": "SENTINEL_MISMATCH",
+      "severity": "CRITICAL",
+      "message": "response body for request 008 lacks the exact Sentinel of the requested html representation",
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "request_index": 8
+    }
+  ],
+  "first_error": 6,
+  "first_error_experiment_id": "HTML_TO_MARKDOWN",
+  "reasons": [
+    "a warm-cache second request was served the other representation from a verified HIT"
+  ],
+  "verified_cache_states": [
+    {
+      "request_index": 1,
+      "state": null
+    },
+    {
+      "request_index": 2,
+      "state": null
+    },
+    {
+      "request_index": 3,
+      "state": "MISS"
+    },
+    {
+      "request_index": 4,
+      "state": "MISS"
+    },
+    {
+      "request_index": 5,
+      "state": "MISS"
+    },
+    {
+      "request_index": 6,
+      "state": "HIT"
+    },
+    {
+      "request_index": 7,
+      "state": "MISS"
+    },
+    {
+      "request_index": 8,
+      "state": "HIT"
+    }
+  ]
+}

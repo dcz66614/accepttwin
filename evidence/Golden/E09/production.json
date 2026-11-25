@@ -1,0 +1,146 @@
+{
+  "confirmed_cache_states": [
+    {
+      "request_index": 1,
+      "state": null
+    },
+    {
+      "request_index": 2,
+      "state": null
+    },
+    {
+      "request_index": 3,
+      "state": "MISS"
+    },
+    {
+      "request_index": 4,
+      "state": "MISS"
+    },
+    {
+      "request_index": 5,
+      "state": "MISS"
+    },
+    {
+      "request_index": 6,
+      "state": "MISS"
+    },
+    {
+      "request_index": 7,
+      "state": "MISS"
+    },
+    {
+      "request_index": 8,
+      "state": "MISS"
+    }
+  ],
+  "critical_count": 4,
+  "diagnostics": [
+    {
+      "code": "ORIGIN_NEGOTIATION_ERROR",
+      "evidence": {
+        "body_sha256": "095245e4c5b9bfa10357790210a526134686fb63b323111e3c575b5f8a91a649",
+        "expected_content_type": "text/markdown; charset=utf-8",
+        "expected_sentinel_sha256": "71a009a0e36345c8b8f6876ac2c351b5da93253a4bad36e8f7db73fb229db35a",
+        "expected_status": 200,
+        "observed_content_type": "text/html; charset=utf-8",
+        "observed_status": 200,
+        "origin_direct": true,
+        "requested_representation": "markdown",
+        "sentinel_match": true,
+        "stage": "ORIGIN_MARKDOWN"
+      },
+      "experiment_id": "ORIGIN_MARKDOWN",
+      "message": "direct-origin baseline for markdown violates the contract: status 200 (expected 200), content-type 'text/html; charset=utf-8' (expected 'text/markdown; charset=utf-8'), sentinel_match=True",
+      "request_index": 2,
+      "severity": "CRITICAL"
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "evidence": {
+        "cache_status": "MISS",
+        "expected": {
+          "content_type": "text/markdown; charset=utf-8",
+          "status": 200
+        },
+        "expected_content_type": "text/markdown; charset=utf-8",
+        "expected_status": 200,
+        "observed": {
+          "content_type": "text/html; charset=utf-8",
+          "status": 200
+        },
+        "observed_content_type": "text/html; charset=utf-8",
+        "observed_status": 200,
+        "requested_representation": "markdown",
+        "response_content_type": "text/html; charset=utf-8",
+        "response_status": 200,
+        "sentinel_match": true,
+        "stage": "MARKDOWN_COLD"
+      },
+      "experiment_id": "MARKDOWN_COLD",
+      "message": "response for request 004 violates the markdown contract: content-type 'text/html; charset=utf-8' (expected 'text/markdown; charset=utf-8')",
+      "request_index": 4,
+      "severity": "CRITICAL"
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "evidence": {
+        "cache_status": "MISS",
+        "expected": {
+          "content_type": "text/markdown; charset=utf-8",
+          "status": 200
+        },
+        "expected_content_type": "text/markdown; charset=utf-8",
+        "expected_status": 200,
+        "observed": {
+          "content_type": "text/html; charset=utf-8",
+          "status": 200
+        },
+        "observed_content_type": "text/html; charset=utf-8",
+        "observed_status": 200,
+        "requested_representation": "markdown",
+        "response_content_type": "text/html; charset=utf-8",
+        "response_status": 200,
+        "sentinel_match": true,
+        "stage": "HTML_TO_MARKDOWN"
+      },
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "message": "response for request 006 violates the markdown contract: content-type 'text/html; charset=utf-8' (expected 'text/markdown; charset=utf-8')",
+      "request_index": 6,
+      "severity": "CRITICAL"
+    },
+    {
+      "code": "CONTRACT_MISMATCH",
+      "evidence": {
+        "cache_status": "MISS",
+        "expected": {
+          "content_type": "text/markdown; charset=utf-8",
+          "status": 200
+        },
+        "expected_content_type": "text/markdown; charset=utf-8",
+        "expected_status": 200,
+        "observed": {
+          "content_type": "text/html; charset=utf-8",
+          "status": 200
+        },
+        "observed_content_type": "text/html; charset=utf-8",
+        "observed_status": 200,
+        "requested_representation": "markdown",
+        "response_content_type": "text/html; charset=utf-8",
+        "response_status": 200,
+        "sentinel_match": true,
+        "stage": "MARKDOWN_TO_HTML"
+      },
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "message": "response for request 007 violates the markdown contract: content-type 'text/html; charset=utf-8' (expected 'text/markdown; charset=utf-8')",
+      "request_index": 7,
+      "severity": "CRITICAL"
+    }
+  ],
+  "first_error": 2,
+  "first_error_experiment_id": "ORIGIN_MARKDOWN",
+  "reasons": [
+    "a direct-origin baseline violates the contract"
+  ],
+  "verdict": "ORIGIN_NEGOTIATION_ERROR",
+  "warning_count": 0
+}

@@ -1,0 +1,238 @@
+{
+  "confirmed_cache_states": [
+    {
+      "request_index": 1,
+      "state": null
+    },
+    {
+      "request_index": 2,
+      "state": null
+    },
+    {
+      "request_index": 3,
+      "state": null
+    },
+    {
+      "request_index": 4,
+      "state": null
+    },
+    {
+      "request_index": 5,
+      "state": null
+    },
+    {
+      "request_index": 6,
+      "state": null
+    },
+    {
+      "request_index": 7,
+      "state": null
+    },
+    {
+      "request_index": 8,
+      "state": null
+    }
+  ],
+  "critical_count": 0,
+  "diagnostics": [
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": null,
+        "cache_key_sha256": null,
+        "cache_reset_confirmed": true,
+        "cache_status": "CACHE_STATE_UNKNOWN",
+        "evidence_conflict": false,
+        "origin_counter_delta": 0,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": null
+      },
+      "experiment_id": "HTML_COLD",
+      "message": "cache state for request 003 could not be confirmed with dual evidence",
+      "request_index": 3,
+      "severity": "WARNING"
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "evidence": {
+        "body_size": 22,
+        "limit_code": "redirect",
+        "redirect_target": "http://example.com/doc",
+        "request_url": "http://127.0.0.1:35421/doc",
+        "response_status": 301,
+        "supported_limit": 1048576
+      },
+      "experiment_id": "HTML_COLD",
+      "message": "out of supported range (redirect): status 301 (redirects are not followed in this release)",
+      "request_index": 3,
+      "severity": "WARNING"
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": null,
+        "cache_key_sha256": null,
+        "cache_reset_confirmed": true,
+        "cache_status": "CACHE_STATE_UNKNOWN",
+        "evidence_conflict": false,
+        "origin_counter_delta": 0,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": null
+      },
+      "experiment_id": "MARKDOWN_COLD",
+      "message": "cache state for request 004 could not be confirmed with dual evidence",
+      "request_index": 4,
+      "severity": "WARNING"
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "evidence": {
+        "body_size": 22,
+        "limit_code": "redirect",
+        "redirect_target": "http://example.com/doc",
+        "request_url": "http://127.0.0.1:35421/doc",
+        "response_status": 301,
+        "supported_limit": 1048576
+      },
+      "experiment_id": "MARKDOWN_COLD",
+      "message": "out of supported range (redirect): status 301 (redirects are not followed in this release)",
+      "request_index": 4,
+      "severity": "WARNING"
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": null,
+        "cache_key_sha256": null,
+        "cache_reset_confirmed": true,
+        "cache_status": "CACHE_STATE_UNKNOWN",
+        "evidence_conflict": false,
+        "origin_counter_delta": 0,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": null
+      },
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "message": "cache state for request 005 could not be confirmed with dual evidence",
+      "request_index": 5,
+      "severity": "WARNING"
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "evidence": {
+        "body_size": 22,
+        "limit_code": "redirect",
+        "redirect_target": "http://example.com/doc",
+        "request_url": "http://127.0.0.1:35421/doc",
+        "response_status": 301,
+        "supported_limit": 1048576
+      },
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "message": "out of supported range (redirect): status 301 (redirects are not followed in this release)",
+      "request_index": 5,
+      "severity": "WARNING"
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": null,
+        "cache_key_sha256": null,
+        "cache_reset_confirmed": true,
+        "cache_status": "CACHE_STATE_UNKNOWN",
+        "evidence_conflict": false,
+        "origin_counter_delta": 0,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": null
+      },
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "message": "cache state for request 006 could not be confirmed with dual evidence",
+      "request_index": 6,
+      "severity": "WARNING"
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "evidence": {
+        "body_size": 22,
+        "limit_code": "redirect",
+        "redirect_target": "http://example.com/doc",
+        "request_url": "http://127.0.0.1:35421/doc",
+        "response_status": 301,
+        "supported_limit": 1048576
+      },
+      "experiment_id": "HTML_TO_MARKDOWN",
+      "message": "out of supported range (redirect): status 301 (redirects are not followed in this release)",
+      "request_index": 6,
+      "severity": "WARNING"
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": null,
+        "cache_key_sha256": null,
+        "cache_reset_confirmed": true,
+        "cache_status": "CACHE_STATE_UNKNOWN",
+        "evidence_conflict": false,
+        "origin_counter_delta": 0,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": null
+      },
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "message": "cache state for request 007 could not be confirmed with dual evidence",
+      "request_index": 7,
+      "severity": "WARNING"
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "evidence": {
+        "body_size": 22,
+        "limit_code": "redirect",
+        "redirect_target": "http://example.com/doc",
+        "request_url": "http://127.0.0.1:35421/doc",
+        "response_status": 301,
+        "supported_limit": 1048576
+      },
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "message": "out of supported range (redirect): status 301 (redirects are not followed in this release)",
+      "request_index": 7,
+      "severity": "WARNING"
+    },
+    {
+      "code": "CACHE_STATE_UNKNOWN",
+      "evidence": {
+        "cache_entry_id": null,
+        "cache_key_sha256": null,
+        "cache_reset_confirmed": true,
+        "cache_status": "CACHE_STATE_UNKNOWN",
+        "evidence_conflict": false,
+        "origin_counter_delta": 0,
+        "origin_journal_available": true,
+        "proxy_cache_header_present": null
+      },
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "message": "cache state for request 008 could not be confirmed with dual evidence",
+      "request_index": 8,
+      "severity": "WARNING"
+    },
+    {
+      "code": "INCONCLUSIVE_LIMIT",
+      "evidence": {
+        "body_size": 22,
+        "limit_code": "redirect",
+        "redirect_target": "http://example.com/doc",
+        "request_url": "http://127.0.0.1:35421/doc",
+        "response_status": 301,
+        "supported_limit": 1048576
+      },
+      "experiment_id": "MARKDOWN_TO_HTML",
+      "message": "out of supported range (redirect): status 301 (redirects are not followed in this release)",
+      "request_index": 8,
+      "severity": "WARNING"
+    }
+  ],
+  "first_error": 3,
+  "first_error_experiment_id": "HTML_COLD",
+  "reasons": [
+    "run left the supported range (redirect, transport failure, oversize body, revalidation required, or unknown representation)"
+  ],
+  "verdict": "INCONCLUSIVE",
+  "warning_count": 12
+}
