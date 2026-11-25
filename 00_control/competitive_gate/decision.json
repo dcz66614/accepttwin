@@ -1,0 +1,87 @@
+{
+  "decision": "CONTINUE",
+  "equivalent_tools": [],
+  "evidence": {
+    "base_commit": "4d3021f",
+    "budget_hours": 4,
+    "closest_competitor": "Hurl 7.0.0: runs both warm orders, asserts headers/sentinels, pinpoints failing request; but has no cache control, no cold-baseline concept, no origin-counter delta arithmetic (FIX-R1 live: dual healthy fails on hardcoded count==9 vs actual 7 even though behaviour was correct), short-circuits on failure (dual-evidence request never runs), and no verdict taxonomy.",
+    "deliverables": [
+      "00_control/competitive_gate/T001_COMPETITIVE_GATE.md",
+      "00_control/competitive_gate/comparison_matrix.csv",
+      "00_control/competitive_gate/tool_versions.json",
+      "00_control/competitive_gate/commands.log",
+      "00_control/competitive_gate/decision.json",
+      "00_control/competitive_gate/evidence/fix-r1/ (FIX-R1 run logs: hurl x4, cache-tests x6, readiness-audit x2 JSON, acceptmarkdown x10, cloudflare x4)"
+    ],
+    "elapsed_minutes": 18,
+    "eq_verdicts": {
+      "EQ01": {
+        "any_full": true,
+        "full_tools": [
+          "Hurl 7.0.0"
+        ]
+      },
+      "EQ02": {
+        "any_full": false,
+        "full_tools": []
+      },
+      "EQ03": {
+        "any_full": false,
+        "full_tools": []
+      },
+      "EQ04": {
+        "any_full": false,
+        "full_tools": []
+      },
+      "EQ05": {
+        "any_full": false,
+        "full_tools": []
+      },
+      "EQ06": {
+        "any_full": false,
+        "full_tools": []
+      },
+      "EQ07": {
+        "any_full": false,
+        "full_tools": []
+      },
+      "EQ08": {
+        "any_full": false,
+        "full_tools": []
+      }
+    },
+    "eq_verdicts_fix_r1_note": "Matrix values UNCHANGED by FIX-R1: every live run confirmed the T001 verdicts. Per-tool detail with config counts and runtimes is in T001_COMPETITIVE_GATE.md §8 and comparison_matrix.csv.",
+    "fix_r1": {
+      "base_commit": "6303d82",
+      "decision_reaffirmed": "CONTINUE",
+      "executed_at": "2026-11-24T18:11:26Z to ~2026-11-24T20:30Z",
+      "live_runs_completed": [
+        "Hurl 7.0.0 re-downloaded (SHA-256 006a9032401b61004d9e104b06aa0973413f7b36dc5437063b0bf028188c0cf9, 3,412,516 B): mh healthy exit 0; hm healthy exit 0; hm bleed exit 4 (request 2 HIT + HTML sentinel, origin +1 only); dual healthy exit 4 (hardcoded count==9 vs actual 7 — live proof of no capture-value arithmetic)",
+        "cache-tests: npm install (278 packages, 31.8 s); npm run validate exit 0 (0.5 s, silent); npm test 20/20 pass (0.45 s); CLI vary-match vs T001 proxy as cache-under-test FAILS (setup PUT 501 + request 404, 'Response 1 status is 404, not 200', 0.36 s); CLI vary-match vs own server direct FAILS 'Response 2 does not come from cache' (0.47 s, control run proving the runner works)",
+        "readiness-audit 2.9.0: live run vs acceptmarkdown.com completed — 32 checks, D8 pass (single-shot markdown negotiation); live run vs T001 proxy via --base completed — exit 1, 32 checks, D8 warn 'Accept: text/markdown on / returns no body'",
+        "acceptmarkdown.com: GET / with Accept text/html 200 in 1.13 s and text/markdown 200 in 0.56 s (both Vary: Accept); JS chunk confirms /api/readiness + /api/negotiate endpoints; 4 POST attempts: 3 confirmed timeouts (30/30/60 s, HTTP 000, zero bytes) + a 4th attempt (30 s) lost to a dropped exec session with no response file on disk (not counted as a confirmed timeout) — API unresponsive from this VM",
+        "Cloudflare: markdown-for-agents docs fetched (200, 1.61 s, 199,239 B); Playground URL probed -> HTTP 403 Forbidden (login + zone required, cannot run); docs confirm Playground is a single-path one-shot comparison; isitagentready.com fetched (200, 0.84 s) — public-site scanner, no scan run (out of T001 scope)"
+      ],
+      "n1_resolved": "M->H healthy PASS re-run live: hurl exit 0, 2 requests in 48 ms, origin count 0 -> 2, proxy holds 2 entries (evidence/fix-r1/hurl_mh_healthy_fixr1.log). The archived exit=4 log was the missing-reset artifact; the new log governs.",
+      "not_verified_remaining": [
+        "acceptmarkdown.com /api/readiness + /api/negotiate interactive checker: 3 confirmed POST timeouts this round (30/30/60 s) on top of 3 in the T001 round (6 confirmed total); a 4th FIX-R1 attempt (30 s) was lost to a dropped exec session with no response file on disk and is not counted as a confirmed timeout. Endpoint existence confirmed in the live JS chunk, behaviour still unverified live. Capability ceiling is still taken from the homepage's own 4-check list (single-shot negotiation only) — no evidence of any EQ02-EQ08 capability exists on the site.",
+        "Cloudflare Playground / isitagentready.com scan: not run live — Playground returns HTTP 403 without a Cloudflare login + zone; isitagentready.com scans public sites only and cannot target the unified synthetic origin. Playground semantics are taken from the official docs text (single-path Accept: text/markdown vs HTML comparison), which cannot satisfy EQ02-EQ08 by construction."
+      ],
+      "task": "P032 FIX-R1 P1-02 (complete the T001 evidence left unverified at R1)"
+    },
+    "hardest_gaps_vs_all_tools": [
+      "Dual header+origin evidence still produced on the failure path (Hurl short-circuits; cache-tests only for its own server)",
+      "Automatic 5-way verdict attribution distinguishing origin error vs cache bleed vs insufficient evidence (no tool has any verdict taxonomy)"
+    ],
+    "not_verified": [
+      "acceptmarkdown.com /api/readiness and /api/negotiate: 3 POST attempts timed out in T001 round (HTTP 000, 30.0s each) and 3 confirmed more in FIX-R1 (30/30/60 s) — 6 confirmed timeouts total across two rounds; a 4th FIX-R1 attempt (30 s) was lost to a dropped exec session with no response file on disk and is not counted. Interactive checker still unverified live; capability ceiling taken from the homepage's own 4-check list",
+      "Cloudflare Playground / isitagentready.com: not run live (Playground HTTP 403 without login+zone; isitagentready.com scans public sites only). Playground semantics taken from official docs text (single-path comparison)."
+    ],
+    "second_closest": "cache-tests HEAD 3942fbfe: DSL can express two-request sequences with cached/not_cached dual verification, but needs new test code (not config), has no cache reset (FIX-R1 live grep: zero reset/purge matches), no cold baselines, no verdicts — and FIX-R1 live run proves it cannot be pointed at an arbitrary origin+controlled-proxy pair (setup PUT 501, test paths 404).",
+    "spec_version": "1.0.0",
+    "started_at": "2026-11-24T12:57:10Z"
+  },
+  "stop_condition": "A single existing dedicated tool completes EQ01-EQ08 automatically, without modifying its business code, with at most 2 simple config files, from a clean environment within 10 minutes, with automatic verifiable error attribution (IMPLEMENTATION_PLAN §1.3).",
+  "stop_triggered": false,
+  "task_id": "P032-T001"
+}

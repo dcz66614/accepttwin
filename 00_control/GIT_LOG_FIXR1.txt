@@ -1,0 +1,1013 @@
+# P032 AcceptTwin — GIT_LOG_FIXR1.txt (FIX-R1 refreeze, generated 2026-11-24 ~21:35 GMT)
+
+## Freeze identity
+git rev-parse HEAD: fa125c2d585422f115427af548ef29020a5074fc
+git rev-parse P032-v1.0.1: 221f902798a245b7a2672f3a53a9a63ab176e014
+git rev-parse P032-v1.0.0 (R1 freeze): d3bee545d8d42b4f4da3fc48bb0a2f514cdbfa7f
+
+Note: HEAD at writing is the release-artifacts commit (fa125c2, after the freeze tag); the freeze commit itself is the tag P032-v1.0.1 (221f902). This file is committed as the next commit after HEAD-at-writing (same one-commit lag as GIT_LOG_T014.txt, which recorded HEAD 7b42bd7).
+
+## Commits d3bee54..HEAD
+fa125c2 P032 FIX-R1 release artifacts v1.0.1: rebuilt source.zip (165 files, prefix accepttwin-1.0.1/), RELEASE_MANIFEST.json (spec 1.0.1, gate values, fix_r1 + gate_evidence sections, T012 P2-1 FIXED), SHA256SUMS.txt, RELEASE_NOTES.md, HOW_TO_REPRODUCE.md, 08_release README; regenerated review packs from tag P032-v1.0.1 (156 sections) + SOURCE_FILE_MANIFEST (970 files) + REVIEW_INDEX.md; FIXR1 gate/test/offline logs; PROJECT_STATE.md FIX-R1 refreeze record
+221f902 P032 FIX-R1: regenerate recorded evidence from v1.0.1 gate re-run (verify --suite all PASS, benchmark PASS, offline PASS, verify_s0 19/19); update docs/USAGE.md measured values + port-rerun confirmation (1026 passed, 0 failed); ADR-009 corrects live-hash note (harness hash has no project field, stays 67e69e68...); PROJECT_STATE spec version v1.0.1; gitignore git bundles
+0290be2 P032 FIX-R1 refreeze prep: bump spec v1.0.0 -> v1.0.1 (spec frontmatter, §21 SPEC_VERSION, report generator + schema + tests, README); regenerate 48 report samples + 49 HTML pages with v1.0.1 (REPORTS_STATUS PASS 48/48/48; per-sample diff is version + report_hash only); fix §15.2/15.3/15.4 leading full-width colons; regenerate PROJECT_BOOK.docx (104/104 headings, 0 placeholders); ADR-009 records the bump execution
+1be77fb P032 FIX-R1 P1-02 review fix: readiness-acceptmarkdown 31->32 checks (verified: results array length 32, D8 pass); acceptmarkdown API 4th POST is session-lost with no response file, not a confirmed timeout (6 confirmed total: T001 3 + FIX-R1 3)
+d5fa420 P032 FIX-R1 P1-02: complete T001 competitive-gate evidence (live runs for cache-tests, readiness-audit, Cloudflare Playground probe; acceptmarkdown API retried x4; Hurl M->H re-run resolves N-1; decision stays CONTINUE)
+2cefa36 P032 FIX-R1 P1-03: complete 45 truncated spec placeholders (58 occurrences), P2-02 + P2-04
+55ad6bc P032 FIX-R1 P1-01: implement all §4.1 CLI commands (run/demo/verify --report/report preview|export|delete/clean/contract delete); P2-01 widen verify_s0 parity to 8 cache states
+6303d82 P032-T014 SUCCESS confirmed (independent T014-C re-review PASS, 0 open items, 967 tests)
+470ee24 P032-T014 delivered (coordinator report verified: freeze d3bee54, 967 tests, Drive archive OK); independent T014-C re-review in progress
+2effda2 P032-T014 SUCCESS: mark IMPLEMENTATION COMPLETE / READY_FOR_FINAL_REVIEW / GPT PENDING / ACCEPTED PENDING; Drive archive complete (33 files)
+fb75666 P032-T014 logs: T014 full pytest log (967 passed), T014 offline log (PASS), git freeze record
+7b42bd7 P032-T014 release files: 08_release/ text artifacts (manifest, sums, notes, reproduce guide); source.zip stays on Drive, not git
+
+## Files changed d3bee54..HEAD (git diff --name-only)
+.gitignore
+00_control/ADR-007.md
+00_control/ADR-008.md
+00_control/ADR-009.md
+00_control/GIT_LOG_T014.txt
+00_control/P1_03_SOURCES.md
+00_control/PROJECT_STATE.md
+00_control/VERIFY_LOG.md
+00_control/competitive_gate/T001_COMPETITIVE_GATE.md
+00_control/competitive_gate/commands.log
+00_control/competitive_gate/decision.json
+00_control/competitive_gate/evidence/fix-r1/am_api1.headers
+00_control/competitive_gate/evidence/fix-r1/am_api2.headers
+00_control/competitive_gate/evidence/fix-r1/am_api3.headers
+00_control/competitive_gate/evidence/fix-r1/am_html.body
+00_control/competitive_gate/evidence/fix-r1/am_html.headers
+00_control/competitive_gate/evidence/fix-r1/am_index.chunk.js
+00_control/competitive_gate/evidence/fix-r1/am_md.body
+00_control/competitive_gate/evidence/fix-r1/am_md.headers
+00_control/competitive_gate/evidence/fix-r1/cachetests-cli-vary-match-direct8000.log
+00_control/competitive_gate/evidence/fix-r1/cachetests-cli-vary-match.log
+00_control/competitive_gate/evidence/fix-r1/cachetests-npm-install.log
+00_control/competitive_gate/evidence/fix-r1/cachetests-npm-test.log
+00_control/competitive_gate/evidence/fix-r1/cachetests-server.log
+00_control/competitive_gate/evidence/fix-r1/cachetests-validate.log
+00_control/competitive_gate/evidence/fix-r1/cf-markdown-docs.html
+00_control/competitive_gate/evidence/fix-r1/cf-playground.body
+00_control/competitive_gate/evidence/fix-r1/cf-playground.headers
+00_control/competitive_gate/evidence/fix-r1/harness-fixr1.log
+00_control/competitive_gate/evidence/fix-r1/hurl-download.sha256
+00_control/competitive_gate/evidence/fix-r1/hurl-version.txt
+00_control/competitive_gate/evidence/fix-r1/hurl_dual_healthy_fixr1.log
+00_control/competitive_gate/evidence/fix-r1/hurl_hm_bleed_fixr1.log
+00_control/competitive_gate/evidence/fix-r1/hurl_hm_healthy_fixr1.log
+00_control/competitive_gate/evidence/fix-r1/hurl_mh_healthy_fixr1.log
+00_control/competitive_gate/evidence/fix-r1/isitagentready.html
+00_control/competitive_gate/evidence/fix-r1/readiness-acceptmarkdown.json
+00_control/competitive_gate/evidence/fix-r1/readiness-acceptmarkdown.stderr.log
+00_control/competitive_gate/evidence/fix-r1/readiness-harness.json
+00_control/competitive_gate/evidence/fix-r1/readiness-harness.stderr.log
+00_control/competitive_gate/tool_versions.json
+00_control/split_specs.py
+01_project_book/PROJECT_BOOK.docx
+01_project_book/PROJECT_BOOK.md
+02_implementation_plan/IMPLEMENTATION_PLAN.docx
+02_implementation_plan/IMPLEMENTATION_PLAN.md
+08_release/HOW_TO_REPRODUCE.md
+08_release/LICENSE
+08_release/README.md
+08_release/RELEASE_MANIFEST.json
+08_release/RELEASE_NOTES.md
+08_release/SHA256SUMS.txt
+08_release/THIRD_PARTY_NOTICES.md
+README.md
+docs/INSTALL.md
+docs/LIMITATIONS.md
+docs/USAGE.md
+evidence/Golden/ALL48_SUMMARY.json
+evidence/Golden/C01/contract.json
+evidence/Golden/C01/oracle-input.json
+evidence/Golden/C01/raw-observations.json
+evidence/Golden/C01/scenario.json
+evidence/Golden/C02/contract.json
+evidence/Golden/C02/oracle-input.json
+evidence/Golden/C02/raw-observations.json
+evidence/Golden/C02/scenario.json
+evidence/Golden/C03/contract.json
+evidence/Golden/C03/oracle-input.json
+evidence/Golden/C03/raw-observations.json
+evidence/Golden/C03/scenario.json
+evidence/Golden/C04/contract.json
+evidence/Golden/C04/oracle-input.json
+evidence/Golden/C04/raw-observations.json
+evidence/Golden/C04/scenario.json
+evidence/Golden/C05/contract.json
+evidence/Golden/C05/oracle-input.json
+evidence/Golden/C05/raw-observations.json
+evidence/Golden/C05/scenario.json
+evidence/Golden/C06/contract.json
+evidence/Golden/C06/oracle-input.json
+evidence/Golden/C06/raw-observations.json
+evidence/Golden/C06/scenario.json
+evidence/Golden/C07/contract.json
+evidence/Golden/C07/oracle-input.json
+evidence/Golden/C07/raw-observations.json
+evidence/Golden/C07/scenario.json
+evidence/Golden/C08/contract.json
+evidence/Golden/C08/oracle-input.json
+evidence/Golden/C08/raw-observations.json
+evidence/Golden/C08/scenario.json
+evidence/Golden/C09/contract.json
+evidence/Golden/C09/oracle-input.json
+evidence/Golden/C09/raw-observations.json
+evidence/Golden/C09/scenario.json
+evidence/Golden/C10/contract.json
+evidence/Golden/C10/oracle-input.json
+evidence/Golden/C10/raw-observations.json
+evidence/Golden/C10/scenario.json
+evidence/Golden/C11/contract.json
+evidence/Golden/C11/oracle-input.json
+evidence/Golden/C11/production.json
+evidence/Golden/C11/raw-observations.json
+evidence/Golden/C11/scenario.json
+evidence/Golden/C12/contract.json
+evidence/Golden/C12/oracle-input.json
+evidence/Golden/C12/production.json
+evidence/Golden/C12/raw-observations.json
+evidence/Golden/C12/scenario.json
+evidence/Golden/C13/contract.json
+evidence/Golden/C13/oracle-input.json
+evidence/Golden/C13/production.json
+evidence/Golden/C13/raw-observations.json
+evidence/Golden/C13/scenario.json
+evidence/Golden/C14/contract.json
+evidence/Golden/C14/oracle-input.json
+evidence/Golden/C14/production.json
+evidence/Golden/C14/raw-observations.json
+evidence/Golden/C14/scenario.json
+evidence/Golden/C15/contract.json
+evidence/Golden/C15/oracle-input.json
+evidence/Golden/C15/production.json
+evidence/Golden/C15/raw-observations.json
+evidence/Golden/C15/scenario.json
+evidence/Golden/C16/contract.json
+evidence/Golden/C16/oracle-input.json
+evidence/Golden/C16/production.json
+evidence/Golden/C16/raw-observations.json
+evidence/Golden/C16/scenario.json
+evidence/Golden/C17/contract.json
+evidence/Golden/C17/oracle-input.json
+evidence/Golden/C17/raw-observations.json
+evidence/Golden/C17/scenario.json
+evidence/Golden/C18/contract.json
+evidence/Golden/C18/oracle-input.json
+evidence/Golden/C18/raw-observations.json
+evidence/Golden/C18/scenario.json
+evidence/Golden/C19/contract.json
+evidence/Golden/C19/oracle-input.json
+evidence/Golden/C19/production.json
+evidence/Golden/C19/raw-observations.json
+evidence/Golden/C20/contract.json
+evidence/Golden/C20/oracle-input.json
+evidence/Golden/C20/raw-observations.json
+evidence/Golden/C20/scenario.json
+evidence/Golden/C21/contract.json
+evidence/Golden/C21/oracle-input.json
+evidence/Golden/C21/production.json
+evidence/Golden/C21/raw-observations.json
+evidence/Golden/C21/scenario.json
+evidence/Golden/C22/contract.json
+evidence/Golden/C22/oracle-input.json
+evidence/Golden/C22/production.json
+evidence/Golden/C22/raw-observations.json
+evidence/Golden/C22/scenario.json
+evidence/Golden/C23/contract.json
+evidence/Golden/C23/oracle-input.json
+evidence/Golden/C23/raw-observations.json
+evidence/Golden/C23/scenario.json
+evidence/Golden/C24/contract.json
+evidence/Golden/C24/oracle-input.json
+evidence/Golden/C24/raw-observations.json
+evidence/Golden/C24/scenario.json
+evidence/Golden/E01/contract.json
+evidence/Golden/E01/oracle-input.json
+evidence/Golden/E01/raw-observations.json
+evidence/Golden/E01/scenario.json
+evidence/Golden/E02/contract.json
+evidence/Golden/E02/oracle-input.json
+evidence/Golden/E02/raw-observations.json
+evidence/Golden/E02/scenario.json
+evidence/Golden/E03/contract.json
+evidence/Golden/E03/oracle-input.json
+evidence/Golden/E03/raw-observations.json
+evidence/Golden/E03/scenario.json
+evidence/Golden/E04/contract.json
+evidence/Golden/E04/oracle-input.json
+evidence/Golden/E04/raw-observations.json
+evidence/Golden/E04/scenario.json
+evidence/Golden/E05/contract.json
+evidence/Golden/E05/oracle-input.json
+evidence/Golden/E05/raw-observations.json
+evidence/Golden/E05/scenario.json
+evidence/Golden/E06/contract.json
+evidence/Golden/E06/oracle-input.json
+evidence/Golden/E06/raw-observations.json
+evidence/Golden/E06/scenario.json
+evidence/Golden/E07/contract.json
+evidence/Golden/E07/oracle-input.json
+evidence/Golden/E07/production.json
+evidence/Golden/E07/raw-observations.json
+evidence/Golden/E07/scenario.json
+evidence/Golden/E08/contract.json
+evidence/Golden/E08/oracle-input.json
+evidence/Golden/E08/production.json
+evidence/Golden/E08/raw-observations.json
+evidence/Golden/E08/scenario.json
+evidence/Golden/E09/contract.json
+evidence/Golden/E09/oracle-input.json
+evidence/Golden/E09/raw-observations.json
+evidence/Golden/E09/scenario.json
+evidence/Golden/E10/contract.json
+evidence/Golden/E10/oracle-input.json
+evidence/Golden/E10/raw-observations.json
+evidence/Golden/E10/scenario.json
+evidence/Golden/E11/contract.json
+evidence/Golden/E11/oracle-input.json
+evidence/Golden/E11/raw-observations.json
+evidence/Golden/E11/scenario.json
+evidence/Golden/E12/contract.json
+evidence/Golden/E12/oracle-input.json
+evidence/Golden/E12/production.json
+evidence/Golden/E12/raw-observations.json
+evidence/Golden/E12/scenario.json
+evidence/Golden/E13/contract.json
+evidence/Golden/E13/oracle-input.json
+evidence/Golden/E13/production.json
+evidence/Golden/E13/raw-observations.json
+evidence/Golden/E13/scenario.json
+evidence/Golden/E14/contract.json
+evidence/Golden/E14/oracle-input.json
+evidence/Golden/E14/production.json
+evidence/Golden/E14/raw-observations.json
+evidence/Golden/E14/scenario.json
+evidence/Golden/E15/contract.json
+evidence/Golden/E15/oracle-input.json
+evidence/Golden/E15/raw-observations.json
+evidence/Golden/E15/scenario.json
+evidence/Golden/E16/contract.json
+evidence/Golden/E16/oracle-input.json
+evidence/Golden/E16/raw-observations.json
+evidence/Golden/E17/contract.json
+evidence/Golden/E17/oracle-input.json
+evidence/Golden/E17/raw-observations.json
+evidence/Golden/E17/scenario.json
+evidence/Golden/E18/contract.json
+evidence/Golden/E18/oracle-input.json
+evidence/Golden/E18/production.json
+evidence/Golden/E18/raw-observations.json
+evidence/Golden/E18/scenario.json
+evidence/Golden/E19/contract.json
+evidence/Golden/E19/oracle-input.json
+evidence/Golden/E19/production.json
+evidence/Golden/E19/raw-observations.json
+evidence/Golden/E19/scenario.json
+evidence/Golden/E20/contract.json
+evidence/Golden/E20/oracle-input.json
+evidence/Golden/E20/production.json
+evidence/Golden/E20/raw-observations.json
+evidence/Golden/E20/scenario.json
+evidence/Golden/E21/contract.json
+evidence/Golden/E21/oracle-input.json
+evidence/Golden/E21/production.json
+evidence/Golden/E21/raw-observations.json
+evidence/Golden/E21/scenario.json
+evidence/Golden/E22/contract.json
+evidence/Golden/E22/oracle-input.json
+evidence/Golden/E22/production.json
+evidence/Golden/E22/raw-observations.json
+evidence/Golden/E22/scenario.json
+evidence/Golden/E23/contract.json
+evidence/Golden/E23/oracle-input.json
+evidence/Golden/E23/raw-observations.json
+evidence/Golden/E23/scenario.json
+evidence/Golden/E24/contract.json
+evidence/Golden/E24/oracle-input.json
+evidence/Golden/E24/raw-observations.json
+evidence/Golden/E24/scenario.json
+evidence/Performance/BENCHMARK_SUMMARY.json
+evidence/Performance/FIXR1_GATE_LOG.txt
+evidence/Performance/FIXR1_OFFLINE_LOG.txt
+evidence/Performance/FIXR1_TEST_LOG.txt
+evidence/Performance/T014_OFFLINE_LOG.txt
+evidence/Performance/T014_TEST_LOG.txt
+evidence/Reports/C01.json
+evidence/Reports/C02.json
+evidence/Reports/C03.json
+evidence/Reports/C04.json
+evidence/Reports/C05.json
+evidence/Reports/C06.json
+evidence/Reports/C07.json
+evidence/Reports/C08.json
+evidence/Reports/C09.json
+evidence/Reports/C10.json
+evidence/Reports/C11.json
+evidence/Reports/C12.json
+evidence/Reports/C13.json
+evidence/Reports/C14.json
+evidence/Reports/C15.json
+evidence/Reports/C16.json
+evidence/Reports/C17.json
+evidence/Reports/C18.json
+evidence/Reports/C19.json
+evidence/Reports/C20.json
+evidence/Reports/C21.json
+evidence/Reports/C22.json
+evidence/Reports/C23.json
+evidence/Reports/C24.json
+evidence/Reports/E01.json
+evidence/Reports/E02.json
+evidence/Reports/E03.json
+evidence/Reports/E04.json
+evidence/Reports/E05.json
+evidence/Reports/E06.json
+evidence/Reports/E07.json
+evidence/Reports/E08.json
+evidence/Reports/E09.json
+evidence/Reports/E10.json
+evidence/Reports/E11.json
+evidence/Reports/E12.json
+evidence/Reports/E13.json
+evidence/Reports/E14.json
+evidence/Reports/E15.json
+evidence/Reports/E16.json
+evidence/Reports/E17.json
+evidence/Reports/E18.json
+evidence/Reports/E19.json
+evidence/Reports/E20.json
+evidence/Reports/E21.json
+evidence/Reports/E22.json
+evidence/Reports/E23.json
+evidence/Reports/E24.json
+evidence/Reports/REPORTS_SUMMARY.json
+evidence/Reports/html/C01.html
+evidence/Reports/html/C02.html
+evidence/Reports/html/C03.html
+evidence/Reports/html/C04.html
+evidence/Reports/html/C05.html
+evidence/Reports/html/C06.html
+evidence/Reports/html/C07.html
+evidence/Reports/html/C08.html
+evidence/Reports/html/C09.html
+evidence/Reports/html/C10.html
+evidence/Reports/html/C11.html
+evidence/Reports/html/C12.html
+evidence/Reports/html/C13.html
+evidence/Reports/html/C14.html
+evidence/Reports/html/C15.html
+evidence/Reports/html/C16.html
+evidence/Reports/html/C17.html
+evidence/Reports/html/C18.html
+evidence/Reports/html/C19.html
+evidence/Reports/html/C20.html
+evidence/Reports/html/C21.html
+evidence/Reports/html/C22.html
+evidence/Reports/html/C23.html
+evidence/Reports/html/C24.html
+evidence/Reports/html/E01.html
+evidence/Reports/html/E02.html
+evidence/Reports/html/E03.html
+evidence/Reports/html/E04.html
+evidence/Reports/html/E05.html
+evidence/Reports/html/E06.html
+evidence/Reports/html/E07.html
+evidence/Reports/html/E08.html
+evidence/Reports/html/E09.html
+evidence/Reports/html/E10.html
+evidence/Reports/html/E11.html
+evidence/Reports/html/E12.html
+evidence/Reports/html/E13.html
+evidence/Reports/html/E14.html
+evidence/Reports/html/E15.html
+evidence/Reports/html/E16.html
+evidence/Reports/html/E17.html
+evidence/Reports/html/E18.html
+evidence/Reports/html/E19.html
+evidence/Reports/html/E20.html
+evidence/Reports/html/E21.html
+evidence/Reports/html/E22.html
+evidence/Reports/html/E23.html
+evidence/Reports/html/E24.html
+evidence/Reports/html/index.html
+evidence/Review/REVIEW_INDEX.md
+evidence/Review/REVIEW_PACK_01.md
+evidence/Review/REVIEW_PACK_02.md
+evidence/Review/REVIEW_PACK_03.md
+evidence/Review/SOURCE_FILE_MANIFEST.md
+evidence/S0/C01/contract.json
+evidence/S0/C01/oracle-input.json
+evidence/S0/C01/raw-observations.json
+evidence/S0/C01/scenario.json
+evidence/S0/C02/contract.json
+evidence/S0/C02/oracle-input.json
+evidence/S0/C02/raw-observations.json
+evidence/S0/C03/contract.json
+evidence/S0/C03/oracle-input.json
+evidence/S0/C03/raw-observations.json
+evidence/S0/C03/scenario.json
+evidence/S0/C04/contract.json
+evidence/S0/C04/oracle-input.json
+evidence/S0/C04/raw-observations.json
+evidence/S0/C04/scenario.json
+evidence/S0/C05/contract.json
+evidence/S0/C05/oracle-input.json
+evidence/S0/C05/raw-observations.json
+evidence/S0/C05/scenario.json
+evidence/S0/C06/contract.json
+evidence/S0/C06/oracle-input.json
+evidence/S0/C06/raw-observations.json
+evidence/S0/C06/scenario.json
+evidence/S0/C07/contract.json
+evidence/S0/C07/oracle-input.json
+evidence/S0/C07/raw-observations.json
+evidence/S0/C07/scenario.json
+evidence/S0/C08/contract.json
+evidence/S0/C08/oracle-input.json
+evidence/S0/C08/raw-observations.json
+evidence/S0/C08/scenario.json
+evidence/S0/C09/contract.json
+evidence/S0/C09/oracle-input.json
+evidence/S0/C09/raw-observations.json
+evidence/S0/C09/scenario.json
+evidence/S0/C10/contract.json
+evidence/S0/C10/oracle-input.json
+evidence/S0/C10/raw-observations.json
+evidence/S0/C10/scenario.json
+evidence/S0/C11/contract.json
+evidence/S0/C11/oracle-input.json
+evidence/S0/C11/production.json
+evidence/S0/C11/raw-observations.json
+evidence/S0/C11/scenario.json
+evidence/S0/C12/contract.json
+evidence/S0/C12/oracle-input.json
+evidence/S0/C12/production.json
+evidence/S0/C12/raw-observations.json
+evidence/S0/C12/scenario.json
+evidence/S0/C13/contract.json
+evidence/S0/C13/oracle-input.json
+evidence/S0/C13/production.json
+evidence/S0/C13/raw-observations.json
+evidence/S0/C13/scenario.json
+evidence/S0/C14/contract.json
+evidence/S0/C14/oracle-input.json
+evidence/S0/C14/production.json
+evidence/S0/C14/raw-observations.json
+evidence/S0/C14/scenario.json
+evidence/S0/C15/contract.json
+evidence/S0/C15/oracle-input.json
+evidence/S0/C15/production.json
+evidence/S0/C15/raw-observations.json
+evidence/S0/C15/scenario.json
+evidence/S0/C16/contract.json
+evidence/S0/C16/oracle-input.json
+evidence/S0/C16/production.json
+evidence/S0/C16/raw-observations.json
+evidence/S0/C16/scenario.json
+evidence/S0/C17/contract.json
+evidence/S0/C17/oracle-input.json
+evidence/S0/C17/raw-observations.json
+evidence/S0/C17/scenario.json
+evidence/S0/C18/contract.json
+evidence/S0/C18/oracle-input.json
+evidence/S0/C18/raw-observations.json
+evidence/S0/C18/scenario.json
+evidence/S0/C19/contract.json
+evidence/S0/C19/oracle-input.json
+evidence/S0/C19/production.json
+evidence/S0/C19/raw-observations.json
+evidence/S0/C19/scenario.json
+evidence/S0/C20/contract.json
+evidence/S0/C20/oracle-input.json
+evidence/S0/C20/raw-observations.json
+evidence/S0/C20/scenario.json
+evidence/S0/C21/contract.json
+evidence/S0/C21/oracle-input.json
+evidence/S0/C21/production.json
+evidence/S0/C21/raw-observations.json
+evidence/S0/C21/scenario.json
+evidence/S0/C22/contract.json
+evidence/S0/C22/oracle-input.json
+evidence/S0/C22/production.json
+evidence/S0/C22/raw-observations.json
+evidence/S0/C22/scenario.json
+evidence/S0/C23/contract.json
+evidence/S0/C23/oracle-input.json
+evidence/S0/C23/raw-observations.json
+evidence/S0/C23/scenario.json
+evidence/S0/C24/contract.json
+evidence/S0/C24/oracle-input.json
+evidence/S0/C24/raw-observations.json
+evidence/S0/C24/scenario.json
+evidence/S0/S0_SUMMARY.json
+schemas/accepttwin.report.v1.schema.json
+scripts/verify_s0.py
+src/accepttwin/cli.py
+src/accepttwin/report_builder.py
+tests/fixtures/contracts/custom-bleed.json
+tests/fixtures/contracts/custom-healthy.json
+tests/integration/test_cli_commands.py
+tests/unit/test_report_builder.py
+tests/unit/test_report_schema.py
+tests/unit/test_verify_s0_parity.py
+
+## Summary (git diff --stat)
+ .gitignore                                         |    3 +
+ 00_control/ADR-007.md                              |    1 +
+ 00_control/ADR-008.md                              |   97 ++
+ 00_control/ADR-009.md                              |   69 +
+ 00_control/GIT_LOG_T014.txt                        |   43 +
+ 00_control/P1_03_SOURCES.md                        |   88 +
+ 00_control/PROJECT_STATE.md                        |   17 +-
+ 00_control/VERIFY_LOG.md                           |   13 +-
+ .../competitive_gate/T001_COMPETITIVE_GATE.md      |  241 ++-
+ 00_control/competitive_gate/commands.log           |   70 +
+ 00_control/competitive_gate/decision.json          |   99 +-
+ .../evidence/fix-r1/am_api1.headers                |    2 +
+ .../evidence/fix-r1/am_api2.headers                |    2 +
+ .../evidence/fix-r1/am_api3.headers                |    2 +
+ .../competitive_gate/evidence/fix-r1/am_html.body  |   31 +
+ .../evidence/fix-r1/am_html.headers                |   17 +
+ .../evidence/fix-r1/am_index.chunk.js              |   10 +
+ .../competitive_gate/evidence/fix-r1/am_md.body    |   37 +
+ .../competitive_gate/evidence/fix-r1/am_md.headers |   16 +
+ .../cachetests-cli-vary-match-direct8000.log       |   50 +
+ .../evidence/fix-r1/cachetests-cli-vary-match.log  |   18 +
+ .../evidence/fix-r1/cachetests-npm-install.log     |    8 +
+ .../evidence/fix-r1/cachetests-npm-test.log        |   32 +
+ .../evidence/fix-r1/cachetests-server.log          |   55 +
+ .../evidence/fix-r1/cachetests-validate.log        |    0
+ .../evidence/fix-r1/cf-markdown-docs.html          |  539 ++++++
+ .../evidence/fix-r1/cf-playground.body             |    1 +
+ .../evidence/fix-r1/cf-playground.headers          |   26 +
+ .../evidence/fix-r1/harness-fixr1.log              |    1 +
+ .../evidence/fix-r1/hurl-download.sha256           |    1 +
+ .../evidence/fix-r1/hurl-version.txt               |    3 +
+ .../evidence/fix-r1/hurl_dual_healthy_fixr1.log    |   18 +
+ .../evidence/fix-r1/hurl_hm_bleed_fixr1.log        |   38 +
+ .../evidence/fix-r1/hurl_hm_healthy_fixr1.log      |    8 +
+ .../evidence/fix-r1/hurl_mh_healthy_fixr1.log      |    8 +
+ .../evidence/fix-r1/isitagentready.html            |   25 +
+ .../evidence/fix-r1/readiness-acceptmarkdown.json  |  236 +++
+ .../fix-r1/readiness-acceptmarkdown.stderr.log     |    0
+ .../evidence/fix-r1/readiness-harness.json         |  236 +++
+ .../evidence/fix-r1/readiness-harness.stderr.log   |    0
+ 00_control/competitive_gate/tool_versions.json     |   96 +-
+ 00_control/split_specs.py                          |    4 +-
+ 01_project_book/PROJECT_BOOK.docx                  |  Bin 61734 -> 65909 bytes
+ 01_project_book/PROJECT_BOOK.md                    |  520 +++++-
+ 02_implementation_plan/IMPLEMENTATION_PLAN.docx    |  Bin 55960 -> 57638 bytes
+ 02_implementation_plan/IMPLEMENTATION_PLAN.md      |   79 +-
+ 08_release/HOW_TO_REPRODUCE.md                     |  164 ++
+ 08_release/LICENSE                                 |   21 +
+ 08_release/README.md                               |   60 +
+ 08_release/RELEASE_MANIFEST.json                   | 1749 ++++++++++++++++++++
+ 08_release/RELEASE_NOTES.md                        |  177 ++
+ 08_release/SHA256SUMS.txt                          |    2 +
+ 08_release/THIRD_PARTY_NOTICES.md                  |   26 +
+ README.md                                          |   67 +-
+ docs/INSTALL.md                                    |    6 +
+ docs/LIMITATIONS.md                                |   28 +-
+ docs/USAGE.md                                      |  211 ++-
+ evidence/Golden/ALL48_SUMMARY.json                 |   96 +-
+ evidence/Golden/C01/contract.json                  |    4 +-
+ evidence/Golden/C01/oracle-input.json              |  108 +-
+ evidence/Golden/C01/raw-observations.json          |   88 +-
+ evidence/Golden/C01/scenario.json                  |    2 +-
+ evidence/Golden/C02/contract.json                  |    4 +-
+ evidence/Golden/C02/oracle-input.json              |  108 +-
+ evidence/Golden/C02/raw-observations.json          |   88 +-
+ evidence/Golden/C02/scenario.json                  |    2 +-
+ evidence/Golden/C03/contract.json                  |    4 +-
+ evidence/Golden/C03/oracle-input.json              |  108 +-
+ evidence/Golden/C03/raw-observations.json          |   88 +-
+ evidence/Golden/C03/scenario.json                  |    2 +-
+ evidence/Golden/C04/contract.json                  |    4 +-
+ evidence/Golden/C04/oracle-input.json              |  108 +-
+ evidence/Golden/C04/raw-observations.json          |   88 +-
+ evidence/Golden/C04/scenario.json                  |    2 +-
+ evidence/Golden/C05/contract.json                  |    4 +-
+ evidence/Golden/C05/oracle-input.json              |   72 +-
+ evidence/Golden/C05/raw-observations.json          |   64 +-
+ evidence/Golden/C05/scenario.json                  |    2 +-
+ evidence/Golden/C06/contract.json                  |    4 +-
+ evidence/Golden/C06/oracle-input.json              |   72 +-
+ evidence/Golden/C06/raw-observations.json          |   64 +-
+ evidence/Golden/C06/scenario.json                  |    2 +-
+ evidence/Golden/C07/contract.json                  |    4 +-
+ evidence/Golden/C07/oracle-input.json              |  108 +-
+ evidence/Golden/C07/raw-observations.json          |   88 +-
+ evidence/Golden/C07/scenario.json                  |    2 +-
+ evidence/Golden/C08/contract.json                  |    4 +-
+ evidence/Golden/C08/oracle-input.json              |  108 +-
+ evidence/Golden/C08/raw-observations.json          |   88 +-
+ evidence/Golden/C08/scenario.json                  |    2 +-
+ evidence/Golden/C09/contract.json                  |    4 +-
+ evidence/Golden/C09/oracle-input.json              |  108 +-
+ evidence/Golden/C09/raw-observations.json          |   88 +-
+ evidence/Golden/C09/scenario.json                  |    2 +-
+ evidence/Golden/C10/contract.json                  |    4 +-
+ evidence/Golden/C10/oracle-input.json              |  108 +-
+ evidence/Golden/C10/raw-observations.json          |   88 +-
+ evidence/Golden/C10/scenario.json                  |    2 +-
+ evidence/Golden/C11/contract.json                  |    4 +-
+ evidence/Golden/C11/oracle-input.json              |  108 +-
+ evidence/Golden/C11/production.json                |    8 +-
+ evidence/Golden/C11/raw-observations.json          |   88 +-
+ evidence/Golden/C11/scenario.json                  |    2 +-
+ evidence/Golden/C12/contract.json                  |    4 +-
+ evidence/Golden/C12/oracle-input.json              |  108 +-
+ evidence/Golden/C12/production.json                |    8 +-
+ evidence/Golden/C12/raw-observations.json          |   88 +-
+ evidence/Golden/C12/scenario.json                  |    2 +-
+ evidence/Golden/C13/contract.json                  |    4 +-
+ evidence/Golden/C13/oracle-input.json              |  108 +-
+ evidence/Golden/C13/production.json                |    8 +-
+ evidence/Golden/C13/raw-observations.json          |   88 +-
+ evidence/Golden/C13/scenario.json                  |    2 +-
+ evidence/Golden/C14/contract.json                  |    4 +-
+ evidence/Golden/C14/oracle-input.json              |  108 +-
+ evidence/Golden/C14/production.json                |    8 +-
+ evidence/Golden/C14/raw-observations.json          |   88 +-
+ evidence/Golden/C14/scenario.json                  |    2 +-
+ evidence/Golden/C15/contract.json                  |    4 +-
+ evidence/Golden/C15/oracle-input.json              |  108 +-
+ evidence/Golden/C15/production.json                |    8 +-
+ evidence/Golden/C15/raw-observations.json          |   88 +-
+ evidence/Golden/C15/scenario.json                  |    2 +-
+ evidence/Golden/C16/contract.json                  |    4 +-
+ evidence/Golden/C16/oracle-input.json              |  108 +-
+ evidence/Golden/C16/production.json                |    8 +-
+ evidence/Golden/C16/raw-observations.json          |   88 +-
+ evidence/Golden/C16/scenario.json                  |    2 +-
+ evidence/Golden/C17/contract.json                  |    4 +-
+ evidence/Golden/C17/oracle-input.json              |   72 +-
+ evidence/Golden/C17/raw-observations.json          |   64 +-
+ evidence/Golden/C17/scenario.json                  |    2 +-
+ evidence/Golden/C18/contract.json                  |    4 +-
+ evidence/Golden/C18/oracle-input.json              |   72 +-
+ evidence/Golden/C18/raw-observations.json          |   64 +-
+ evidence/Golden/C18/scenario.json                  |    2 +-
+ evidence/Golden/C19/contract.json                  |    4 +-
+ evidence/Golden/C19/oracle-input.json              |  108 +-
+ evidence/Golden/C19/production.json                |   12 +-
+ evidence/Golden/C19/raw-observations.json          |   88 +-
+ evidence/Golden/C20/contract.json                  |    4 +-
+ evidence/Golden/C20/oracle-input.json              |   36 +-
+ evidence/Golden/C20/raw-observations.json          |   40 +-
+ evidence/Golden/C20/scenario.json                  |    2 +-
+ evidence/Golden/C21/contract.json                  |    4 +-
+ evidence/Golden/C21/oracle-input.json              |  108 +-
+ evidence/Golden/C21/production.json                |   24 +-
+ evidence/Golden/C21/raw-observations.json          |   88 +-
+ evidence/Golden/C21/scenario.json                  |    2 +-
+ evidence/Golden/C22/contract.json                  |    4 +-
+ evidence/Golden/C22/oracle-input.json              |  108 +-
+ evidence/Golden/C22/production.json                |    4 +-
+ evidence/Golden/C22/raw-observations.json          |   88 +-
+ evidence/Golden/C22/scenario.json                  |    2 +-
+ evidence/Golden/C23/contract.json                  |    4 +-
+ evidence/Golden/C23/oracle-input.json              |  108 +-
+ evidence/Golden/C23/raw-observations.json          |   88 +-
+ evidence/Golden/C23/scenario.json                  |    2 +-
+ evidence/Golden/C24/contract.json                  |    4 +-
+ evidence/Golden/C24/oracle-input.json              |  108 +-
+ evidence/Golden/C24/raw-observations.json          |   88 +-
+ evidence/Golden/C24/scenario.json                  |    2 +-
+ evidence/Golden/E01/contract.json                  |    4 +-
+ evidence/Golden/E01/oracle-input.json              |  108 +-
+ evidence/Golden/E01/raw-observations.json          |   88 +-
+ evidence/Golden/E01/scenario.json                  |    2 +-
+ evidence/Golden/E02/contract.json                  |    4 +-
+ evidence/Golden/E02/oracle-input.json              |  108 +-
+ evidence/Golden/E02/raw-observations.json          |   88 +-
+ evidence/Golden/E02/scenario.json                  |    2 +-
+ evidence/Golden/E03/contract.json                  |    4 +-
+ evidence/Golden/E03/oracle-input.json              |   72 +-
+ evidence/Golden/E03/raw-observations.json          |   64 +-
+ evidence/Golden/E03/scenario.json                  |    2 +-
+ evidence/Golden/E04/contract.json                  |    4 +-
+ evidence/Golden/E04/oracle-input.json              |  108 +-
+ evidence/Golden/E04/raw-observations.json          |   88 +-
+ evidence/Golden/E04/scenario.json                  |    2 +-
+ evidence/Golden/E05/contract.json                  |    4 +-
+ evidence/Golden/E05/oracle-input.json              |   72 +-
+ evidence/Golden/E05/raw-observations.json          |   64 +-
+ evidence/Golden/E05/scenario.json                  |    2 +-
+ evidence/Golden/E06/contract.json                  |    4 +-
+ evidence/Golden/E06/oracle-input.json              |   72 +-
+ evidence/Golden/E06/raw-observations.json          |   64 +-
+ evidence/Golden/E06/scenario.json                  |    2 +-
+ evidence/Golden/E07/contract.json                  |    4 +-
+ evidence/Golden/E07/oracle-input.json              |  108 +-
+ evidence/Golden/E07/production.json                |   16 +-
+ evidence/Golden/E07/raw-observations.json          |   88 +-
+ evidence/Golden/E07/scenario.json                  |    2 +-
+ evidence/Golden/E08/contract.json                  |    4 +-
+ evidence/Golden/E08/oracle-input.json              |  108 +-
+ evidence/Golden/E08/production.json                |   16 +-
+ evidence/Golden/E08/raw-observations.json          |   88 +-
+ evidence/Golden/E08/scenario.json                  |    2 +-
+ evidence/Golden/E09/contract.json                  |    4 +-
+ evidence/Golden/E09/oracle-input.json              |  108 +-
+ evidence/Golden/E09/raw-observations.json          |   88 +-
+ evidence/Golden/E09/scenario.json                  |    2 +-
+ evidence/Golden/E10/contract.json                  |    4 +-
+ evidence/Golden/E10/oracle-input.json              |  108 +-
+ evidence/Golden/E10/raw-observations.json          |   88 +-
+ evidence/Golden/E10/scenario.json                  |    2 +-
+ evidence/Golden/E11/contract.json                  |    4 +-
+ evidence/Golden/E11/oracle-input.json              |  108 +-
+ evidence/Golden/E11/raw-observations.json          |   88 +-
+ evidence/Golden/E11/scenario.json                  |    2 +-
+ evidence/Golden/E12/contract.json                  |    4 +-
+ evidence/Golden/E12/oracle-input.json              |   48 +-
+ evidence/Golden/E12/production.json                |   24 +-
+ evidence/Golden/E12/raw-observations.json          |   52 +-
+ evidence/Golden/E12/scenario.json                  |    2 +-
+ evidence/Golden/E13/contract.json                  |    4 +-
+ evidence/Golden/E13/oracle-input.json              |  108 +-
+ evidence/Golden/E13/production.json                |    8 +-
+ evidence/Golden/E13/raw-observations.json          |   88 +-
+ evidence/Golden/E13/scenario.json                  |    2 +-
+ evidence/Golden/E14/contract.json                  |    4 +-
+ evidence/Golden/E14/oracle-input.json              |  108 +-
+ evidence/Golden/E14/production.json                |    8 +-
+ evidence/Golden/E14/raw-observations.json          |   88 +-
+ evidence/Golden/E14/scenario.json                  |    2 +-
+ evidence/Golden/E15/contract.json                  |    4 +-
+ evidence/Golden/E15/oracle-input.json              |   72 +-
+ evidence/Golden/E15/raw-observations.json          |   64 +-
+ evidence/Golden/E15/scenario.json                  |    2 +-
+ evidence/Golden/E16/contract.json                  |    4 +-
+ evidence/Golden/E16/oracle-input.json              |   72 +-
+ evidence/Golden/E16/raw-observations.json          |   64 +-
+ evidence/Golden/E17/contract.json                  |    4 +-
+ evidence/Golden/E17/oracle-input.json              |   36 +-
+ evidence/Golden/E17/raw-observations.json          |   40 +-
+ evidence/Golden/E17/scenario.json                  |    2 +-
+ evidence/Golden/E18/contract.json                  |    4 +-
+ evidence/Golden/E18/oracle-input.json              |  108 +-
+ evidence/Golden/E18/production.json                |   24 +-
+ evidence/Golden/E18/raw-observations.json          |   88 +-
+ evidence/Golden/E18/scenario.json                  |    2 +-
+ evidence/Golden/E19/contract.json                  |    4 +-
+ evidence/Golden/E19/oracle-input.json              |  108 +-
+ evidence/Golden/E19/production.json                |    4 +-
+ evidence/Golden/E19/raw-observations.json          |   88 +-
+ evidence/Golden/E19/scenario.json                  |    2 +-
+ evidence/Golden/E20/contract.json                  |    4 +-
+ evidence/Golden/E20/oracle-input.json              |  108 +-
+ evidence/Golden/E20/production.json                |    4 +-
+ evidence/Golden/E20/raw-observations.json          |   88 +-
+ evidence/Golden/E20/scenario.json                  |    2 +-
+ evidence/Golden/E21/contract.json                  |    4 +-
+ evidence/Golden/E21/oracle-input.json              |  108 +-
+ evidence/Golden/E21/production.json                |   12 +-
+ evidence/Golden/E21/raw-observations.json          |   88 +-
+ evidence/Golden/E21/scenario.json                  |    2 +-
+ evidence/Golden/E22/contract.json                  |    4 +-
+ evidence/Golden/E22/oracle-input.json              |   36 +-
+ evidence/Golden/E22/production.json                |   12 +-
+ evidence/Golden/E22/raw-observations.json          |   40 +-
+ evidence/Golden/E22/scenario.json                  |    2 +-
+ evidence/Golden/E23/contract.json                  |    4 +-
+ evidence/Golden/E23/oracle-input.json              |  108 +-
+ evidence/Golden/E23/raw-observations.json          |   88 +-
+ evidence/Golden/E23/scenario.json                  |    2 +-
+ evidence/Golden/E24/contract.json                  |    4 +-
+ evidence/Golden/E24/oracle-input.json              |  108 +-
+ evidence/Golden/E24/raw-observations.json          |   88 +-
+ evidence/Golden/E24/scenario.json                  |    2 +-
+ evidence/Performance/BENCHMARK_SUMMARY.json        |   98 +-
+ evidence/Performance/FIXR1_GATE_LOG.txt            |  225 +++
+ evidence/Performance/FIXR1_OFFLINE_LOG.txt         |  171 ++
+ evidence/Performance/FIXR1_TEST_LOG.txt            |   16 +
+ evidence/Performance/T014_OFFLINE_LOG.txt          |  162 ++
+ evidence/Performance/T014_TEST_LOG.txt             |   15 +
+ evidence/Reports/C01.json                          |   32 +-
+ evidence/Reports/C02.json                          |   32 +-
+ evidence/Reports/C03.json                          |   32 +-
+ evidence/Reports/C04.json                          |   32 +-
+ evidence/Reports/C05.json                          |   20 +-
+ evidence/Reports/C06.json                          |   20 +-
+ evidence/Reports/C07.json                          |   32 +-
+ evidence/Reports/C08.json                          |   32 +-
+ evidence/Reports/C09.json                          |   32 +-
+ evidence/Reports/C10.json                          |   32 +-
+ evidence/Reports/C11.json                          |   40 +-
+ evidence/Reports/C12.json                          |   40 +-
+ evidence/Reports/C13.json                          |   40 +-
+ evidence/Reports/C14.json                          |   40 +-
+ evidence/Reports/C15.json                          |   40 +-
+ evidence/Reports/C16.json                          |   40 +-
+ evidence/Reports/C17.json                          |   20 +-
+ evidence/Reports/C18.json                          |   20 +-
+ evidence/Reports/C19.json                          |   44 +-
+ evidence/Reports/C20.json                          |    8 +-
+ evidence/Reports/C21.json                          |   56 +-
+ evidence/Reports/C22.json                          |   36 +-
+ evidence/Reports/C23.json                          |   32 +-
+ evidence/Reports/C24.json                          |   32 +-
+ evidence/Reports/E01.json                          |   32 +-
+ evidence/Reports/E02.json                          |   32 +-
+ evidence/Reports/E03.json                          |   20 +-
+ evidence/Reports/E04.json                          |   32 +-
+ evidence/Reports/E05.json                          |   20 +-
+ evidence/Reports/E06.json                          |   20 +-
+ evidence/Reports/E07.json                          |   48 +-
+ evidence/Reports/E08.json                          |   48 +-
+ evidence/Reports/E09.json                          |   32 +-
+ evidence/Reports/E10.json                          |   32 +-
+ evidence/Reports/E11.json                          |   32 +-
+ evidence/Reports/E12.json                          |   32 +-
+ evidence/Reports/E13.json                          |   40 +-
+ evidence/Reports/E14.json                          |   40 +-
+ evidence/Reports/E15.json                          |   20 +-
+ evidence/Reports/E16.json                          |   20 +-
+ evidence/Reports/E17.json                          |    8 +-
+ evidence/Reports/E18.json                          |   56 +-
+ evidence/Reports/E19.json                          |   36 +-
+ evidence/Reports/E20.json                          |   36 +-
+ evidence/Reports/E21.json                          |   44 +-
+ evidence/Reports/E22.json                          |   20 +-
+ evidence/Reports/E23.json                          |   32 +-
+ evidence/Reports/E24.json                          |   32 +-
+ evidence/Reports/REPORTS_SUMMARY.json              |   96 +-
+ evidence/Reports/html/C01.html                     |   32 +-
+ evidence/Reports/html/C02.html                     |   32 +-
+ evidence/Reports/html/C03.html                     |   32 +-
+ evidence/Reports/html/C04.html                     |   32 +-
+ evidence/Reports/html/C05.html                     |   20 +-
+ evidence/Reports/html/C06.html                     |   20 +-
+ evidence/Reports/html/C07.html                     |   32 +-
+ evidence/Reports/html/C08.html                     |   32 +-
+ evidence/Reports/html/C09.html                     |   32 +-
+ evidence/Reports/html/C10.html                     |   32 +-
+ evidence/Reports/html/C11.html                     |   40 +-
+ evidence/Reports/html/C12.html                     |   40 +-
+ evidence/Reports/html/C13.html                     |   40 +-
+ evidence/Reports/html/C14.html                     |   40 +-
+ evidence/Reports/html/C15.html                     |   40 +-
+ evidence/Reports/html/C16.html                     |   40 +-
+ evidence/Reports/html/C17.html                     |   20 +-
+ evidence/Reports/html/C18.html                     |   20 +-
+ evidence/Reports/html/C19.html                     |   44 +-
+ evidence/Reports/html/C20.html                     |    8 +-
+ evidence/Reports/html/C21.html                     |   56 +-
+ evidence/Reports/html/C22.html                     |   36 +-
+ evidence/Reports/html/C23.html                     |   32 +-
+ evidence/Reports/html/C24.html                     |   32 +-
+ evidence/Reports/html/E01.html                     |   32 +-
+ evidence/Reports/html/E02.html                     |   32 +-
+ evidence/Reports/html/E03.html                     |   20 +-
+ evidence/Reports/html/E04.html                     |   32 +-
+ evidence/Reports/html/E05.html                     |   20 +-
+ evidence/Reports/html/E06.html                     |   20 +-
+ evidence/Reports/html/E07.html                     |   48 +-
+ evidence/Reports/html/E08.html                     |   48 +-
+ evidence/Reports/html/E09.html                     |   32 +-
+ evidence/Reports/html/E10.html                     |   32 +-
+ evidence/Reports/html/E11.html                     |   32 +-
+ evidence/Reports/html/E12.html                     |   32 +-
+ evidence/Reports/html/E13.html                     |   40 +-
+ evidence/Reports/html/E14.html                     |   40 +-
+ evidence/Reports/html/E15.html                     |   20 +-
+ evidence/Reports/html/E16.html                     |   20 +-
+ evidence/Reports/html/E17.html                     |    8 +-
+ evidence/Reports/html/E18.html                     |   56 +-
+ evidence/Reports/html/E19.html                     |   36 +-
+ evidence/Reports/html/E20.html                     |   36 +-
+ evidence/Reports/html/E21.html                     |   44 +-
+ evidence/Reports/html/E22.html                     |   20 +-
+ evidence/Reports/html/E23.html                     |   32 +-
+ evidence/Reports/html/E24.html                     |   32 +-
+ evidence/Reports/html/index.html                   |   96 +-
+ evidence/Review/REVIEW_INDEX.md                    |  152 +-
+ evidence/Review/REVIEW_PACK_01.md                  | 1375 ++++++++++++++-
+ evidence/Review/REVIEW_PACK_02.md                  | 1487 +++++++++++++++--
+ evidence/Review/REVIEW_PACK_03.md                  | 1318 ++++++++++++++-
+ evidence/Review/SOURCE_FILE_MANIFEST.md            | 1207 +++++++-------
+ evidence/S0/C01/contract.json                      |    4 +-
+ evidence/S0/C01/oracle-input.json                  |  108 +-
+ evidence/S0/C01/raw-observations.json              |   88 +-
+ evidence/S0/C01/scenario.json                      |    2 +-
+ evidence/S0/C02/contract.json                      |    4 +-
+ evidence/S0/C02/oracle-input.json                  |  108 +-
+ evidence/S0/C02/raw-observations.json              |   88 +-
+ evidence/S0/C03/contract.json                      |    4 +-
+ evidence/S0/C03/oracle-input.json                  |  108 +-
+ evidence/S0/C03/raw-observations.json              |   88 +-
+ evidence/S0/C03/scenario.json                      |    2 +-
+ evidence/S0/C04/contract.json                      |    4 +-
+ evidence/S0/C04/oracle-input.json                  |  108 +-
+ evidence/S0/C04/raw-observations.json              |   88 +-
+ evidence/S0/C04/scenario.json                      |    2 +-
+ evidence/S0/C05/contract.json                      |    4 +-
+ evidence/S0/C05/oracle-input.json                  |   72 +-
+ evidence/S0/C05/raw-observations.json              |   64 +-
+ evidence/S0/C05/scenario.json                      |    2 +-
+ evidence/S0/C06/contract.json                      |    4 +-
+ evidence/S0/C06/oracle-input.json                  |   72 +-
+ evidence/S0/C06/raw-observations.json              |   64 +-
+ evidence/S0/C06/scenario.json                      |    2 +-
+ evidence/S0/C07/contract.json                      |    4 +-
+ evidence/S0/C07/oracle-input.json                  |  108 +-
+ evidence/S0/C07/raw-observations.json              |   88 +-
+ evidence/S0/C07/scenario.json                      |    2 +-
+ evidence/S0/C08/contract.json                      |    4 +-
+ evidence/S0/C08/oracle-input.json                  |  108 +-
+ evidence/S0/C08/raw-observations.json              |   88 +-
+ evidence/S0/C08/scenario.json                      |    2 +-
+ evidence/S0/C09/contract.json                      |    4 +-
+ evidence/S0/C09/oracle-input.json                  |  108 +-
+ evidence/S0/C09/raw-observations.json              |   88 +-
+ evidence/S0/C09/scenario.json                      |    2 +-
+ evidence/S0/C10/contract.json                      |    4 +-
+ evidence/S0/C10/oracle-input.json                  |  108 +-
+ evidence/S0/C10/raw-observations.json              |   88 +-
+ evidence/S0/C10/scenario.json                      |    2 +-
+ evidence/S0/C11/contract.json                      |    4 +-
+ evidence/S0/C11/oracle-input.json                  |  108 +-
+ evidence/S0/C11/production.json                    |    8 +-
+ evidence/S0/C11/raw-observations.json              |   88 +-
+ evidence/S0/C11/scenario.json                      |    2 +-
+ evidence/S0/C12/contract.json                      |    4 +-
+ evidence/S0/C12/oracle-input.json                  |  108 +-
+ evidence/S0/C12/production.json                    |    8 +-
+ evidence/S0/C12/raw-observations.json              |   88 +-
+ evidence/S0/C12/scenario.json                      |    2 +-
+ evidence/S0/C13/contract.json                      |    4 +-
+ evidence/S0/C13/oracle-input.json                  |  108 +-
+ evidence/S0/C13/production.json                    |    8 +-
+ evidence/S0/C13/raw-observations.json              |   88 +-
+ evidence/S0/C13/scenario.json                      |    2 +-
+ evidence/S0/C14/contract.json                      |    4 +-
+ evidence/S0/C14/oracle-input.json                  |  108 +-
+ evidence/S0/C14/production.json                    |    8 +-
+ evidence/S0/C14/raw-observations.json              |   88 +-
+ evidence/S0/C14/scenario.json                      |    2 +-
+ evidence/S0/C15/contract.json                      |    4 +-
+ evidence/S0/C15/oracle-input.json                  |  108 +-
+ evidence/S0/C15/production.json                    |    8 +-
+ evidence/S0/C15/raw-observations.json              |   88 +-
+ evidence/S0/C15/scenario.json                      |    2 +-
+ evidence/S0/C16/contract.json                      |    4 +-
+ evidence/S0/C16/oracle-input.json                  |  108 +-
+ evidence/S0/C16/production.json                    |    8 +-
+ evidence/S0/C16/raw-observations.json              |   88 +-
+ evidence/S0/C16/scenario.json                      |    2 +-
+ evidence/S0/C17/contract.json                      |    4 +-
+ evidence/S0/C17/oracle-input.json                  |   72 +-
+ evidence/S0/C17/raw-observations.json              |   64 +-
+ evidence/S0/C17/scenario.json                      |    2 +-
+ evidence/S0/C18/contract.json                      |    4 +-
+ evidence/S0/C18/oracle-input.json                  |   72 +-
+ evidence/S0/C18/raw-observations.json              |   64 +-
+ evidence/S0/C18/scenario.json                      |    2 +-
+ evidence/S0/C19/contract.json                      |    4 +-
+ evidence/S0/C19/oracle-input.json                  |  108 +-
+ evidence/S0/C19/production.json                    |   12 +-
+ evidence/S0/C19/raw-observations.json              |   88 +-
+ evidence/S0/C19/scenario.json                      |    2 +-
+ evidence/S0/C20/contract.json                      |    4 +-
+ evidence/S0/C20/oracle-input.json                  |   36 +-
+ evidence/S0/C20/raw-observations.json              |   40 +-
+ evidence/S0/C20/scenario.json                      |    2 +-
+ evidence/S0/C21/contract.json                      |    4 +-
+ evidence/S0/C21/oracle-input.json                  |  108 +-
+ evidence/S0/C21/production.json                    |   24 +-
+ evidence/S0/C21/raw-observations.json              |   88 +-
+ evidence/S0/C21/scenario.json                      |    2 +-
+ evidence/S0/C22/contract.json                      |    4 +-
+ evidence/S0/C22/oracle-input.json                  |  108 +-
+ evidence/S0/C22/production.json                    |    4 +-
+ evidence/S0/C22/raw-observations.json              |   88 +-
+ evidence/S0/C22/scenario.json                      |    2 +-
+ evidence/S0/C23/contract.json                      |    4 +-
+ evidence/S0/C23/oracle-input.json                  |  108 +-
+ evidence/S0/C23/raw-observations.json              |   88 +-
+ evidence/S0/C23/scenario.json                      |    2 +-
+ evidence/S0/C24/contract.json                      |    4 +-
+ evidence/S0/C24/oracle-input.json                  |  108 +-
+ evidence/S0/C24/raw-observations.json              |   88 +-
+ evidence/S0/C24/scenario.json                      |    2 +-
+ evidence/S0/S0_SUMMARY.json                        |   52 +-
+ schemas/accepttwin.report.v1.schema.json           |    2 +-
+ scripts/verify_s0.py                               |  115 +-
+ src/accepttwin/cli.py                              |  983 ++++++++++-
+ src/accepttwin/report_builder.py                   |    2 +-
+ tests/fixtures/contracts/custom-bleed.json         |    1 +
+ tests/fixtures/contracts/custom-healthy.json       |    1 +
+ tests/integration/test_cli_commands.py             |  677 ++++++++
+ tests/unit/test_report_builder.py                  |    2 +-
+ tests/unit/test_report_schema.py                   |    2 +-
+ tests/unit/test_verify_s0_parity.py                |  166 ++
+ 491 files changed, 20911 insertions(+), 9559 deletions(-)
+
+## Worktree
+?? 00_control/GIT_LOG_FIXR1.txt
+(empty above = clean)

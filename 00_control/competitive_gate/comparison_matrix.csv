@@ -1,0 +1,6 @@
+tool,EQ01_same_url_html_markdown,EQ02_independent_cold_baselines,EQ03_warm_html_to_markdown,EQ04_warm_markdown_to_html,EQ05_reset_and_verify_empty,EQ06_dual_header_plus_origin_evidence,EQ07_wrong_representation_and_first_error,EQ08_origin_vs_bleed_vs_inconclusive
+Hurl 7.0.0,FULL,PARTIAL,PARTIAL,PARTIAL,PARTIAL,PARTIAL,PARTIAL,NO
+cache-tests HEAD 3942fbfe,PARTIAL,NO,PARTIAL,PARTIAL,NO,PARTIAL,PARTIAL,NO
+acceptmarkdown.com,PARTIAL,NO,NO,NO,NO,NO,NO,NO
+readiness-audit 2.9.0,PARTIAL,NO,NO,NO,NO,NO,NO,NO
+Cloudflare Agent Readiness,PARTIAL,NO,NO,NO,NO,NO,NO,NO

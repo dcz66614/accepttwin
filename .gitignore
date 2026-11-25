@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+node_modules/
+08_release/source.zip
+08_release/*.bundle
+output/

@@ -1,0 +1,43 @@
+P032 AcceptTwin — Git record at T014 freeze (generated 2026-11-24 ~17:15 GMT)
+
+== frozen source identity ==
+freeze commit: d3bee545d8d42b4f4da3fc48bb0a2f514cdbfa7f (tag P032-v1.0.0)
+NOTE: HEAD at record time is 7b42bd7 (post-freeze commit adding only
+08_release/ text artifacts + .gitignore; it touches no source).
+The frozen source identity is d3bee54, not HEAD.
+
+== HEAD at record time ==
+7b42bd78202c99d220ddd404b6117ba12614e467
+commit 7b42bd78202c99d220ddd404b6117ba12614e467
+Author: Muse <muse@local>
+Date: Tue Nov 24 17:09:04 2026 +0000
+Subject: P032-T014 release files: 08_release/ text artifacts (manifest, sums, notes, reproduce guide); source.zip stays on Drive, not git
+
+== tag ==
+P032-v1.0.0
+d3bee545d8d42b4f4da3fc48bb0a2f514cdbfa7f
+
+== log (T014 work, d22ee92..HEAD) ==
+7b42bd7 P032-T014 release files: 08_release/ text artifacts (manifest, sums, notes, reproduce guide); source.zip stays on Drive, not git
+d3bee54 P032-T014 WP-10: refresh committed S0 evidence for widened parity (verify s0 + benchmark re-run); PROJECT_STATE T014 record through T014-D
+aa68ea7 P032-T014 WP-9 (T014-C follow-up): regenerate recorded Golden evidence + 48 report samples for widened parity; all 48 report hashes identical, 967 passed
+4aa43a1 P032-T014 WP-7: ADR-005 (§4.1 CLI deferral), ADR-006 (D-03 honest-boundary clause), ADR-007 (T014 fix record); docs cite ADRs; LIMITATIONS residual table closed
+c4daaae P032-T014 WP-6+WP-8: cleanup subtree narrowed to evidence/ (T011 P2); USAGE.md durable log path (T012 P2-2); T010_NOTES wording (T010 P2-1); offline rendering tests fail hard without Chromium (T010 P2-2)
+8afd7c1 P032-T014 WP-5: Oracle parity widened to per-request verified states (T013-F02); Oracle decoupled from production verified_cache_state (T013-F05); classifier exposes confirmed_cache_states
+6e126b2 P032-T014 WP-4: origin q=0 returns 406 (T003 P2-01, RFC 9110 12.5.1); q-tie tests (T003 P2-02)
+2da97ce P032-T014 WP-3: RFC 9111-tolerant revalidation parsing (T008 P2-2) in classifier + Oracle; T006 P3 constant-True cleanup
+f07b875 P032-T014 WP-2: bounded reads (T011 F-01, T013-F04) via privacy.read_http_body_bounded; runner returns exact size/hash/sentinel, proxy retains limit+1
+1419ae4 P032-T014 WP-1: T013-F01 port-swap hash collision accepted with proof (ADR-007 pending); pinning test added, no production change
+
+== freeze commit file stats ==
+ evidence/S0/C24/production.json             |  34 +++++++++
+ evidence/S0/C24/raw-observations.json       |  88 +++++++++++------------
+ evidence/S0/C24/scenario.json               |   2 +-
+ evidence/S0/S0_SUMMARY.json                 |  54 +++++++-------
+ 455 files changed, 9863 insertions(+), 8230 deletions(-)
+
+== worktree status at record time ==
+?? 00_control/GIT_LOG_T014.txt
+?? evidence/Performance/T014_OFFLINE_LOG.txt
+?? evidence/Performance/T014_TEST_LOG.txt
+(end)

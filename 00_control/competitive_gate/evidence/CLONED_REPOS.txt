@@ -1,0 +1,2 @@
+cache-tests HEAD 3942fbfe1f6d23406e55b4120cde61da98080539 (2026-11-17, .git removed for evidence archival; see tool_versions.json)
+readiness-audit HEAD 9ce02f858d50df407b8d0e73f77673f4805caa64 (2026-11-19, .git removed for evidence archival; see tool_versions.json)
