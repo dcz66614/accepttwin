@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://accepttwin.local/schemas/accepttwin.contract.v1.schema.json",
+  "title": "AcceptTwin contract",
+  "type": "object",
+  "required": [
+    "schema",
+    "contract_id",
+    "name",
+    "url",
+    "origin_url",
+    "representations",
+    "request_headers",
+    "cache_behavior",
+    "limits",
+    "metadata"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "const": "accepttwin.contract/v1"
+    },
+    "contract_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "url": {
+      "type": "string",
+      "minLength": 1
+    },
+    "origin_url": {
+      "type": "string",
+      "minLength": 1
+    },
+    "representations": {
+      "type": "object",
+      "required": [
+        "html",
+        "markdown"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "html": {
+          "$ref": "#/$defs/representation"
+        },
+        "markdown": {
+          "$ref": "#/$defs/representation"
+        }
+      }
+    },
+    "request_headers": {
+      "type": "object",
+      "required": [
+        "accept_encoding",
+        "user_agent",
+        "accept_language"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "accept_encoding": {
+          "const": "identity"
+        },
+        "user_agent": {
+          "const": "AcceptTwin/1.0.0"
+        },
+        "accept_language": {
+          "const": "en"
+        }
+      }
+    },
+    "cache_behavior": {
+      "type": "object",
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "mode": {
+          "enum": [
+            "variant_by_accept",
+            "no_store"
+          ]
+        },
+        "vary_accept": {
+          "enum": [
+            "required",
+            "advisory",
+            "not_required"
+          ]
+        },
+        "max_age_seconds": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 0
+        }
+      }
+    },
+    "limits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "max_body_bytes": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1048576
+        },
+        "request_timeout_seconds": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "representation": {
+      "type": "object",
+      "required": [
+        "accept",
+        "expected_status",
+        "expected_content_type",
+        "sentinel"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "accept": {
+          "type": "string",
+          "minLength": 1
+        },
+        "expected_status": {
+          "type": "integer"
+        },
+        "expected_content_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sentinel": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

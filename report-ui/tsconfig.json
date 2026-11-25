@@ -1,0 +1,1 @@
+{"compilerOptions":{"declaration":false,"forceConsistentCasingInFileNames":true,"module":"none","noEmitOnError":true,"outFile":"./report-ui.js","rootDir":"./src","skipLibCheck":true,"sourceMap":false,"strict":true,"target":"ES2024"},"include":["src/**/*.ts"]}
